@@ -29,7 +29,20 @@ class ParticipanteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+
+        $participante = new Participante();
+        $participante->nombre = $request->nombre;
+        $participante->nombreEquipo = $request->nombreEquipo;
+        $participante->escuela = $request->escuela;
+        $participante->correo = $request->correo;
+        $participante->numeroEquipo = $request->numeroEquipo;
+        $participante->pago = $request->pago;
+        $participante->competencia = $request->competencia;
+
+        $participante->save();
+
+        return redirect('/participante');
     }
 
     /**
