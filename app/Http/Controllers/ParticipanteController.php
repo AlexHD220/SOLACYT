@@ -30,6 +30,17 @@ class ParticipanteController extends Controller
     public function store(Request $request)
     {
 
+        $request->validate([                                        //validacion
+
+            'nombre'=>'required',
+            'nombreEquipo'=>'required',
+            'escuela'=>'required',
+            'correo'=>'required',
+            'numeroEquipo'=>'required',
+            'pago'=>'required',
+            'competencia'=>'required'
+        ]);
+
 
         $participante = new Participante();
         $participante->nombre = $request->nombre;
