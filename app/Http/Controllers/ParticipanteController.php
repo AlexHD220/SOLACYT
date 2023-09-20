@@ -13,7 +13,9 @@ class ParticipanteController extends Controller
     public function index()
     {
         //return "hola index";
-        return view('participante/indexParticipante');
+        //return view('participante/indexParticipante');
+        $participantes = Participante::all();
+        return view('participante/indexParticipante', compact('participantes'));
     }
 
     /**

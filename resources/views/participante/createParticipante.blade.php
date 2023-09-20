@@ -9,7 +9,7 @@
 
 <body>
     <h1>Formulario de participante</h1>
-    <form action="/participante" method="POST">  <!--checar--> 
+    <form action="/participante" method="POST">  <!--es importante la / --> 
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
