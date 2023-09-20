@@ -12,7 +12,9 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        return view("usuario/indexUsuario"); //<----- regresar vista al llamar al archivo index (usuario)
+        $usuarios = Usuario::all();
+        //dd($usuarios); //para ver que hay en esa variable
+        return view("usuario/indexUsuario",compact('usuarios')); //compact es para enviar al archhivo todos los datos de la variable usuarios //<----- regresar vista al llamar al archivo index (usuario)
     }
 
     /**
