@@ -63,7 +63,8 @@ class ParticipanteController extends Controller
      */
     public function show(Participante $participante)
     {
-        //
+        //$participante = Participante::find
+        return view('participante.showParticipante', compact('participante'));
     }
 
     /**
@@ -71,7 +72,7 @@ class ParticipanteController extends Controller
      */
     public function edit(Participante $participante)
     {
-        //
+        return view('participante.editParticipante', compact('participante'));
     }
 
     /**

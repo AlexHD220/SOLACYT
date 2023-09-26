@@ -18,4 +18,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//Rout::get('participante/pdf')
+
 Route::resource('participante', ParticipanteController::class);
