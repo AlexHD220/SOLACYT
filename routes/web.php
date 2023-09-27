@@ -22,4 +22,6 @@ Route::get('/', function () {
 
 //Route::post('usuario/createUsuario',[SitioController::class,'usuarioSave']);
 
+//Route::get('usuario/pdf',[usuarioController::class,'pdf']) -> name('usuario.pdf'); //Ruta agregada de forma manual
+//cabiar el nombre de mis rutas
 Route::resource('usuario', UsuarioController::class); //este hace 

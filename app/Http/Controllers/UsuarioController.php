@@ -46,6 +46,7 @@ class UsuarioController extends Controller
         $usuario->mail = $request->correo; //asignari atributos que corresonden por como se llaman mis columnas
         //$usuario->comentario = $request->comentario; 
         $usuario->usuario = $request->usuario;
+        //$usuario->usuario = $request->pass;
         $usuario->save();
     
         return redirect('/usuario'); 
@@ -54,9 +55,10 @@ class UsuarioController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Usuario $usuario)
+    public function show(Usuario $usuario) //Se recibe un iD instanciando una variable de esa tabla con ese ID y hace la consulta para guardr el registro en la consulta
     {
-        //
+        //$usuario = Usuario::find($id);
+        return view('usuario/showUsuario',compact('usuario'));
     }
 
     /**
@@ -65,6 +67,7 @@ class UsuarioController extends Controller
     public function edit(Usuario $usuario)
     {
         //
+        return view('usuario/editUsuario',compact('usuario')); //formulario para editar la base
     }
 
     /**

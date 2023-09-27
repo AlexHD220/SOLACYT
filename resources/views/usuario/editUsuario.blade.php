@@ -14,14 +14,14 @@
         @csrf <!--permite entrar al formulario muy importante agregar-->
 
         <label for="usuario"><b> Usuario: </b></label>
-        <input type="text" id="usuario" name="usuario" placeholder="Usuario" required><br><br>
+        <input type="text" id="usuario" name="usuario" placeholder="Usuario" required value = "{{$usuario -> usuario}}"><br><br>
 
 
         <label for = "correo"><b>Correo: </b></label>
-        <input type="email" name="correo"><br><br>
+        <input type="email" name="correo" required value = "{{$usuario -> mail}}"><br><br>
 
-        <!-- <label for="pass"><b> Contraseña: </b></label> -->
-        <!-- <input type="password" id="pass" name="pass" required style="width: 250px;"><br><br> -->
+        <!--<label for="pass"><b> Contraseña: </b></label>-->
+        <!--<input type="password" id="pass" name="pass" required><br><br>-->
 
         <input type="submit" value="Enviar">
     </form>
