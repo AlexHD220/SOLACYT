@@ -11,8 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('asesors', function (Blueprint $table) {
+        Schema::create('asesores', function (Blueprint $table) {
             $table->id();
+            $table->string('usuario')->unique();
+            $table->string('nombre');
+            $table->string('correo')->unique();
+            $table->unsignedInteger('telefono')->nullable();
+            $table->string('escuela')->nullable();
+            //$table->string('pass');
+
             $table->timestamps();
         });
     }
@@ -22,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('asesors');
+        Schema::dropIfExists('asesores');
     }
 };

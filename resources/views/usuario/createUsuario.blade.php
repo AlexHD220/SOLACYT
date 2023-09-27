@@ -18,7 +18,7 @@
 
 
         <label for = "mail"><b>Correo: </b></label>
-        <input type="email" name="mail"><br><br>
+        <input type="email" name="mail" required><br><br>
 
         <label for="pass"><b> Contraseña: </b></label>
         <input type="password" id="pass" name="pass" required><br><br>
