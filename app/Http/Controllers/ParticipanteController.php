@@ -80,7 +80,27 @@ class ParticipanteController extends Controller
      */
     public function update(Request $request, Participante $participante)
     {
-        //
+
+        $request->validate([                                        //validacion
+
+            'nombre'=>'required',
+            'nombreEquipo'=>'required',
+            'escuela'=>'required',
+            'correo'=>'required',
+            'numeroEquipo'=>'required',
+            'pago'=>'required',
+            'competencia'=>'required'
+        ]);
+
+        $participante->nombre = $request->nombre;
+        $participante->nombreEquipo = $request->nombreEquipo;
+        $participante->escuela = $request->escuela;
+        $participante->correo = $request->correo;
+        $participante->numeroEquipo = $request->numeroEquipo;
+        $participante->pago = $request->pago;
+        $participante->competencia = $request->competencia;
+        $participante->save();
+        return redirect()->route('participante.index');
     }
 
     /**
@@ -88,6 +108,7 @@ class ParticipanteController extends Controller
      */
     public function destroy(Participante $participante)
     {
-        //
+        $participante->delete();
+        return redirect()->route('participante.index');
     }
 }

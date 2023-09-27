@@ -12,6 +12,11 @@
             <a href="{{route('participante.show', $participante)}}">
                 {{$participante->nombre}}</a> 
             <a href="{{route('participante.edit', $participante)}}"> Editar</a>
+            <form action="{{route('participante.destroy', $participante)}}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit">ELIMINAR</button>
+            </form>
         </li>
 
 
