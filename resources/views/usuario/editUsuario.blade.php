@@ -17,13 +17,13 @@
         <input type="text" id="usuario" name="usuario" placeholder="Usuario" required value = "{{$usuario -> usuario}}"><br><br>
 
 
-        <label for = "correo"><b>Correo: </b></label>
-        <input type="email" name="correo" required value = "{{$usuario -> mail}}"><br><br>
+        <label for = "mail"><b>Correo: </b></label>
+        <input type="email" name="mail" required value = "{{$usuario -> mail}}"><br><br>
 
-        <!--<label for="pass"><b> Contraseña: </b></label>-->
-        <!--<input type="password" id="pass" name="pass" required><br><br>-->
+        <label for="pass"><b> Contraseña: </b></label>
+        <input type="password" id="pass" name="pass" required><br><br>
 
-        <input type="submit" value="Enviar">
+        <input type="submit" value="Enviar">     <a href="/usuario"> Cancelar </a> 
     </form>
 
 </body>

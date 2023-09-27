@@ -13,8 +13,9 @@
 
         <li>
             <a href="{{route('usuario.show', $usuario)}}">
-                {{ $usuario -> usuario }} 
+                {{ $usuario -> usuario }}
             </a>
+                | 
             <a href="{{route('usuario.edit', $usuario)}}">
                 Editar
             </a>

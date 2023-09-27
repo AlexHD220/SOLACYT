@@ -37,16 +37,16 @@ class UsuarioController extends Controller
     public function store(Request $request)
     {
         $request->validate([ ///Validar datos, si los datos recibidos no cumplen estas regresas no les permite la entrada a la base de datos y regresa a la pagina original
-            'correo' => 'required|email',
-            //'comentario' => ['required','min:10','max:50'], //requerido minio 10 caracteres
+            'mail' => 'required|email',
+            'pass' => ['required','min:5','max:15'], //requerido minio 10 caracteres
         ]);
     
         $usuario = new Usuario(); //quiero una nueva instanciade este modelo que va a representar mi tabla (representante de alto nivel)
         //Contacto --> a las clases se les nombra con matusculas (modelos)
-        $usuario->mail = $request->correo; //asignari atributos que corresonden por como se llaman mis columnas
+        $usuario->mail = $request->mail; //asignari atributos que corresonden por como se llaman mis columnas
         //$usuario->comentario = $request->comentario; 
         $usuario->usuario = $request->usuario;
-        //$usuario->usuario = $request->pass;
+        $usuario->pass = $request->pass;
         $usuario->save();
     
         return redirect('/usuario'); 

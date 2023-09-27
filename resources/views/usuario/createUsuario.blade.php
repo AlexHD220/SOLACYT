@@ -17,11 +17,11 @@
         <input type="text" id="usuario" name="usuario" placeholder="Usuario" required><br><br>
 
 
-        <label for = "correo"><b>Correo: </b></label>
-        <input type="email" name="correo"><br><br>
+        <label for = "mail"><b>Correo: </b></label>
+        <input type="email" name="mail"><br><br>
 
-        <!-- <label for="pass"><b> Contraseña: </b></label> -->
-        <!-- <input type="password" id="pass" name="pass" required style="width: 250px;"><br><br> -->
+        <label for="pass"><b> Contraseña: </b></label>
+        <input type="password" id="pass" name="pass" required><br><br>
 
         <input type="submit" value="Enviar">
     </form>
