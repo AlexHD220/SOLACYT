@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('usuario')->unique();
             $table->string('nombre');
-            $table->string('correo')->unique();
+            $table->string('correo');
             $table->unsignedInteger('telefono')->nullable();
             $table->string('escuela')->nullable();
             //$table->string('pass');

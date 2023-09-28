@@ -25,6 +25,7 @@ Route::get('/', function () {
 
 //Route::get('usuario/pdf',[usuarioController::class,'pdf']) -> name('usuario.pdf'); //Ruta agregada de forma manual
 //cabiar el nombre de mis rutas
+
 Route::resource('usuario', UsuarioController::class); //este hace que el CRUD sirva hay que agregarlo por cada tabla
 
 Route::resource('asesor', AsesorController::class);

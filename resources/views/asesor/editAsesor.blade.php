@@ -40,8 +40,8 @@
         <label for="escuela"><b> Escuela: </b></label>
         <input type="text" name="escuela" list="listaEscuelas" value = "{{old('pass') ?? $asesor -> escuela}}"><br><br>
 
-        <label for="pass"><b> Contraseña: </b></label>
-        <input type="text" id="pass" name="pass" required value = "{{old('pass') ?? $password}}"><br><br>
+        <!--<label for="pass"><b> Contraseña: </b></label>
+        <input type="text" id="pass" name="pass" required value = "{{old('pass') ?? $password}}"><br><br>-->
 
         <input type="submit" value="Actualizar">
     </form>

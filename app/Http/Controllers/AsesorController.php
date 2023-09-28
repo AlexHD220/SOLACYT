@@ -66,13 +66,13 @@ class AsesorController extends Controller
      */
     public function show(Asesor $asesor)
     {
-        return view('asesor/showAsesor',compact('asesor'));
+        return view('asesor/showAsesor',compact('asesor')); //asesor es el usuario actual a mostrar
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Asesor $asesor, Usuario $usuario)
+    public function edit(Asesor $asesor)
     {
         // Obtener un asesor por su ID
         /*$asesor = Asesor::findOrFail($asesor);
@@ -82,9 +82,10 @@ class AsesorController extends Controller
 
         //dd($password);
 
-        $password = $asesor->usuario;
+        //$password = $asesor->usuario;
 
-        return view('asesor/editAsesor',compact('asesor','password')); //formulario para editar la base
+        //return view('asesor/editAsesor',compact('asesor','password')); 
+        return view('asesor/editAsesor',compact('asesor')); //formulario para editar la base, asesor es el usuario a editar
     }
 
     /**
