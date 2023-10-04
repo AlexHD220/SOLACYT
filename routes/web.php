@@ -19,6 +19,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/plantilla', function () {
+    return view('plantilla');
+});
+
 //Route::get('/contacto/{tipo?}',[SitioController::class,'contactoForm']);
 
 //Route::post('usuario/createUsuario',[SitioController::class,'usuarioSave']);
@@ -29,3 +33,13 @@ Route::get('/', function () {
 Route::resource('usuario', UsuarioController::class); //este hace que el CRUD sirva hay que agregarlo por cada tabla
 
 Route::resource('asesor', AsesorController::class);
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});
