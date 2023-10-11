@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+<x-layout>
     <h1>Listado de Asesores</h1>
     @foreach ($asesores as $asesor) <!--Listar todos los datos de la tabla asesores-->
 
@@ -30,5 +23,4 @@
 
     <br>
     <button onclick="window.location.href = '/asesor/create';">Registrar nuevo asesor</button>
-</body>
-</html>
+</x-layout>

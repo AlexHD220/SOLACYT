@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario</title>
-</head>
-<body>
+<x-layout>
 
-    <h1>Registrar Asesor</h1>
+    <h1>Editar Asesor</h1>
 
     <!--editar formulario por medio de la direccion de route:list, esto porque como no tengo un archivo, necesito mandar llamas a la ruta de la lista asesor.update-->
     <form action="{{ route('asesor.update', $asesor)}}" method="post"> <!--la diagonal me envia al principio de la url "solacyt.test/"-->
@@ -40,8 +33,6 @@
         <label for="escuela"><b> Escuela: </b></label>
         <input type="text" name="escuela" list="listaEscuelas" value = "{{old('pass') ?? $asesor -> escuela}}"><br><br>
 
-        <!--<label for="pass"><b> Contraseña: </b></label>
-        <input type="text" id="pass" name="pass" required value = "{{old('pass') ?? $password}}"><br><br>-->
 
         <input type="submit" value="Actualizar">
     </form>
@@ -58,5 +49,4 @@
     <option value="Universidad Autonoma del Valle de Mexico">
     </datalist>
 
-</body>
-</html>
+</x-layout>

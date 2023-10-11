@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AsesorController;
+use App\Http\Controllers\CompetenciaController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +34,8 @@ Route::get('/plantilla', function () {
 Route::resource('usuario', UsuarioController::class); //este hace que el CRUD sirva hay que agregarlo por cada tabla
 
 Route::resource('asesor', AsesorController::class);
+
+Route::resource('competencia', CompetenciaController::class);
 
 Route::middleware([
     'auth:sanctum',

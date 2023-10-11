@@ -5,15 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Asesor extends Model
+class Competencia extends Model
 {
-    protected $table = 'asesores'; //<-- Cambiar el nombre de mi tabla
     use HasFactory;
+    //public $timestamps = false; //--> ignorar una valor de la tabla 
 
     // Definición de la relación con Usuario (PENDIENTE DE HACERLO FUNCIONAR) NO FUNCIONO LO ELIMINE
-    public function competencias()
+    public function asesor()
     {
         //return $this->belongsTo(Usuario::class);
-        return $this->hasMany(Competenia::class);
+        return $this->belongsTo(Asesor::class);
     }
+
 }
