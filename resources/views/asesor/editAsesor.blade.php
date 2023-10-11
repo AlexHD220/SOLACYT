@@ -1,18 +1,27 @@
-<x-layout>
+<!DOCTYPE html>
+<html lang="es">
 
-    <h1>Editar Asesor</h1>
+<x-plantilla-head>
+    <title>Asesor | Editar</title>
+</x-plantilla-head>
+
+<x-plantilla-body>
+
+    <h1 style="margin-bottom: 15px;">Editar Asesor</h1>
 
     <!--editar formulario por medio de la direccion de route:list, esto porque como no tengo un archivo, necesito mandar llamas a la ruta de la lista asesor.update-->
     <form action="{{ route('asesor.update', $asesor)}}" method="post"> <!--la diagonal me envia al principio de la url "solacyt.test/"-->
 
+        <!--Mostrar errores-->
         @if ($errors->any())
-            <div class="alert alert-danger">
+            <div class="msgAlerta">
                 <ul>
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                     @endforeach
                 </ul>
             </div>
+            <br>
         @endif
 
         @csrf <!--permite entrar al formulario muy importante agregar-->
@@ -22,7 +31,7 @@
         <input type="text" id="usuario" name="usuario" placeholder="Usuario" required value = "{{$asesor -> usuario}}"><br><br>
 
         <label for="nombre"><b> Nombre: </b></label>
-        <input type="text" name="nombre" required value = "{{old('pass') ?? $asesor -> nombre}}"><br><br>
+        <input type="text" name="nombre" placeholder="Nombre Completo" required value = "{{old('pass') ?? $asesor -> nombre}}"><br><br>
 
         <label for = "correo"><b>Correo: </b></label>
         <input type="email" name="correo" required value = "{{old('pass') ?? $asesor -> correo}}"><br><br>
@@ -34,7 +43,7 @@
         <input type="text" name="escuela" list="listaEscuelas" value = "{{old('pass') ?? $asesor -> escuela}}"><br><br>
 
 
-        <input type="submit" value="Actualizar">
+        <input type="submit" value="Actualizar" style="margin-top: 10px;">
     </form>
 
     <br>
@@ -49,4 +58,6 @@
     <option value="Universidad Autonoma del Valle de Mexico">
     </datalist>
 
-</x-layout>
+    </x-plantilla-body>
+
+</html>

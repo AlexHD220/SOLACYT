@@ -1,4 +1,12 @@
-<x-layout>
+<!DOCTYPE html>
+<html lang="es">
+
+<x-plantilla-head>
+    <title>Asesor | Mostrar</title>
+</x-plantilla-head>
+
+<x-plantilla-body>
+
     <h2> Usuario: {{ $asesor -> usuario }}</h2> <!--Mostrar detalles-->
     <h3> Nombre: {{ $asesor -> nombre }}</h3>
     <h3> Correo electronico: {{ $asesor -> correo }}</h3>
@@ -12,4 +20,7 @@
     @endif
 
     <a href="/asesor">Regresar</a> 
-</x-layout>
+
+</x-plantilla-body>
+
+</html>

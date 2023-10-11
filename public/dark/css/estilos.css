@@ -1,0 +1,46 @@
+.mt-16{margin-top:4rem}
+.flex{display:flex}
+.justify-center{justify-content:center}
+
+.margenContenido{
+    margin-top:1.5rem;
+    margin-left:1.5rem;
+}
+
+.centrar {
+    text-align: center;
+    justify-content: center; /* Centra horizontalmente */
+    /*align-items: center;     /* Centra verticalmente */
+}
+
+.msgAlerta{
+    position:relative;
+    /*padding:1rem 1rem;*/
+    /*margin-bottom:1rem;*/
+    /*border:1px solid transparent;*/
+    padding-top: 15px;
+    padding-right: 15px;
+    border-radius:5px;
+
+    display: table-cell;
+
+    color:#842029;
+    background-color:#f8d7da;
+    border-color:#f5c2c7;
+}
+
+/* Oculta el campo de contraseña por defecto */
+#password {
+    display: none;
+  }
+  
+  /* Estiliza el botón de mostrar/ocultar */
+  #showPassword {
+    cursor: pointer;
+    background-color: #1d2225;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+  

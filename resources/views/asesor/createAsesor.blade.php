@@ -1,17 +1,26 @@
-<x-layout>
+<!DOCTYPE html>
+<html lang="es">
 
-    <h1>Registrar Asesor</h1>
+<x-plantilla-head>
+    <title>Asesor | Formulario</title>
+</x-plantilla-head>
+
+<x-plantilla-body>
+
+    <h1 style="margin-bottom: 15px;">Registrar Asesor</h1>
 
     <form action="/asesor" method="post"> <!--la diagonal me envia al principio de la url "solacyt.test/"-->
 
+        <!--Mostrar errores-->
         @if ($errors->any())
-            <div class="alert alert-danger">
+            <div class="msgAlerta">
                 <ul>
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                     @endforeach
                 </ul>
             </div>
+            <br>
         @endif
 
         @csrf <!--permite entrar al formulario muy importante agregar-->
@@ -20,7 +29,7 @@
         <input type="text" id="usuario" name="usuario" placeholder="Usuario" required value = "{{ old('usuario') }}"><br><br> <!--value = "{{old('name')}}"-->
 
         <label for="nombre"><b> Nombre: </b></label>
-        <input type="text" name="nombre" required value = "{{ old('nombre') }}"><br><br>
+        <input type="text" name="nombre" placeholder="Nombre Completo" required value = "{{ old('nombre') }}"><br><br>
 
         <label for = "correo"><b>Correo: </b></label>
         <input type="email" name="correo" required value = "{{ old('correo') }}"><br><br>
@@ -32,9 +41,10 @@
         <input type="text" name="escuela" list="listaEscuelas" value = "{{ old('escuela') }}"><br><br>
 
         <label for="pass"><b> Contraseña: </b></label>
-        <input type="password" id="pass" name="pass" required value = "{{ old('pass') }}"><br><br>
+        <input type="password" id="pass" name="pass" required value = "{{ old('pass') }}">
+        <button type="button" id="showPassword" onclick="cambiarTexto()" style="margin-left: 5px">Mostrar</button><br><br>
 
-        <input type="submit" value="Registrar">
+        <input type="submit" value="Registrar" style="margin-top: 10px;">
     </form>
 
     <br>
@@ -49,4 +59,6 @@
     <option value="Universidad Autonoma del Valle de Mexico">
     </datalist>
 
-</x-layout>
+    </x-plantilla-body>
+
+</html>

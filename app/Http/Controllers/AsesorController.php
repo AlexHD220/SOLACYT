@@ -34,9 +34,16 @@ class AsesorController extends Controller
     {
         $request->validate([ ///Validar datos, si los datos recibidos no cumplen estas regresas no les permite la entrada a la base de datos y regresa a la pagina original
             //'nombre' => 'required|string|max:255',
-            'correo' => 'required|email',
             //'telefono' => ['required','min:10','max:10']
+            'usuario' => ['required', 'string', 'min:5', 'regex:/^[A-Za-z0-9_-]+$/'],
+            'nombre' => ['required', 'string', 'min:4', 'regex:/^[A-Za-z\s]+$/'],
+            'correo' => 'required|email',
             'telefono' => ['nullable','numeric','regex:/^\d{10}$/',],
+            
+            'pass' => ['required', 'min:5','max:15', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/']
+
+            //'pass' => ['required', 'min:5','max:15', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/']
+            /*La contraseña debe tener al menos 8 caracteres y debe contener al menos una letra minúscula, una letra mayúscula, un número y un carácter especial.*/
         ]);
     
         $asesor = new Asesor(); //quiero una nueva instanciade este modelo que va a representar mi tabla (representante de alto nivel)

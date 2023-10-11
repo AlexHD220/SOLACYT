@@ -37,8 +37,8 @@ class UsuarioController extends Controller
     public function store(Request $request)
     {
         $request->validate([ ///Validar datos, si los datos recibidos no cumplen estas regresas no les permite la entrada a la base de datos y regresa a la pagina original
-            'mail' => 'required|email',
-            'pass' => ['required','min:5','max:15'], //requerido minio 5 y maximo 15 caracteres
+            /*'mail' => 'required|email',
+            'pass' => ['required','min:5','max:15'], //requerido minio 5 y maximo 15 caracteres*/
         ]);
     
         $usuario = new Usuario(); //quiero una nueva instanciade este modelo que va a representar mi tabla (representante de alto nivel)
