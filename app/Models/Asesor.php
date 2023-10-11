@@ -14,6 +14,6 @@ class Asesor extends Model
     public function competencias()
     {
         //return $this->belongsTo(Usuario::class);
-        return $this->hasMany(Competenia::class);
+        return $this->hasMany(Competencia::class);
     }
 }

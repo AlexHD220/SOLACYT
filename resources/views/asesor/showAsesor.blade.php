@@ -19,6 +19,14 @@
         <h3> Escuela: {{ $asesor->escuela }}</h3>
     @endif
 
+    <ul>
+        @foreach($asesor->competencias as $competencia)
+            <li>
+                {{ $competencia -> identificador }}
+            </li>
+        @endforeach
+    </ul>
+
     <a href="/asesor">Regresar</a> 
 
 </x-plantilla-body>
