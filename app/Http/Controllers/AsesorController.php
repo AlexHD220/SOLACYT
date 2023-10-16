@@ -11,6 +11,15 @@ class AsesorController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+     public function __construct() //proteger con inicio de sesion aquellas pestañas que yo quiera
+     {
+        $this->middleware('auth')->except(['index','show']); //excepto estas necesitan iniciar sesion 
+     }
+     
+    //otra variante es "only" para autenticar solo aquellas que notros queramos 
+
+
     public function index()
     {
         $asesores = Asesor::all();
