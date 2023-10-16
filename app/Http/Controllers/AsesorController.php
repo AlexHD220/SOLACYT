@@ -46,17 +46,25 @@ class AsesorController extends Controller
             /*La contraseña debe tener al menos 8 caracteres y debe contener al menos una letra minúscula, una letra mayúscula, un número y un carácter especial.*/
         ]);
     
-        $asesor = new Asesor(); //quiero una nueva instanciade este modelo que va a representar mi tabla (representante de alto nivel)
+        
+        
         //Contacto --> a las clases se les nombra con matusculas (modelos)        
         //$usuario->comentario = $request->comentario; 
         //$asesor->pass = $request->pass;
+        
+        Asesor::create($request->all()); // <-- hace todo lo que esta abajo desde new hasta save
 
+//--------------------------------------------------------------------------------------------------------------> comentado
+
+        /*$asesor = new Asesor(); //quiero una nueva instanciade este modelo que va a representar mi tabla (representante de alto nivel)
         $asesor->usuario = $request->usuario;
         $asesor->nombre = $request->nombre;
         $asesor->correo = $request->correo; //asignari atributos que corresonden por como se llaman mis columnas
         $asesor->telefono = $request->telefono;
         $asesor->escuela = $request->escuela;
-        $asesor->save();
+        $asesor->save();*/
+
+//--------------------------------------------------------------------------------------------------------------> comentado
 
         //Insertar en la tabla usuarios
         $usuario = new Usuario(); //quiero una nueva instanciade este modelo que va a representar mi tabla (representante de alto nivel)
@@ -100,13 +108,19 @@ class AsesorController extends Controller
      */
     public function update(Request $request, Asesor $asesor) ///las reglas del store y el update deben ser las mismas o muy parecidas
     {
-        $asesor -> usuario = $request -> usuario; //Usuario no debe poder modificarse
+        /*$asesor -> usuario = $request -> usuario; //Usuario no debe poder modificarse
         $asesor -> nombre = $request -> nombre;
         $asesor -> correo = $request -> correo;
         $asesor -> telefono = $request -> telefono;
         $asesor -> escuela = $request -> escuela;
-        $asesor -> save();
-        return redirect() -> route('asesor.show',$asesor); //esto corresponde a el listado de route:list 
+        $asesor -> save();*/
+
+        //dd($request->except('_token','_method'));
+
+        Asesor::where('id', $asesor->id)
+                ->update($request->except('_token','_method')); //opuesto de except (only)
+
+        return redirect() -> route('asesor.show', $asesor); //esto corresponde a el listado de route:list 
         // como estoy mandando a show, necesito mandarle el id del usuario como egundo parametro $asesor <-- este es mi asesor actual
         //return redirect("/asesor/show"); //es lo mismo que esto
     }

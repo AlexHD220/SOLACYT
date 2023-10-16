@@ -18,5 +18,10 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
+        //lista de seeders que quiero que se ejecuten
+        $this->call([
+            AsesorSeeder::class,
+        ]); // --> php artisan db:seed
     }
 }
