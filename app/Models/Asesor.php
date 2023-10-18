@@ -25,4 +25,8 @@ class Asesor extends Model
         //return $this->belongsTo(Usuario::class);
         return $this->belongsTo(User::class);
     }
+
+    public function organizaciones(){
+        return $this -> belongsToMany(Organizacion::class);
+    }
 }
