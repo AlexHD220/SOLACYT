@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,6 +21,7 @@ class AsesorFactory extends Factory
             'usuario' => fake()->name(),
             'nombre' => fake()->name(),
             'correo' => fake()->email(),
+            'user_id' => User::factory(),
             //'telefono' => fake()-> sentence(),
             //'escuela' => fake()-> sentence(),
         ];

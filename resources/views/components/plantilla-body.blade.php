@@ -15,7 +15,7 @@
 
                 <!--Imagen esquina superior dereha-->
                 <a href="/" class="navbar-brand mx-4 mb-3">
-                    <!--<h3 class="text-primary"><i class="fa fa-user-edit me-2"></i>Solacyt</h3>--> 
+                    <!--<h3 class="text-primary"><i class="fa fa-user-edit me-2"></i>TechCompete</h3>--> 
                     <!--filter: brightness(100); background-color: white;-->
                     <img src="/dark/img/solacytLogo.png" style="height: 60px; border-radius: 5px;">
                 </a>
@@ -122,7 +122,7 @@
 
 
         <!-- Back to Top -->
-        <!--<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>-->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
 
     <!-- JavaScript Libraries -->

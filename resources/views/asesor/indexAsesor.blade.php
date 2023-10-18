@@ -8,6 +8,9 @@
 <x-plantilla-body>
     <div>
         <h1 style="margin-bottom: 15px;">Listado de Asesores</h1>
+
+
+
         @foreach ($asesores as $asesor) <!--Listar todos los datos de la tabla asesores-->
 
             <li>

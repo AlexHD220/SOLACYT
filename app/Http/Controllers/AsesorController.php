@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Asesor;
 use App\Models\Usuario; //Insertar datos en la tabla usuarios
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AsesorController extends Controller
 {
@@ -22,7 +23,10 @@ class AsesorController extends Controller
 
     public function index()
     {
-        $asesores = Asesor::all();
+       //$asesores = Asesor::all();
+
+       $asesores = Asesor::where('user_id',Auth::id())->get(); //registros que solo pertenezcan al usuario logueado
+
         //dd($asesores); //para ver que hay en esa variable
         return view("asesor/indexAsesor",compact('asesores'));//<----- regresar vista al llamar al archivo index (asesor)
         //compact es para enviar al archhivo todos los datos de la variable asesores 
@@ -61,11 +65,15 @@ class AsesorController extends Controller
         //$usuario->comentario = $request->comentario; 
         //$asesor->pass = $request->pass;
         
+
+        //Forma nueva
+        $request->merge(['user_id' => Auth::id()]); //Inyectar el user id en el request
         Asesor::create($request->all()); // <-- hace todo lo que esta abajo desde new hasta save
 
 //--------------------------------------------------------------------------------------------------------------> comentado
 
         /*$asesor = new Asesor(); //quiero una nueva instanciade este modelo que va a representar mi tabla (representante de alto nivel)
+        $asesor->user_id = Auth::id();
         $asesor->usuario = $request->usuario;
         $asesor->nombre = $request->nombre;
         $asesor->correo = $request->correo; //asignari atributos que corresonden por como se llaman mis columnas
