@@ -10,12 +10,19 @@ class ParticipanteController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+     public function __construct() //proteger con inicio de sesion aquellas pestañas que yo quiera
+     {
+        $this->middleware('auth')->except(['index','show']); //excepto estas necesitan iniciar sesion 
+     }
+    
     public function index()
     {
         //return "hola index";
         //return view('participante/indexParticipante');
         $participantes = Participante::all();
         return view('participante/indexParticipante', compact('participantes'));
+
     }
 
     /**
@@ -43,8 +50,9 @@ class ParticipanteController extends Controller
             'competencia'=>'required'
         ]);
 
+        Participante::create($request->all());
 
-        $participante = new Participante();
+       /* $participante = new Participante();
         $participante->nombre = $request->nombre;
         $participante->nombreEquipo = $request->nombreEquipo;
         $participante->escuela = $request->escuela;
@@ -53,7 +61,7 @@ class ParticipanteController extends Controller
         $participante->pago = $request->pago;
         $participante->competencia = $request->competencia;
 
-        $participante->save();
+        $participante->save();*/
 
         return redirect('/participante');
     }
@@ -64,7 +72,8 @@ class ParticipanteController extends Controller
     public function show(Participante $participante)
     {
         //$participante = Participante::find
-        return view('participante.showParticipante', compact('participante'));
+        return view('participante/showParticipante', compact('participante'));
+        //return view('asesor.showAsesor',compact('asesor'));
     }
 
     /**
@@ -72,7 +81,9 @@ class ParticipanteController extends Controller
      */
     public function edit(Participante $participante)
     {
-        return view('participante.editParticipante', compact('participante'));
+        return view('participante/editParticipante', compact('participante'));
+        //return view('participante.editParticipante', compact('participante'));
+        
     }
 
     /**
@@ -81,7 +92,7 @@ class ParticipanteController extends Controller
     public function update(Request $request, Participante $participante)
     {
 
-        $request->validate([                                        //validacion
+       /* $request->validate([                                        //validacion
 
             'nombre'=>'required',
             'nombreEquipo'=>'required',
@@ -100,7 +111,13 @@ class ParticipanteController extends Controller
         $participante->pago = $request->pago;
         $participante->competencia = $request->competencia;
         $participante->save();
-        return redirect()->route('participante.index');
+        return redirect()->route('participante.index');*/
+
+
+        Participante::where('id', $participante->id)
+                ->update($request->except('_token','_method')); //opuesto de except (only)
+
+        return redirect() -> route('participante.show', $participante);
     }
 
     /**
@@ -110,5 +127,7 @@ class ParticipanteController extends Controller
     {
         $participante->delete();
         return redirect()->route('participante.index');
+        //return redirect()->route('participante.index');
+
     }
 }

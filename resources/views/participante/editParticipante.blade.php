@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+
+<x-plantilla-head>
+    <title>Participante | Editar</title>
+</x-plantilla-head>
 
 
-<body>
+<x-plantilla-body>
+
+    <h1 style="margin-bottom: 15px;">Editar Asesor</h1>
+
     <h1>Formulario de participante</h1>
     <form action="{{route('participante.update', $participante)}}" method="POST">  <!--es importante la / --> 
         @if ($errors->any())
@@ -17,7 +19,7 @@
                         <li>{{ $error }}</li>
                     @endforeach
                 </ul>
-            </div>
+            </div><br>
         @endif
 
         @csrf
@@ -30,7 +32,7 @@
         <input type="text" name="nombreEquipo" value="{{old('nombreEquipo') ?? $participante->nombreEquipo}}"><br>
 
         <label for="escuela">nombre de escuela</label>
-        <input type="text" name="escuela" value="{{old('escuela') ?? $participante->escuela}}"><br>
+        <input type="text" name="escuela" list="listaEscuelas" value="{{old('escuela') ?? $participante->escuela}}"><br>
 
         <label for="correo">correo</label>
         <input type="text" name="correo" value="{{old('correo') ?? $participante->correo}}"><br>
@@ -46,7 +48,22 @@
 
         <input type="submit" value="enviar">
 
+        
+
+        <datalist id="listaEscuelas">
+            <option value="Centro Universitario de Ciencias Exactas e Ingenierias">
+            <option value="Centro Universitario de Ciencias Economico Administrativas">
+            <option value="Colegio Republica Mexicana">
+            <option value="Colegio Rafael Guizar">
+            <option value="Colegio Versalles">
+            <option value="Universidad Autonoma del Valle de Mexico">
+        </datalist>
+
 
     </form>
-</body>
+
+    <br>
+    <button onclick="window.location.href = '/participante';">Cancelar</button>
+
+</x-plantilla-body>
 </html>
