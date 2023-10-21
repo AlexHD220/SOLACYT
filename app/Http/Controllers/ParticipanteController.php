@@ -41,13 +41,13 @@ class ParticipanteController extends Controller
 
         $request->validate([                                        //validacion
 
-            'nombre'=>'required',
-            'nombreEquipo'=>'required',
-            'escuela'=>'required',
-            'correo'=>'required',
-            'numeroEquipo'=>'required',
-            'pago'=>'required',
-            'competencia'=>'required'
+            'nombre'=>['required', 'string', 'min:4', 'regex:/^[A-Za-z\s]+$/'],
+            'nombreEquipo'=>['required', 'string', 'min:4', 'regex:/^[A-Za-z\s]+$/'],
+            'escuela'=>['required', 'string', 'min:4', 'regex:/^[A-Za-z\s]+$/'],
+            'correo'=>'required|email',
+            'numeroEquipo'=>'required|numeric',
+            'pago'=>'nullable',
+            'competencia'=>'nullable'
         ]);
 
         Participante::create($request->all());

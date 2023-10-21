@@ -17,9 +17,9 @@ return new class extends Migration
             $table->string('nombreEquipo');
             $table->string('escuela');
             $table->string('correo');
-            $table->string('numeroEquipo');
-            $table->string('pago');
-            $table->string('competencia');
+            $table->unsignedInteger('numeroEquipo');
+            $table->string('pago')->nullable();
+            $table->string('competencia')->nullable();
             $table->timestamps();
         });
     }
