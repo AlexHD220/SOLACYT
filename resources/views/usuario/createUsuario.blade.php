@@ -23,7 +23,7 @@
         <label for="pass"><b> Contraseña: </b></label>
         <input type="password" id="pass" name="pass" required><br><br>
 
-        <input type="submit" value="Enviar">
+        <input type="submit" value="Enviar">     <a href="/usuario"> Cancelar </a>
     </form>
 
 </body>

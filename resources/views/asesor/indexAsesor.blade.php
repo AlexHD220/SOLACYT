@@ -6,15 +6,19 @@
 </x-plantilla-head>
 
 <x-plantilla-body>
-    <div>
-        <h1 style="margin-bottom: 15px;">Listado de Asesores</h1>
 
+        <div class="d-flex justify-content-between align-items-center" style="margin-bottom: 15px;">
+            <h1 style="display: inline;">Listado de Asesores</h1>
+            @auth <!--Cuando el usuario este logueado muestrame lo sigiente-->
+                <button class="btn btn-primary" onclick="window.location.href = '/asesor/create';">Registrar nuevo asesor</button>
+            @endauth
+        </div>
 
 
         @foreach ($asesores as $asesor) <!--Listar todos los datos de la tabla asesores-->
 
             <li>
-                <a href="{{route('asesor.show', $asesor)}}" style="text-decoration: none; color: inherit; display: inline-block;">
+                <a onmouseover="this.style.color='white'" onmouseout="this.style.color='#6c7293'" href="{{route('asesor.show', $asesor)}}" style="text-decoration: none; color: inherit; display: inline-block;">
                     <b>{{ $asesor -> nombre }}</b>
                 </a>
                 |
@@ -32,8 +36,8 @@
             <br>
         @endforeach
 
-        <br>
-        <button onclick="window.location.href = '/asesor/create';">Registrar nuevo asesor</button>
+        <!--<br>
+        <button onclick="window.location.href = '/asesor/create';">Registrar nuevo asesor</button>-->
     </div>
 </x-plantilla-body>
 

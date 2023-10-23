@@ -23,7 +23,8 @@
         <label for="pass"><b> Contraseña: </b></label>
         <input type="password" id="pass" name="pass" required><br><br>
 
-        <input type="submit" value="Enviar">     <a href="/usuario"> Cancelar </a> 
+        <input type="submit" value="Enviar">     <a href="/usuario"> Cancelar </a>
+        <!--<a href="{{ route('usuario.index') }}" style="margin-top: 10px; margin-left:10px;">Cancelar</a>-->
     </form>
 
 </body>

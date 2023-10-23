@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Asesor;
 use App\Models\Usuario; //Insertar datos en la tabla usuarios
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth; //ID Usuario
 
 class AsesorController extends Controller
 {
@@ -28,7 +28,7 @@ class AsesorController extends Controller
        $asesores = Asesor::where('user_id',Auth::id())->get(); //registros que solo pertenezcan al usuario logueado
 
         //dd($asesores); //para ver que hay en esa variable
-        return view("asesor/indexAsesor",compact('asesores'));//<----- regresar vista al llamar al archivo index (asesor)
+        return view("asesor/indexAsesor",compact('asesores')); //<----- regresar vista al llamar al archivo index (asesor)
         //compact es para enviar al archhivo todos los datos de la variable asesores 
     }
 
@@ -50,12 +50,12 @@ class AsesorController extends Controller
             //'telefono' => ['required','min:10','max:10']
             'usuario' => ['required', 'string', 'min:5', 'regex:/^[A-Za-z0-9_-]+$/'],
             'nombre' => ['required', 'string', 'min:4', 'regex:/^[A-Za-z\s]+$/'],
-            'correo' => 'required|email',
+            'correo' => ['required','email'],
             'telefono' => ['nullable','numeric','regex:/^\d{10}$/',],
             
             'pass' => ['required', 'min:5','max:15', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/']
 
-            //'pass' => ['required', 'min:5','max:15', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/']
+            //'pass' => ['required', 'min:8','max:15', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/']
             /*La contraseña debe tener al menos 8 caracteres y debe contener al menos una letra minúscula, una letra mayúscula, un número y un carácter especial.*/
         ]);
     
@@ -125,6 +125,21 @@ class AsesorController extends Controller
      */
     public function update(Request $request, Asesor $asesor) ///las reglas del store y el update deben ser las mismas o muy parecidas
     {
+
+        $request->validate([ ///Validar datos, si los datos recibidos no cumplen estas regresas no les permite la entrada a la base de datos y regresa a la pagina original
+            //'nombre' => 'required|string|max:255',
+            //'telefono' => ['required','min:10','max:10']
+            'usuario' => ['required', 'string', 'min:5', 'regex:/^[A-Za-z0-9_-]+$/'],
+            'nombre' => ['required', 'string', 'min:4', 'regex:/^[A-Za-z\s]+$/'],
+            'correo' => ['required','email'],
+            'telefono' => ['nullable','numeric','regex:/^\d{10}$/',],
+            
+            //'pass' => ['required', 'min:5','max:15', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/']
+
+            //'pass' => ['required', 'min:8','max:15', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/']
+            /*La contraseña debe tener al menos 8 caracteres y debe contener al menos una letra minúscula, una letra mayúscula, un número y un carácter especial.*/
+        ]);
+
         /*$asesor -> usuario = $request -> usuario; //Usuario no debe poder modificarse
         $asesor -> nombre = $request -> nombre;
         $asesor -> correo = $request -> correo;

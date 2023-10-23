@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AsesorController;
 use App\Http\Controllers\CompetenciaController;
+use App\Http\Controllers\EquipoController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,15 +32,19 @@ Route::get('/plantilla', function () {
 //Route::get('usuario/pdf',[usuarioController::class,'pdf']) -> name('usuario.pdf'); //Ruta agregada de forma manual
 //cabiar el nombre de mis rutas
 
-//Route::middleware('auth')->group(function(){
-
-    Route::resource('usuario', UsuarioController::class); //este hace que el CRUD sirva hay que agregarlo por cada tabla
+Route::middleware('auth')->group(function(){
 
     Route::resource('asesor', AsesorController::class);
 
-    Route::resource('competencia', CompetenciaController::class);
-//});
+    Route::resource('equipo', EquipoController::class);
+    
+});
 
+Route::resource('usuario', UsuarioController::class); //este hace que el CRUD sirva hay que agregarlo por cada tabla
+
+//Route::resource('asesor', AsesorController::class);
+
+Route::resource('competencia', CompetenciaController::class);
 
 
 Route::middleware([
@@ -51,3 +56,6 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+
+//Route::post('/logout', 'Auth\LoginController@logout')->name('logout'); //ERROR NO FUNCIONO

@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('competencias', function (Blueprint $table) {
             $table->id();
             $table->string('identificador')->unique();
-            $table->unsignedInteger('fecha')->nullable();
+            $table->date('fecha');
+            $table->unsignedInteger('duracion');
             //$table->foreignId('asesor_id')->constrained();
 
             $table->unsignedBigInteger('asesor_id'); //--> crear columna dentro de la tabla competencias

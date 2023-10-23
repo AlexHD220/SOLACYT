@@ -1,7 +1,7 @@
 <head>
     <meta charset="utf-8">
     
-    {{ $slot }} <!--Title--!
+    {{ $slot }} <!--Title-->
 
     <!-- fevicon -->
     <link rel="icon" type="image/png" href="/dark/img/solacytIcono.png"/>

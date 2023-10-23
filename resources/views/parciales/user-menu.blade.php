@@ -1,5 +1,4 @@
-                <div class="navbar-nav align-items-center ms-auto">
-                    <div class="nav-item dropdown">
+                <!--<div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <i class="fa fa-envelope me-lg-2"></i>
                             <span class="d-none d-lg-inline-flex">Message</span>
@@ -38,6 +37,7 @@
                             <a href="#" class="dropdown-item text-center">See all message</a>
                         </div>
                     </div>
+
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <i class="fa fa-bell me-lg-2"></i>
@@ -61,19 +61,33 @@
                             <hr class="dropdown-divider">
                             <a href="#" class="dropdown-item text-center">See all notifications</a>
                         </div>
-                    </div>
+                    </div>-->
                     
                     <!--User Menu-->
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                        <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <img class="rounded-circle me-lg-2" src="/dark/img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                            <span class="d-none d-lg-inline-flex">{{ auth()->user()->name }}</span>
+                            <span class="d-none d-lg-inline-flex"><b>{{ auth()->user()->name }}</b></span>
                         </a>
+
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                            <p>{{ auth()->user()->email }}</p>
+                            <!--<p>{{ auth()->user()->email }}</p>-->
+                            <div class="block px-4 py-2 text-xs text-gray-400" style="font-size: 12px; text-align: center;">
+                                Administrar cuenta
+                            </div>
                             <a href="/dashboard" class="dropdown-item">Mi Perfil</a>
-                            <a href="#" class="dropdown-item">Settings</a>
-                            <a href="#" class="dropdown-item">Log Out</a>                            
+                            <!--<a href="#" class="dropdown-item">Settings</a>-->
+                            <!--<a href="#" class="dropdown-item">Log Out</a> -->
+                            
+                            <!--<div class="border-t border-gray-200 dark:border-gray-600"></div>-->
+
+                            <!-- Authentication -->
+                            <form id="logout-form" method="POST" action="{{ route('logout') }}">
+                                @csrf
+                            </form>
+
+                            <a class="dropdown-item" onclick="document.getElementById('logout-form').submit();" style="cursor: pointer;">
+                                {{ __('Cerrar sesión') }}
+                            </a>                       
                         </div>
                     </div>
-                </div>

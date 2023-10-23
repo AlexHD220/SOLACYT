@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('organizaciones', function (Blueprint $table) {
+        Schema::create('equipos', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
+            $table->timestamps();
         });
     }
 
@@ -22,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('organizaciones');
+        Schema::dropIfExists('equipos');
     }
 };

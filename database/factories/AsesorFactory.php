@@ -18,11 +18,13 @@ class AsesorFactory extends Factory
     public function definition(): array
     {
         return [
-            'usuario' => fake()->name(),
+            //'usuario' => fake()->name(),
+            'usuario' => $this->faker->userName,
             'nombre' => fake()->name(),
             'correo' => fake()->email(),
             'user_id' => User::factory(),
-            //'telefono' => fake()-> sentence(),
+            'telefono' => $this->faker->numerify('33########'),
+
             //'escuela' => fake()-> sentence(),
         ];
     }

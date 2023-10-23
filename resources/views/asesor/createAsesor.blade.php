@@ -37,27 +37,28 @@
         <label for = "telefono"><b>Telefono: </b></label>
         <input type="tel" name="telefono" value = "{{ old('telefono') }}"><br><br>
 
-        <label for="escuela"><b> Escuela: </b></label>
-        <input type="text" name="escuela" list="listaEscuelas" value = "{{ old('escuela') }}"><br><br>
+        <!--<label for="escuela"><b> Escuela: </b></label>
+        <input type="text" name="escuela" list="listaEscuelas" value = "{{ old('escuela') }}"><br><br>-->
 
         <label for="pass"><b> Contraseña: </b></label>
         <input type="password" id="pass" name="pass" required value = "{{ old('pass') }}">
         <button type="button" id="showPassword" onclick="cambiarTexto()" style="margin-left: 5px">Mostrar</button><br><br>
 
-        <input type="submit" value="Registrar" style="margin-top: 10px;">
+        <input type="submit" value="Registrar" style="margin-top: 10px;"> 
+        <a href="{{ route('asesor.index') }}" style="margin-left:10px;">Cancelar</a>
     </form>
 
-    <br>
-    <button onclick="window.location.href = '/asesor';">Cancelar</button>
+    <!--<br>
+    <button onclick="window.location.href = '/asesor';">Cancelar</button>-->
 
-    <datalist id="listaEscuelas">
+    <!--<datalist id="listaEscuelas">
     <option value="Centro Universitario de Ciencias Exactas e Ingenierias">
     <option value="Centro Universitario de Ciencias Economico Administrativas">
     <option value="Colegio Republica Mexicana">
     <option value="Colegio Rafael Guizar">
     <option value="Colegio Versalles">
     <option value="Universidad Autonoma del Valle de Mexico">
-    </datalist>
+    </datalist>-->
 
     </x-plantilla-body>
 
