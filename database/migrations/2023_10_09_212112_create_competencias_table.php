@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('identificador')->unique();
             $table->date('fecha');
             $table->unsignedInteger('duracion');
+            $table->string('tipo');
             //$table->foreignId('asesor_id')->constrained();
 
             $table->unsignedBigInteger('asesor_id'); //--> crear columna dentro de la tabla competencias

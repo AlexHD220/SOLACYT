@@ -4,22 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Models\Asesor;
 use App\Models\Competencia;
-use App\Models\Equipo;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Proyecto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class EquipoController extends Controller
+class ProyectoController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $equipos = Equipo::all();
+        $proyectos = Proyecto::all();
 
         $asesores = Asesor::all();
 
-        return view('equipo/indexEquipo', compact('equipos','asesores'));
+        return view('proyecto/indexProyecto', compact('proyectos','asesores'));
     }
 
     /**
@@ -29,9 +29,9 @@ class EquipoController extends Controller
     {
         $asesores = Asesor::where('user_id',Auth::id())->get(); //registros que solo pertenezcan al usuario logueado
 
-        $competencias = Competencia::where('tipo','Equipo')->get();
+        $competencias = Competencia::where('tipo','Proyecto')->get();
 
-        return view('equipo/createEquipo', compact('asesores','competencias'));
+        return view('proyecto/createProyecto', compact('asesores','competencias'));
     }
 
     /**
@@ -41,53 +41,53 @@ class EquipoController extends Controller
     {
         $request->merge(['user_id' => Auth::id()]); //Inyectar el user id en el request
 
-        Equipo::create($request->all());
+        Proyecto::create($request->all());
 
-        return redirect('/equipo'); 
+        return redirect('/proyecto'); 
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Equipo $equipo)
+    public function show(Proyecto $proyecto)
     {
-        $asesor = Asesor::where('id',$equipo->asesor_id)->first(); //registro que solo pertenezcan al usuario logueado (1 solo arreglo)
+        $asesor = Asesor::where('id',$proyecto->asesor_id)->first(); //registro que solo pertenezcan al usuario logueado (1 solo arreglo)
 
-        $competencia = Competencia::where('id',$equipo->competencia_id)->first();
+        $competencia = Competencia::where('id',$proyecto->competencia_id)->first();
 
         //dd($asesor);
 
-        return view('equipo/showEquipo',compact('equipo', 'asesor', 'competencia')); //asesor es el usuario actual a mostrar
+        return view('proyecto/showProyecto',compact('proyecto', 'asesor', 'competencia')); //asesor es el usuario actual a mostrar
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Equipo $equipo)
+    public function edit(Proyecto $proyecto)
     {
         $asesores = Asesor::where('user_id',Auth::id())->get(); //registros que solo pertenezcan al usuario logueado
 
-        $competencias = Competencia::where('tipo','Equipo')->get();
+        $competencias = Competencia::where('tipo','Proyecto')->get();
         
-        return view('equipo/editEquipo',compact('equipo', 'asesores', 'competencias'));
+        return view('proyecto/editProyecto',compact('proyecto', 'asesores', 'competencias'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Equipo $equipo)
+    public function update(Request $request, Proyecto $proyecto)
     {
-        Equipo::where('id', $equipo->id)
+        Proyecto::where('id', $proyecto->id)
                           ->update($request->except('_token','_method')); //opuesto de except (only)
 
         //return redirect() -> route('categoria.show', $categoria); //esto corresponde a el listado de route:list 
-        return redirect() -> route('equipo.index'); //esto corresponde a el listado de route:list 
+        return redirect() -> route('proyecto.index'); //esto corresponde a el listado de route:list 
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Equipo $equipo)
+    public function destroy(Proyecto $proyecto)
     {
         //
     }

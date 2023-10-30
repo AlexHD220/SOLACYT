@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('asesores', function (Blueprint $table) {
-            //$table->unsignedBigInteger('user_id')->after('id'); //Llave foranea de esta columna
-            $table->foreignID('user_id')->after('id')->constrained();
+        Schema::create('participantes', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
         });
     }
 
@@ -22,8 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('asesores', function (Blueprint $table) {
-            $table->dropColumn('user_id');
-        });
+        Schema::dropIfExists('participantes');
     }
 };

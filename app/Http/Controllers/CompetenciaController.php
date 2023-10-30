@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Asesor;
+use App\Models\Categoria;
 use App\Models\Competencia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,7 +26,9 @@ class CompetenciaController extends Controller
     {
         $competencias = Competencia::all();
 
-        return view('competencia/indexComepetencia', compact('competencias'));
+        $categorias = Categoria::all();
+
+        return view('competencia/indexCompetencia', compact('competencias','categorias'));
     }
 
     /**
@@ -34,9 +37,12 @@ class CompetenciaController extends Controller
     public function create()
     {
         //$asesores = Asesor::all();
+
+        $categorias = Categoria::all();
+        
         $asesores = Asesor::where('user_id',Auth::id())->get(); //registros que solo pertenezcan al usuario logueado
 
-        return view('competencia/createCompetencia', compact('asesores'));
+        return view('competencia/createCompetencia', compact('asesores','categorias'));
     }
 
     /**
@@ -53,14 +59,18 @@ class CompetenciaController extends Controller
 
         ]);
 
-        $competencia = new Competencia();
+        /*$competencia = new Competencia();
 
         $competencia -> asesor_id = $request -> asesor_id;
         $competencia -> identificador = $request -> identificador;
         $competencia -> fecha = $request -> fecha;
         $competencia -> duracion = $request -> duracion;
 
-        $competencia->save();
+        $competencia->save();*/
+
+        $competencia = Competencia::create($request->all()); // <-- hace todo lo que esta abajo desde new hasta save
+
+        $competencia->categorias()->attach($request->categoria_id); //detach() elimina de la lista el usuario que le pasemos 
 
         return redirect()->route('competencia.index');
 
@@ -71,7 +81,7 @@ class CompetenciaController extends Controller
      */
     public function show(Competencia $competencia)
     {
-        //
+        return view('competencia/showCompetencia',compact('competencia')); //asesor es el usuario actual a mostrar
     }
 
     /**
@@ -79,7 +89,7 @@ class CompetenciaController extends Controller
      */
     public function edit(Competencia $competencia)
     {
-        //
+        return view('competencia/editcompetencia',compact('competencia')); //formulario para editar la base, asesor es el usuario a editar
     }
 
     /**
@@ -87,7 +97,11 @@ class CompetenciaController extends Controller
      */
     public function update(Request $request, Competencia $competencia)
     {
-        //
+        Competencia::where('id', $competencia->id)
+                          ->update($request->except('_token','_method')); //opuesto de except (only)
+
+        //return redirect() -> route('categoria.show', $categoria); //esto corresponde a el listado de route:list 
+        return redirect() -> route('competencia.index'); //esto corresponde a el listado de route:list 
     }
 
     /**

@@ -35,7 +35,8 @@
 
                 <div class="navbar-nav w-100">
                     <!--<a href="/dashboard" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>-->
-                    <div class="nav-item dropdown">
+                    
+                    <!--<div class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="cursor: pointer;">
                             <i class="fa fa-laptop me-2"></i>
                             Elements
@@ -45,12 +46,7 @@
                             <a href="typography.html" class="dropdown-item">Typography</a>
                             <a href="element.html" class="dropdown-item">Other Elements</a>
                         </div>
-                    </div>
-
-                    <a href="widget.html" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Widgets</a>
-                    <a href="form.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Forms</a>
-                    <a href="table.html" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Tables</a>
-                    <a href="chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Charts</a>
+                    </div>-->
 
                     @auth <!--Cuando el usuario este logueado muestrame lo sigiente-->
                     <div class="nav-item dropdown">
@@ -59,14 +55,23 @@
                             Navegación
                         </a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="/" class="dropdown-item">Página principal</a>
+                            <!--<a href="/" class="dropdown-item">Página principal</a>-->
                             <a href="/asesor" class="dropdown-item">Asesores</a>
                             <a href="/equipo" class="dropdown-item">Equipos</a>
-                            <a href="" class="dropdown-item">Participantes</a>
-                            <a href="/competencia" class="dropdown-item">Competencias</a>
+                            <a href="/proyecto" class="dropdown-item">Proyectos</a>
+                            <!--<a href="/participantes" class="dropdown-item">Participantes</a>-->
+                            <!--<a href="/competencia" class="dropdown-item">Competencias</a>-->
                         </div>
                     </div>
                     @endauth
+
+                    <a href="/competencia" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Competencias</a>
+                    @auth
+                        <a href="/categoria" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Categorías</a>
+                    @endauth
+                    <!--<a href="form.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Forms</a>-->
+                    <a href="" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Resultados</a>
+
                 </div>
             </nav>
         </div>
@@ -85,7 +90,8 @@
                     <i class="fa fa-bars"></i>
                 </a>
                 <form class="d-none d-md-flex ms-4">
-                    <input class="form-control bg-dark border-0" type="search" placeholder="Search">
+                    <input class="form-control bg-dark border-0" type="search" placeholder="Busqueda">
+                    <button type="submit" class="btn btn-primary" style="margin-left: 15px; font-size: 15px;">Buscar</button>
                 </form>
 
                 <div class="navbar-nav align-items-center ms-auto">

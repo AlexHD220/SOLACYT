@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Organizacion>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Participante>
  */
-class OrganizacionFactory extends Factory
+class ParticipanteFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +17,7 @@ class OrganizacionFactory extends Factory
     public function definition(): array
     {
         return [
-            'nombre' => fake()->sentence(),
+            //
         ];
     }
 }

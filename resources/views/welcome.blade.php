@@ -74,12 +74,12 @@
 
                     @else
                         <a href="{{ route('login') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white ">
-                            Iniciar Sesión
+                            Iniciar sesión
                         </a>
 
                         @if (Route::has('register'))
                             <a href="{{ route('register') }}" class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white ">
-                                Registrate
+                                Registrarse
                             </a>
                         @endif
                     @endauth
@@ -115,11 +115,21 @@
                         <button onclick="window.location.href = '/equipo';" class="boton" style="margin-right: 25px;">
                             Equipos
                         </button>
+
+                        <button onclick="window.location.href = '/proyecto';" class="boton" style="margin-right: 25px;">
+                            Proyectos
+                        </button>
+
+                        <button onclick="window.location.href = '/categoria';" class="boton" style="margin-right: 25px;"> <!--style="margin-left: 20px;"-->
+                            Categorías
+                        </button>
+
                     @endauth
 
                     <button onclick="window.location.href = '/competencia';" class="boton"> <!--style="margin-left: 20px;"-->
                         Competencias
                     </button>
+
                 </div>
                 
 

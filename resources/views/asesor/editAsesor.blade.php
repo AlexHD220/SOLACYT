@@ -27,8 +27,8 @@
         @csrf <!--permite entrar al formulario muy importante agregar-->
         @method ('PATCH') <!--permite truquear nuestro formulario para editar la informacion-->
 
-        <label for="usuario"><b> Usuario: </b></label>
-        <input type="text" id="usuario" name="usuario" placeholder="Usuario" required value = "{{old('usuario') ?? $asesor -> usuario}}"><br><br>
+        <!--<label for="usuario"><b> Usuario: </b></label>
+        <input type="text" id="usuario" name="usuario" placeholder="Usuario" required value = "{{old('usuario') ?? $asesor -> usuario}}"><br><br>-->
 
         <label for="nombre"><b> Nombre: </b></label>
         <input type="text" name="nombre" placeholder="Nombre Completo" required value = "{{old('nombre') ?? $asesor -> nombre}}"><br><br>

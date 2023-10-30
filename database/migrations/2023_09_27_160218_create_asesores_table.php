@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('asesores', function (Blueprint $table) {
             $table->id();
-            $table->string('usuario')->unique();
+            //$table->string('usuario')->unique();
             $table->string('nombre');
             $table->string('correo');
             //$table->unsignedInteger('telefono')->nullable();
@@ -21,7 +21,7 @@ return new class extends Migration
             //$table->string('escuela')->nullable();
             //$table->string('pass');
 
-            $table->timestamps();
+            //$table->timestamps();
         });
     }
 

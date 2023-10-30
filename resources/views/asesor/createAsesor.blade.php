@@ -25,11 +25,11 @@
 
         @csrf <!--permite entrar al formulario muy importante agregar-->
 
-        <label for="usuario"><b> Usuario: </b></label>
-        <input type="text" id="usuario" name="usuario" placeholder="Usuario" required value = "{{ old('usuario') }}"><br><br> <!--value = "{{old('name')}}"-->
+        <!--<label for="usuario"><b> Usuario: </b></label>
+        <input type="text" id="usuario" name="usuario" placeholder="Usuario" required value = "{{ old('usuario') }}"><br><br>--> <!--value = "{{old('name')}}"-->
 
         <label for="nombre"><b> Nombre: </b></label>
-        <input type="text" name="nombre" placeholder="Nombre Completo" required value = "{{ old('nombre') }}"><br><br>
+        <input type="text" id = "nombre" name="nombre" placeholder="Nombre Completo" required value = "{{ old('nombre') }}"><br><br>
 
         <label for = "correo"><b>Correo: </b></label>
         <input type="email" name="correo" required value = "{{ old('correo') }}"><br><br>
@@ -40,9 +40,20 @@
         <!--<label for="escuela"><b> Escuela: </b></label>
         <input type="text" name="escuela" list="listaEscuelas" value = "{{ old('escuela') }}"><br><br>-->
 
-        <label for="pass"><b> Contraseña: </b></label>
+        <!--<label for="pass"><b> Contraseña: </b></label>
         <input type="password" id="pass" name="pass" required value = "{{ old('pass') }}">
-        <button type="button" id="showPassword" onclick="cambiarTexto()" style="margin-left: 5px">Mostrar</button><br><br>
+        <button type="button" id="showPassword" onclick="cambiarTexto()" style="margin-left: 5px">Mostrar</button><br><br>-->
+
+        <!--Seleccion multiple []-->
+        <!--<br>
+        <select name="organizacion_id[]" multiple>
+            @foreach($orgs as $org)
+                <option value="{{ $org -> id }}" @selected(array_search($org->id, old('organizacion_id') ?? []) !== false)>
+                    {{ $org->nombre }}
+                </option>
+            @endforeach
+        </select>
+        <br>-->
 
         <input type="submit" value="Registrar" style="margin-top: 10px;"> 
         <a href="{{ route('asesor.index') }}" style="margin-left:10px;">Cancelar</a>

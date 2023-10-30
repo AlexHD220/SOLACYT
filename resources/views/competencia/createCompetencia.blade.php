@@ -40,11 +40,28 @@
         <select name="asesor_id">
             <option selected>Selecciona una opción</option>
             @foreach($asesores as $asesor)
-                <option value="{{ $asesor -> id }}">
+                <option value="{{ $asesor -> id }}" @if(old('asesor_id') == $asesor->id) selected @endif>
                     {{ $asesor->nombre }}
                 </option>
             @endforeach
         </select><br><br>
+
+        <label for="tipo">Tipo: </label>
+        <select name="tipo">
+            <option selected> - </option>
+            <option value="Equipo" @selected(old('tipo') == 'Equipo')>Equipo</option>
+            <option value="Proyecto" @selected(old('tipo') == 'Proyecto')>Proyecto</option>
+        </select><br><br>
+
+        <label for = "Categorias:" style="margin-bottom: 5px;"><b>Categorías: </b></label><br>
+        <select name="categoria_id[]" multiple style="width: 200px;"> <!--Seleccion multiple []-->
+            @foreach($categorias as $categoria)
+                <option value="{{ $categoria -> id }}" @selected(array_search($categoria->id, old('categoria_id') ?? []) !== false)>
+                    {{ $categoria->nombre }}
+                </option>
+            @endforeach
+        </select><br><br>
+
 
         <input type="submit" value="Registrar" style="margin-top: 10px;">
         <a href="{{ route('competencia.index') }}" style="margin-left:10px;">Cancelar</a>

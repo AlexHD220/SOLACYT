@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Asesor;
+use App\Models\Organizacion;
 use App\Models\Usuario; //Insertar datos en la tabla usuarios
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; //ID Usuario
@@ -37,7 +38,8 @@ class AsesorController extends Controller
      */
     public function create()
     {
-        return view('asesor/createAsesor');
+        $orgs = Organizacion::all();
+        return view('asesor/createAsesor', compact('orgs'));
     }
 
     /**
@@ -48,12 +50,12 @@ class AsesorController extends Controller
         $request->validate([ ///Validar datos, si los datos recibidos no cumplen estas regresas no les permite la entrada a la base de datos y regresa a la pagina original
             //'nombre' => 'required|string|max:255',
             //'telefono' => ['required','min:10','max:10']
-            'usuario' => ['required', 'string', 'min:5', 'regex:/^[A-Za-z0-9_-]+$/'],
+            /*'usuario' => ['required', 'string', 'min:5', 'regex:/^[A-Za-z0-9_-]+$/'],*/
             'nombre' => ['required', 'string', 'min:4', 'regex:/^[A-Za-z\s]+$/'],
             'correo' => ['required','email'],
             'telefono' => ['nullable','numeric','regex:/^\d{10}$/',],
             
-            'pass' => ['required', 'min:5','max:15', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/']
+            /*'pass' => ['required', 'min:5','max:15', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/']*/
 
             //'pass' => ['required', 'min:8','max:15', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/']
             /*La contraseña debe tener al menos 8 caracteres y debe contener al menos una letra minúscula, una letra mayúscula, un número y un carácter especial.*/
@@ -65,10 +67,22 @@ class AsesorController extends Controller
         //$usuario->comentario = $request->comentario; 
         //$asesor->pass = $request->pass;
         
+        
 
         //Forma nueva
         $request->merge(['user_id' => Auth::id()]); //Inyectar el user id en el request
-        Asesor::create($request->all()); // <-- hace todo lo que esta abajo desde new hasta save
+        
+        //Tabla pivote
+        //$asesor = Asesor::create($request->only('id'));
+
+        //dd($request->organizacion_id); //PRUEBA DD
+
+        $asesor = Asesor::create($request->all()); // <-- hace todo lo que esta abajo desde new hasta save
+
+        $asesor->organizaciones()->attach($request->organizacion_id); //detach() elimina de la lista el usuario que le pasemos 
+        //Tabla pivote
+
+        //Asesor::create($request->all()); // <-- hace todo lo que esta abajo desde new hasta save
 
 //--------------------------------------------------------------------------------------------------------------> comentado
 
@@ -84,11 +98,11 @@ class AsesorController extends Controller
 //--------------------------------------------------------------------------------------------------------------> comentado
 
         //Insertar en la tabla usuarios
-        $usuario = new Usuario(); //quiero una nueva instanciade este modelo que va a representar mi tabla (representante de alto nivel)
+        /*$usuario = new Usuario(); //quiero una nueva instanciade este modelo que va a representar mi tabla (representante de alto nivel)
         $usuario->usuario = $request->usuario;
         $usuario->mail = $request->correo; //asignari atributos que corresonden por como se llaman mis columnas
         $usuario->pass = $request->pass;
-        $usuario->save();
+        $usuario->save();*/
     
         return redirect('/asesor'); 
     }
@@ -129,7 +143,7 @@ class AsesorController extends Controller
         $request->validate([ ///Validar datos, si los datos recibidos no cumplen estas regresas no les permite la entrada a la base de datos y regresa a la pagina original
             //'nombre' => 'required|string|max:255',
             //'telefono' => ['required','min:10','max:10']
-            'usuario' => ['required', 'string', 'min:5', 'regex:/^[A-Za-z0-9_-]+$/'],
+            /*'usuario' => ['required', 'string', 'min:5', 'regex:/^[A-Za-z0-9_-]+$/'],*/
             'nombre' => ['required', 'string', 'min:4', 'regex:/^[A-Za-z\s]+$/'],
             'correo' => ['required','email'],
             'telefono' => ['nullable','numeric','regex:/^\d{10}$/',],

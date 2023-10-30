@@ -10,7 +10,8 @@ class Asesor extends Model
     protected $table = 'asesores'; //<-- Cambiar el nombre de mi tabla
     
     use HasFactory;
-    protected $fillable = ['user_id','usuario','nombre','correo','telefono','escuela']; // <-- columnas llenables por el usuario (fillable) opuesto es guarded ES MEJOR ESTE
+    public $timestamps = false; //--> ignorar una valor de la tabla 
+    protected $fillable = ['user_id','nombre','correo','telefono','escuela'/*,'usuario'*/]; // <-- columnas llenables por el usuario (fillable) opuesto es guarded ES MEJOR ESTE
     //protected $guarded = ['id']; // <-- columnas protegidas no llenables por el usuario (guarded)
 
     // Definición de la relación con Usuario 
@@ -20,6 +21,7 @@ class Asesor extends Model
         return $this->hasMany(Competencia::class);
     }
 
+
     public function user()
     {
         //return $this->belongsTo(Usuario::class);
@@ -27,6 +29,21 @@ class Asesor extends Model
     }
 
     public function organizaciones(){
-        return $this -> belongsToMany(Organizacion::class);
+        return $this -> belongsToMany(Organizacion::class); //Pertenece a muchos
     }
+
+    // Definición de la relación con Usuario 
+    public function equipos()
+    {
+        //return $this->belongsTo(Usuario::class);
+        return $this->hasMany(Equipo::class);
+    }
+
+    // Definición de la relación con Usuario 
+    public function proyectos()
+    {
+        //return $this->belongsTo(Usuario::class);
+        return $this->hasMany(Proyecto::class);
+    }
+
 }

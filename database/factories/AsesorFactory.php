@@ -19,10 +19,10 @@ class AsesorFactory extends Factory
     {
         return [
             //'usuario' => fake()->name(),
-            'usuario' => $this->faker->userName,
+            //'usuario' => $this->faker->userName,
             'nombre' => fake()->name(),
             'correo' => fake()->email(),
-            'user_id' => User::factory(),
+            'user_id' => User::factory(), // Para cada asesor crearme un usuario y asegnar el id de usuario a este asesor
             'telefono' => $this->faker->numerify('33########'),
 
             //'escuela' => fake()-> sentence(),

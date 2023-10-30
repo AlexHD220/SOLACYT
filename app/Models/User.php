@@ -63,4 +63,12 @@ class User extends Authenticatable
         $this->hasmany(Asesor::class);
     }
 
+    public function equipos(){
+        $this->hasmany(Equipos::class);
+    }
+
+    public function proyectos(){
+        $this->hasmany(Proyecto::class);
+    }
+
 }

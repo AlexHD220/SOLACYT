@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Equipo extends Model
+class Proyecto extends Model
 {
     use HasFactory;
-    public $timestamps = false; //--> ignorar una valor de la tabla 
+    public $timestamps = false;
 
-    protected $fillable = ['user_id','nombre','asesor_id','competencia_id']; // <-- columnas llenables por el usuario (fillable) opuesto es guarded ES MEJOR ESTE
+    protected $fillable = ['user_id','nombre', 'descripcion','asesor_id','competencia_id']; // <-- columnas llenables por el usuario (fillable) opuesto es guarded ES MEJOR ESTE
 
 
     public function user()

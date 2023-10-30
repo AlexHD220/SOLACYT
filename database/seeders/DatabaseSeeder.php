@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,14 +15,23 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+         \App\Models\User::factory()->withPersonalTeam()->create([
+             'name' => 'CUCEI',
+             'email' => 'alexhdezlego@live.com',
+             'password' =>Hash::make('Alex.hd14'),
+         ]);
+
+         \App\Models\Asesor::factory()->create([
+            //'usuario' => 'AlexHD220',
+            'nombre' => 'Alejandro',
+            'correo' => 'alexhdezlego@live.com',
+            'user_id' => 1,
+        ]);
 
         //lista de seeders que quiero que se ejecuten
         $this->call([
             AsesorSeeder::class,
+            OrganizacionSeeder::class,
         ]); // --> php artisan db:seed
     }
 }

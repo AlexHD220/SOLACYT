@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\AsesorController;
+use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\CompetenciaController;
 use App\Http\Controllers\EquipoController;
+use App\Http\Controllers\ParticipanteController;
+use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,9 +37,18 @@ Route::get('/plantilla', function () {
 
 Route::middleware('auth')->group(function(){
 
+    Route::resource('categoria', CategoriaController::class)->parameters([
+        'categoria' => 'categoria',
+    ]);
+
+    
     Route::resource('asesor', AsesorController::class);
 
     Route::resource('equipo', EquipoController::class);
+
+    Route::resource('proyecto', ProyectoController::class);
+
+    Route::resource('participante', ParticipanteController::class);
     
 });
 
@@ -44,7 +56,9 @@ Route::resource('usuario', UsuarioController::class); //este hace que el CRUD si
 
 //Route::resource('asesor', AsesorController::class);
 
-Route::resource('competencia', CompetenciaController::class);
+Route::resource('competencia', CompetenciaController::class)->parameters([
+    'competencia' => 'competencia', //Corregir error {competencium} en -> php artisan route:list
+]);
 
 
 Route::middleware([
