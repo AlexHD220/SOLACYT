@@ -11,7 +11,8 @@ use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens;
     use HasFactory;
@@ -20,13 +21,15 @@ class User extends Authenticatable
     use Notifiable;
     use TwoFactorAuthenticatable;
 
+    public $timestamps = false; //--> ignorar una valor de la tabla 
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'tipo'
     ];
 
     /**
@@ -69,6 +72,12 @@ class User extends Authenticatable
 
     public function proyectos(){
         $this->hasmany(Proyecto::class);
+    }
+
+    public function administrador()
+    {
+        //return $this->belongsTo(Usuario::class);
+        return $this->belongsTo(Administrador::class);
     }
 
 }

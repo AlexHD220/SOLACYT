@@ -25,6 +25,42 @@
         </ul>
     @endif
 
+    @can('only-admin')
+        @if ($competencia->tipo == 'Equipo' && $equipos->count() > 0)
+            <br>
+            <h4>Equipos registrados</h4>
+
+            <ul>
+                @foreach($equipos as $equipo)
+                    <li>
+                        <!--{{ $equipo -> nombre }}-->
+                        <a onmouseover="this.style.color='white'" onmouseout="this.style.color='#6c7293'" href="{{route('equipo.show', $equipo)}}" style="text-decoration: none; color: inherit; display: inline-block;">
+                            <b>{{ $equipo -> nombre }}</b>
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+        @endif
+
+        @if ($competencia->tipo == 'Proyecto' && $proyectos->count() > 0)
+            <br>
+            <h4>Proyectos registrados</h4>
+
+            <ul>
+                @foreach($proyectos as $proyecto)
+                    <li>
+                        <!--{{ $proyecto -> nombre }}-->
+                        <a onmouseover="this.style.color='white'" onmouseout="this.style.color='#6c7293'" href="{{route('equipo.show', $equipo)}}" style="text-decoration: none; color: inherit; display: inline-block;">
+                            <b>{{ $proyecto -> nombre }}</b>
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+        @endif
+    @endcan
+
+
+
 
 
     <div style="margin-top: 25px;">

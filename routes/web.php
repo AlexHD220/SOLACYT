@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdministradorController;
 use App\Http\Controllers\AsesorController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\CompetenciaController;
@@ -7,6 +8,7 @@ use App\Http\Controllers\EquipoController;
 use App\Http\Controllers\ParticipanteController;
 use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\UsuarioController;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,8 +26,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/plantilla', function () {
+/*Route::get('/plantilla', function () {
     return view('plantilla');
+});*/
+
+Route::get('/plantilla', function () {
+    if (Gate::allows('only-admin', auth()->user())) {
+        return view('plantilla');
+    } else {
+        return redirect('/');
+    }
 });
 
 //Route::get('/contacto/{tipo?}',[SitioController::class,'contactoForm']);
@@ -49,7 +59,19 @@ Route::middleware('auth')->group(function(){
     Route::resource('proyecto', ProyectoController::class);
 
     Route::resource('participante', ParticipanteController::class);
+
+    Route::resource('participante', ParticipanteController::class);
+
+    Route::resource('administrador', AdministradorController::class);
     
+});
+
+Route::get('/admin', function () {
+    if (Gate::allows('adminAccess', auth()->user())) {
+        return view('admin.index');
+    } else {
+        return redirect('/otra-pagina');
+    }
 });
 
 Route::resource('usuario', UsuarioController::class); //este hace que el CRUD sirva hay que agregarlo por cada tabla

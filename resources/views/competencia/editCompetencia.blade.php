@@ -37,7 +37,7 @@
         <label for = "duracion"><b>Duración: </b></label>
         <input type="number" name="duracion" id="duracion" value = "{{old('duracion') ?? $competencia -> duracion}}" min="1" max="100" step="1" style="width: 50px;"> días <br><br>
 
-        <label for="tipo">Tipo: </label>
+        <label for="tipo"><b>Tipo: </b></label>
         <select name="tipo">
             <option value="Equipo" @selected( (old('tipo') ?? $competencia->tipo) == 'Equipo')>Equipo</option>
             <option value="Proyecto" @selected( (old('tipo') ?? $competencia->tipo) == 'Proyecto')>Proyecto</option>

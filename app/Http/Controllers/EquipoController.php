@@ -7,17 +7,32 @@ use App\Models\Competencia;
 use App\Models\Equipo;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class EquipoController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('can:only-user')->except('index', 'show');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $equipos = Equipo::all();
+        // Uso de gate
+        if (Gate::allows('only-user')) {
+            $equipos = Equipo::where('user_id',Auth::id())->get(); //registros que solo pertenezcan al usuario logueado
+        }
+        else{
+            $equipos = Equipo::all();
+        }
 
-        $asesores = Asesor::all();
+        //$asesores = Asesor::all();
+
+        $asesores = Asesor::where('user_id',Auth::id())->get(); //registros que solo pertenezcan al usuario logueado
 
         return view('equipo/indexEquipo', compact('equipos','asesores'));
     }

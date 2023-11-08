@@ -10,7 +10,7 @@
     <title>TechCompete</title>
 
     <!-- fevicon -->
-    <link rel="icon" type="image/png" href="/dark/img/solacytIcono.png"/>
+    <link rel="icon" type="image/png" href="/dark/img/tsIcono.png"/>
 
 
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -58,7 +58,7 @@
             <nav class="navbar bg-secondary navbar-dark">
                 <a href="/" class="navbar-brand mx-4 mb-3">
                     <!--<h3 class="text-primary"><i class="fa fa-user-edit me-2"></i>TechCompete</h3> background-color: white;-->
-                    <img src="/dark/img/solacytLogo.png" style="height: 60px; filter: brightness(100);">
+                    <img src="/dark/img/tsPortada.png" style="height: 60px; filter: brightness(100);">
                 </a>
 
                 <!--etiqueta-->

@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Asesor;
 use App\Models\Categoria;
 use App\Models\Competencia;
+use App\Models\Equipo;
+use App\Models\Proyecto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class CompetenciaController extends Controller
 {
@@ -17,6 +20,8 @@ class CompetenciaController extends Controller
      public function __construct() //proteger con inicio de sesion aquellas pestañas que yo quiera
      {
         $this->middleware('auth')->except(['index','show']); //excepto estas necesitan iniciar sesion 
+
+        $this->middleware('can:only-admin')->except('index', 'show');
      }
      
     //otra variante es "only" para autenticar solo aquellas que notros queramos 
@@ -43,6 +48,7 @@ class CompetenciaController extends Controller
         $asesores = Asesor::where('user_id',Auth::id())->get(); //registros que solo pertenezcan al usuario logueado
 
         return view('competencia/createCompetencia', compact('asesores','categorias'));
+        //return view('competencia/createCompetencia', compact('categorias'));
     }
 
     /**
@@ -55,7 +61,8 @@ class CompetenciaController extends Controller
             'identificador' => ['required', 'string', 'min:3'],
             'fecha' => ['required', 'date', 'after_or_equal:today', 'before_or_equal:' . now()->addYears(2)->format('Y-m-d')],
             'duracion' => ['required','integer','min:1','max:100'],
-            'asesor_id' => ['required', 'not_in:Selecciona una opción'],
+            //'asesor_id' => ['required', 'not_in:Selecciona una opción'],
+            'tipo' => ['required', 'not_in:-'],
 
         ]);
 
@@ -81,7 +88,22 @@ class CompetenciaController extends Controller
      */
     public function show(Competencia $competencia)
     {
-        return view('competencia/showCompetencia',compact('competencia')); //asesor es el usuario actual a mostrar
+        //$competencias = Competencia::all();
+
+        // Uso de gate PENDIENTE
+        if (Gate::allows('only-admin')) {
+            $equipos = Equipo::where('competencia_id',$competencia->id)->get(); 
+            $proyectos = Proyecto::where('competencia_id',$competencia->id)->get(); 
+            
+            return view('competencia/showCompetencia',compact('competencia','equipos','proyectos')); //asesor es el usuario actual a mostrar
+        }
+        else{
+            return view('competencia/showCompetencia',compact('competencia')); //asesor es el usuario actual a mostrar
+        }
+
+        //$asesor = Asesor::where('id',$equipo->asesor_id)->first();
+
+        //return view('competencia/showCompetencia',compact('competencia')); //asesor es el usuario actual a mostrar
     }
 
     /**

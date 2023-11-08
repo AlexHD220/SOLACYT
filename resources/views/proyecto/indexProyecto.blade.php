@@ -10,9 +10,11 @@
         <div class="d-flex justify-content-between align-items-center" style="margin-bottom: 15px;">
             <h1 style="display: inline;">Lista de Proyectos</h1>
             @auth <!--Cuando el usuario este logueado muestrame lo sigiente-->
-                @if ($asesores->count() > 0)
-                    <button class="btn btn-primary" onclick="window.location.href = '/proyecto/create';">Registrar nuevo Proyecto</button>
-                @endif
+                @can('only-user')
+                    @if ($asesores->count() > 0)
+                        <button class="btn btn-primary" onclick="window.location.href = '/proyecto/create';">Registrar nuevo Proyecto</button>
+                    @endif
+                @endcan
             @endauth
         </div>
 

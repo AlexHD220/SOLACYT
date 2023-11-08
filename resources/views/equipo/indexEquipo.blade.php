@@ -10,9 +10,11 @@
         <div class="d-flex justify-content-between align-items-center" style="margin-bottom: 15px;">
             <h1 style="display: inline;">Lista de Equipos</h1>
             @auth <!--Cuando el usuario este logueado muestrame lo sigiente-->
-                @if ($asesores->count() > 0)
-                    <button class="btn btn-primary" onclick="window.location.href = '/equipo/create';">Registrar nuevo Equipo</button>
-                @endif
+                @can('only-user')
+                    @if ($asesores->count() > 0)
+                        <button class="btn btn-primary" onclick="window.location.href = '/equipo/create';">Registrar nuevo Equipo</button>
+                    @endif
+                @endcan
             @endauth
         </div>
 
@@ -23,10 +25,12 @@
                 <a onmouseover="this.style.color='white'" onmouseout="this.style.color='#6c7293'" href="{{route('equipo.show', $equipo)}}" style="text-decoration: none; color: inherit; display: inline-block;">
                     <b>{{ $equipo -> nombre }}</b>
                 </a>
-                |
-                <a href="{{route('equipo.edit', $equipo)}}" style="display: inline-block;">
-                    Editar
-                </a>
+                @can('only-user')
+                    |
+                    <a href="{{route('equipo.edit', $equipo)}}" style="display: inline-block;">
+                        Editar
+                    </a>
+                @endcan
                 <!--|
                 <form action="{{route('equipo.destroy', $equipo)}}" method = "POST" style="display: inline-block;">
                     @csrf

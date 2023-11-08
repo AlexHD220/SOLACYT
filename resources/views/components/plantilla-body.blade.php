@@ -17,7 +17,7 @@
                 <a href="/" class="navbar-brand mx-4 mb-3">
                     <!--<h3 class="text-primary"><i class="fa fa-user-edit me-2"></i>TechCompete</h3>--> 
                     <!--filter: brightness(100); background-color: white;-->
-                    <img src="/dark/img/solacytLogo.png" style="height: 45px; border-radius: 5px;">
+                    <img src="/dark/img/tsPortada.png" style="height: 60px; border-radius: 5px;">
                 </a>
 
                 <!--etiqueta-->
@@ -56,7 +56,9 @@
                         </a>
                         <div class="dropdown-menu bg-transparent border-0">
                             <!--<a href="/" class="dropdown-item">Página principal</a>-->
-                            <a href="/asesor" class="dropdown-item">Asesores</a>
+                            @can('only-user')
+                                <a href="/asesor" class="dropdown-item">Asesores</a>
+                            @endcan
                             <a href="/equipo" class="dropdown-item">Equipos</a>
                             <a href="/proyecto" class="dropdown-item">Proyectos</a>
                             <!--<a href="/participantes" class="dropdown-item">Participantes</a>-->
@@ -67,7 +69,9 @@
 
                     <a href="/competencia" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Competencias</a>
                     @auth
-                        <a href="/categoria" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Categorías</a>
+                        @can('only-admin')
+                            <a href="/categoria" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Categorías</a>
+                        @endcan
                     @endauth
                     <!--<a href="form.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Forms</a>-->
                     <a href="" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Resultados</a>
@@ -84,7 +88,7 @@
             <nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-0">
                 <a href="/" class="navbar-brand d-flex d-lg-none me-4">
                     <!--<h2 class="text-primary mb-0"><i class="fa fa-user-edit"></i></h2>-->
-                    <img src="/dark/img/solacytLogo.png" style="height: 40px; border-radius: 5px;">
+                    <img src="/dark/img/tsPortada.png" style="height: 60px; border-radius: 5px;">
                 </a>
                 <a class="sidebar-toggler flex-shrink-0" style="cursor: pointer;">
                     <i class="fa fa-bars"></i>
@@ -100,9 +104,9 @@
                     @auth <!--Cuando el usuario este logueado muestrame lo sigiente-->
                         @include('parciales/user-menu')
                     @else
-                    <div style="margin-top: 20px; margin-bottom: 20px;">
-                        <a href="/login" style="font-size: 16px;"><b>Ingresar</b></a>
-                    </div>
+                        <div style="margin-top: 20px; margin-bottom: 20px;">
+                            <a href="/login" style="font-size: 16px;"><b>Ingresar</b></a>
+                        </div>
                     @endauth
                 </div>
 

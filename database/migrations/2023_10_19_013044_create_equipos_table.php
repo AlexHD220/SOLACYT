@@ -17,10 +17,12 @@ return new class extends Migration
             $table->foreignID('user_id')->constrained();
             $table->string('nombre')->unique();
 
+            //-> onDelete('cascade') // se aplica a la llave foranea de la tabla dependiente para que se elimine cuando se elimina el id referenciado
+
             $table->unsignedBigInteger('asesor_id'); //--> crear columna dentro de la tabla competencias
-            $table->foreign('asesor_id')->references('id')->on('asesores'); //--> referenciar columna de ID dentro de la tabla competencias 
+            $table->foreign('asesor_id')->references('id')->on('asesores') -> onDelete('cascade'); //--> referenciar columna de ID dentro de la tabla competencias 
             
-            $table->foreignID('competencia_id')->constrained();
+            $table->foreignID('competencia_id')->constrained() -> onDelete('cascade');
         });
     }
 

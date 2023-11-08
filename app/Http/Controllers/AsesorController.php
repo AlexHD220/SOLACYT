@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NotificaAsesorCreado;
 use App\Models\Asesor;
 use App\Models\Organizacion;
 use App\Models\Usuario; //Insertar datos en la tabla usuarios
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; //ID Usuario
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 
 class AsesorController extends Controller
 {
@@ -14,19 +17,30 @@ class AsesorController extends Controller
      * Display a listing of the resource.
      */
 
-     public function __construct() //proteger con inicio de sesion aquellas pestañas que yo quiera
+     // Midelware de iniciar sesion 
+     /*public function __construct() //proteger con inicio de sesion aquellas pestañas que yo quiera
      {
         $this->middleware('auth')->except(['index','show']); //excepto estas necesitan iniciar sesion 
-     }
+     }*/
+
      
     //otra variante es "only" para autenticar solo aquellas que notros queramos 
 
+
+    public function __construct()
+    {
+        $this->middleware('can:only-user');
+    }
 
     public function index()
     {
        //$asesores = Asesor::all();
 
+       //DESCOMENTAR (solo los asesores relacionados con ese usuario)
        $asesores = Asesor::where('user_id',Auth::id())->get(); //registros que solo pertenezcan al usuario logueado
+
+       // Eager loading
+       //$asesores = Asesor::with('user:id,name')->with('competencias')->get(); //eager loading (CARGAR TDA LA INFORMACION DE TODOS LOS USUARIO EN UNA SOLACONSULTA, EN LUGAR DE LLAMAR VARIAS VECES A LA BASE DE DATOS ME TRAIGO TODA LA INFORMACION DE JALON)
 
         //dd($asesores); //para ver que hay en esa variable
         return view("asesor/indexAsesor",compact('asesores')); //<----- regresar vista al llamar al archivo index (asesor)
@@ -70,6 +84,8 @@ class AsesorController extends Controller
         
 
         //Forma nueva
+
+        // Insertar un dato en el request
         $request->merge(['user_id' => Auth::id()]); //Inyectar el user id en el request
         
         //Tabla pivote
@@ -79,8 +95,9 @@ class AsesorController extends Controller
 
         $asesor = Asesor::create($request->all()); // <-- hace todo lo que esta abajo desde new hasta save
 
-        $asesor->organizaciones()->attach($request->organizacion_id); //detach() elimina de la lista el usuario que le pasemos 
         //Tabla pivote
+        $asesor->organizaciones()->attach($request->organizacion_id); //detach() elimina de la lista el usuario que le pasemos 
+        
 
         //Asesor::create($request->all()); // <-- hace todo lo que esta abajo desde new hasta save
 
@@ -103,6 +120,10 @@ class AsesorController extends Controller
         $usuario->mail = $request->correo; //asignari atributos que corresonden por como se llaman mis columnas
         $usuario->pass = $request->pass;
         $usuario->save();*/
+
+        Mail::to($request->user())->send(new NotificaAsesorCreado($asesor));
+
+        //return redirect() -> reoue('asesor.index');
     
         return redirect('/asesor'); 
     }
@@ -131,6 +152,14 @@ class AsesorController extends Controller
         //$password = $asesor->usuario;
 
         //return view('asesor/editAsesor',compact('asesor','password')); 
+
+
+        // Uso de gate
+        if (! Gate::allows('admin-asesor', $asesor)) {
+            abort(403);
+        }
+ 
+
         return view('asesor/editAsesor',compact('asesor')); //formulario para editar la base, asesor es el usuario a editar
     }
 
@@ -174,8 +203,21 @@ class AsesorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Asesor $asesor)
+    public function destroy(Request $request, Asesor $asesor)
     {
+
+        /*if ($request->user()->cannot('delete', $asesor)) {
+            abort(403);
+        }*/
+
+
+        $this->authorize('delete', $asesor); //No se podra eliminar ninguno
+        
+        //DESCOMENTAR para borrar en cascada desde aqui
+        /*$asesor->equipos()->delete(); // caso 1 a muchos eliminando los equipos de este asesor*/
+        //$asesor->requerimentos()->detach(); // relacion de muchos a muchos
+
+
         $asesor -> delete();
         return redirect('/asesor');
     }

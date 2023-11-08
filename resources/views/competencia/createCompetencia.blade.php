@@ -36,7 +36,7 @@
         <label for = "duracion"><b>Duración: </b></label>
         <input type="number" name="duracion" id="duracion" value = "{{ old('duracion') }}" min="1" max="100" step="1" style="width: 50px;"> días <br><br>
 
-        <label for = "asesor_id"><b>Asesor: </b></label>
+        <!--{{--<label for = "asesor_id"><b>Asesor: </b></label>
         <select name="asesor_id">
             <option selected>Selecciona una opción</option>
             @foreach($asesores as $asesor)
@@ -44,9 +44,9 @@
                     {{ $asesor->nombre }}
                 </option>
             @endforeach
-        </select><br><br>
+        </select><br><br>--}}-->
 
-        <label for="tipo">Tipo: </label>
+        <label for="tipo"><b>Tipo: </b></label>
         <select name="tipo">
             <option selected> - </option>
             <option value="Equipo" @selected(old('tipo') == 'Equipo')>Equipo</option>

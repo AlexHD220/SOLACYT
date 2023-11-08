@@ -4,9 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\Categoria;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class CategoriaController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('can:only-admin');
+        
+        //$this->middleware('can:only-admin')->except('index');
+        //return redirect()->route('competencia.index');
+
+    }
+
+
     /**
      * Display a listing of the resource.
      */

@@ -10,7 +10,7 @@
         <title>TechCompete</title>
 
         <!-- fevicon -->
-       <link rel="icon" type="image/png" href="/dark/img/solacytIcono.png"/>
+       <link rel="icon" type="image/png" href="/dark/img/tsIcono.png"/>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">

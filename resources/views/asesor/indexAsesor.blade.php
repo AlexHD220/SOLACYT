@@ -26,12 +26,15 @@
                     Editar
                 </a>
                 |
-                <form action="{{route('asesor.destroy', $asesor)}}" method = "POST" style="display: inline-block;">
-                    @csrf
-                    @method('DELETE')
 
-                    <button type = "submit">Eliminar </button>
-                </form>
+                @can('delete', $asesor)
+                    <form action="{{route('asesor.destroy', $asesor)}}" method = "POST" style="display: inline-block;">
+                        @csrf
+                        @method('DELETE')
+
+                        <button type = "submit">Eliminar </button>
+                    </form>
+                @endcan
             </li>
             <br>
         @endforeach

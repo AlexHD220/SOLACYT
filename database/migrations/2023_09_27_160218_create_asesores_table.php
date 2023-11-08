@@ -22,6 +22,8 @@ return new class extends Migration
             //$table->string('pass');
 
             //$table->timestamps();
+
+            $table->softDeletes(); // Borrado logico de datos
         });
     }
 

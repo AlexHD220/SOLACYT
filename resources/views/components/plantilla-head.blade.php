@@ -4,7 +4,7 @@
     {{ $slot }} <!--Title-->
 
     <!-- fevicon -->
-    <link rel="icon" type="image/png" href="/dark/img/solacytIcono.png"/>
+    <link rel="icon" type="image/png" href="/dark/img/tsIcono.png"/>
 
 
     <meta content="width=device-width, initial-scale=1.0" name="viewport">

@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Asesor;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -17,6 +19,7 @@ class DatabaseSeeder extends Seeder
 
          \App\Models\User::factory()->withPersonalTeam()->create([
              'name' => 'CUCEI',
+             'tipo' => 1,
              'email' => 'alexhdezlego@live.com',
              'password' =>Hash::make('Alex.hd14'),
          ]);
@@ -33,5 +36,9 @@ class DatabaseSeeder extends Seeder
             AsesorSeeder::class,
             OrganizacionSeeder::class,
         ]); // --> php artisan db:seed
+
+
+        Asesor::factory()->count(5)->create(); //--> generar informacion falsa
+
     }
 }

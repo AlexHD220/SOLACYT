@@ -17,13 +17,14 @@ return new class extends Migration
             $table->date('fecha');
             $table->unsignedInteger('duracion');
             $table->string('tipo');
-            //$table->foreignId('asesor_id')->constrained();
-
-            $table->unsignedBigInteger('asesor_id'); //--> crear columna dentro de la tabla competencias
+            
+            //$table->foreignId('asesor_id')->constrained(); // Otra forma de hacerlo cuando la tabla no se renombra
+            
+            // Llave foranea de asesor_id
+            //$table->unsignedBigInteger('asesor_id'); //--> crear columna dentro de la tabla competencias
  
-            $table->foreign('asesor_id')->references('id')->on('asesores'); //--> referenciar columna de ID dentro de la tabla competencias 
+            //$table->foreign('asesor_id')->references('id')->on('asesores'); //--> referenciar columna de ID dentro de la tabla competencias 
 
-            $table->timestamps();
         });
     }
 
