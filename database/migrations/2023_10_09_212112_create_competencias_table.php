@@ -17,6 +17,11 @@ return new class extends Migration
             $table->date('fecha');
             $table->unsignedInteger('duracion');
             $table->string('tipo');
+
+            $table->string('ubicacion_imagen');
+            $table->string('nombre_imagen');
+
+            //$table->softdelete(); // Borrado logico
             
             //$table->foreignId('asesor_id')->constrained(); // Otra forma de hacerlo cuando la tabla no se renombra
             

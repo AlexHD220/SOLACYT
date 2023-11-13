@@ -6,6 +6,7 @@ use App\Models\Administrador;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; //ID Usuario
+use Illuminate\Support\Facades\Hash;
 
 class AdministradorController extends Controller
 {
@@ -38,14 +39,28 @@ class AdministradorController extends Controller
     public function store(Request $request)
     {
         //$user = $this->create($request->all());
-        $request->merge(['tipo' => 1]); //Inyectar el user id en el request
+        //$request->merge(['tipo' => 1]); //Inyectar el user id en el request
         
         //Tabla pivote
         //$asesor = Asesor::create($request->only('id'));
 
         //dd($request->organizacion_id); //PRUEBA DD
 
-        User::create($request->all()); // <-- hace todo lo que esta abajo desde new hasta save
+        //User::create($request->all()); // <-- hace todo lo que esta abajo desde new hasta save
+
+
+        $user = User::create([
+                'tipo' => 2,
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),                
+            ])
+            /*, function (User $user) {
+                $this->createTeam($user);
+            }*/;
+
+        $user->sendEmailVerificationNotification();
+
     }
 
     /**

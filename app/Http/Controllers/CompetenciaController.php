@@ -10,6 +10,8 @@ use App\Models\Proyecto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
+
 
 class CompetenciaController extends Controller
 {
@@ -75,9 +77,23 @@ class CompetenciaController extends Controller
 
         $competencia->save();*/
 
-        $competencia = Competencia::create($request->all()); // <-- hace todo lo que esta abajo desde new hasta save
+        // Validar que el archivo se haya cargado bien
+        /*if ($request->file('imagen')->isValid()) {
+            // Instancia del archivo
+            $request->file('imagen')->store('imagenes competencias'); // 'imaganes competencias' --> carpeta 
+        }*/
 
+        $request -> merge([
+            'nombre_imagen' =>  $request->file('imagen')->getClientOriginalName(),
+            //'ubicacion_imagen' =>  $request->file('imagen')->store('imagenes_competencias'),
+            'ubicacion_imagen' =>  $request->file('imagen')->storeAs('public/imagenes_competencias', 'Logo_'.$request->identificador.'.'. $request->file('imagen')->extension()),
+        ]);
+
+        $competencia = Competencia::create($request->all()); // <-- hace todo lo que esta abajo desde new hasta save
+        
+        // Insertar en la tabla pivote relacion m:n
         $competencia->categorias()->attach($request->categoria_id); //detach() elimina de la lista el usuario que le pasemos 
+        
 
         return redirect()->route('competencia.index');
 
@@ -95,10 +111,10 @@ class CompetenciaController extends Controller
             $equipos = Equipo::where('competencia_id',$competencia->id)->get(); 
             $proyectos = Proyecto::where('competencia_id',$competencia->id)->get(); 
             
-            return view('competencia/showCompetencia',compact('competencia','equipos','proyectos')); //asesor es el usuario actual a mostrar
+            return view('competencia/showCompetencia',compact('competencia','equipos','proyectos')); // Listar los proyectos y equipos registrados en esa competencia
         }
         else{
-            return view('competencia/showCompetencia',compact('competencia')); //asesor es el usuario actual a mostrar
+            return view('competencia/showCompetencia',compact('competencia'));
         }
 
         //$asesor = Asesor::where('id',$equipo->asesor_id)->first();

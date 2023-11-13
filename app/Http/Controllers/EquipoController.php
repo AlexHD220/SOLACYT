@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NotificaAsesorCreado;
+use App\Mail\NotificaEquipoRegistrado;
 use App\Models\Asesor;
+use App\Models\Categoria;
 use App\Models\Competencia;
 use App\Models\Equipo;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 
 class EquipoController extends Controller
 {
@@ -46,6 +50,8 @@ class EquipoController extends Controller
 
         $competencias = Competencia::where('tipo','Equipo')->get();
 
+        $categoria = Categoria::all();
+
         return view('equipo/createEquipo', compact('asesores','competencias'));
     }
 
@@ -56,7 +62,13 @@ class EquipoController extends Controller
     {
         $request->merge(['user_id' => Auth::id()]); //Inyectar el user id en el request
 
-        Equipo::create($request->all());
+        $equipo = Equipo::create($request->all());
+
+        $competencia = Competencia::where('id',$equipo->competencia_id)->first();
+
+        //$categoria = Categoria::where('id',$equipo->categoria_id)->first();
+
+        Mail::to($request->user())->send(new NotificaEquipoRegistrado($equipo, $competencia));
 
         return redirect('/equipo'); 
     }

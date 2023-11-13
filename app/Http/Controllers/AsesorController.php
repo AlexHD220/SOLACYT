@@ -155,7 +155,7 @@ class AsesorController extends Controller
 
 
         // Uso de gate
-        if (! Gate::allows('admin-asesor', $asesor)) {
+        if (!Gate::allows('admin-asesor', $asesor)) {
             abort(403);
         }
  
@@ -211,7 +211,8 @@ class AsesorController extends Controller
         }*/
 
 
-        $this->authorize('delete', $asesor); //No se podra eliminar ninguno
+        //Policy
+        //$this->authorize('delete', $asesor); //No se podra eliminar ninguno
         
         //DESCOMENTAR para borrar en cascada desde aqui
         /*$asesor->equipos()->delete(); // caso 1 a muchos eliminando los equipos de este asesor*/

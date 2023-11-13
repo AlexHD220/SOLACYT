@@ -11,7 +11,8 @@
 
     <!--<form action = "{{ route('competencia.store') }}">-->
 
-    <form action="/competencia" method="post"> <!--la diagonal me envia al principio de la url "solacyt.test/"-->
+                                              <!-- Agregar archivos al formulario -->
+    <form action="/competencia" method="post" enctype="multipart/form-data"> <!--la diagonal me envia al principio de la url "solacyt.test/"-->
 
         <!--Mostrar errores-->
         @if ($errors->any())
@@ -61,6 +62,9 @@
                 </option>
             @endforeach
         </select><br><br>
+
+        <label for="imagen" style="margin-bottom: 5px;"><b> Cargar imagen: </b></label><br>
+        <input type="file" id="imagen" name="imagen" placeholder="imagen" required value = "{{ old('imagen') }}"><br><br> <!--value = "{{old('name')}}"-->
 
 
         <input type="submit" value="Registrar" style="margin-top: 10px;">

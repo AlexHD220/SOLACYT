@@ -10,7 +10,7 @@ class Competencia extends Model
     use HasFactory;
     public $timestamps = false; //--> ignorar una valor de la tabla 
 
-    protected $fillable = ['identificador','fecha', 'duracion', 'tipo','asesor_id']; // <-- columnas llenables por el usuario (fillable) opuesto es guarded ES MEJOR ESTE
+    protected $fillable = ['identificador','fecha', 'duracion', 'tipo','asesor_id', 'ubicacion_imagen', 'nombre_imagen']; // <-- columnas llenables por el usuario (fillable) opuesto es guarded ES MEJOR ESTE
 
     // Definición de la relación con Usuario (PENDIENTE DE HACERLO FUNCIONAR) NO FUNCIONO LO ELIMINE
     public function asesor()

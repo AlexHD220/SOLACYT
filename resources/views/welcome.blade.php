@@ -13,6 +13,8 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=FreeLine&display=swap">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Blogger+Sans&display=swap">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap">
 
 
         <!-- Styles -->
@@ -63,7 +65,7 @@
                 <div class="sm:fixed sm:top-0 sm:left-0 p-6 text_left z-10">
                     @auth
                         @can('only-admin')
-                            <a href="{{ url('/administrador') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"> <!--class="focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"-->
+                            <a href="{{ url('/administrador/create') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"> <!--class="focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"-->
                                 Registrar nuevo Administrador
                             </a>
                         @endcan
@@ -106,12 +108,14 @@
 
                 @auth
                     <div class="flex justify-center" style="margin-top: 10px;">
-                        <h1 style="color: #ed5048; font-size: 50px; font-weight: bold; margin-bottom: 10px; margin-top: 20px; font-family: 'FreeLine';">
+                        <h1 style="color: #ed5048; font-size: 35px; font-weight: bold; margin-bottom: 10px; margin-top: 20px; font-family: 'Montserrat'; letter-spacing: 5px;">
+                            <a onmouseover="this.style.color='#eb1616'" onmouseout="this.style.color='#ed5048'" href="{{ url('/dashboard') }}">
                             @can('only-user')
-                                {{ auth()->user()->name }}
-                            @else
-                                Administrador
+                                <b>{{ auth()->user()->name }}</b>
+                            @else                    
+                                <b>Administrador</b>
                             @endcan
+                            </a>
                         </h1>
                     </div>
                 @endauth
@@ -125,13 +129,18 @@
                     <img src="/dark/img/tsLogo.png" style="height: 150px;" alt="Logo TechCompete">
                 </div>
 
-                <div class="flex justify-center" style="margin-top: 10px;">
-                    <h1 style="color: white; font-size: 40px; font-weight: bold; font-style: italic;">TechCompete</h1>
+                <div class="flex justify-center">
+                    <img src="/dark/img/tsportada.png" style="height: 130px;" alt="Logo TechCompete">
+                </div>
+                
+
+                <!--<div class="flex justify-center" style="margin-top: 10px;">
+                    <h1 style="color: white; font-size: 50px; font-weight: bold; font-style: italic;">TechCompete</h1>
                 </div>
 
                 <div class="flex justify-center">
                     <h3 style="color: #ec6a3b; font-size: 18px;">- Competencias al alcance de todos -</h3>
-                </div>
+                </div>-->
 
                 <!--Botones-->
                 <div class="flex justify-center" style="margin-top: 30px;">

@@ -38,6 +38,10 @@ Route::get('/plantilla', function () {
     }
 });
 
+Route::get('/correo', function () {
+    return view('emails/notificaEquipo');
+});
+
 //Route::get('/contacto/{tipo?}',[SitioController::class,'contactoForm']);
 
 //Route::post('usuario/createUsuario',[SitioController::class,'usuarioSave']);
@@ -45,7 +49,7 @@ Route::get('/plantilla', function () {
 //Route::get('usuario/pdf',[usuarioController::class,'pdf']) -> name('usuario.pdf'); //Ruta agregada de forma manual
 //cabiar el nombre de mis rutas
 
-Route::middleware('auth')->group(function(){
+Route::middleware('auth', 'verified')->group(function(){
 
     Route::resource('categoria', CategoriaController::class)->parameters([
         'categoria' => 'categoria',
@@ -82,7 +86,7 @@ Route::resource('competencia', CompetenciaController::class)->parameters([
     'competencia' => 'competencia', //Corregir error {competencium} en -> php artisan route:list
 ]);
 
-
+//Proteccion del dashboard
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),

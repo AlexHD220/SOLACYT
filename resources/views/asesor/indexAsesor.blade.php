@@ -35,8 +35,7 @@
                         <button type = "submit">Eliminar </button>
                     </form>
                 @endcan
-            </li>
-            <br>
+            </li><br>
         @endforeach
 
         <!--<br>

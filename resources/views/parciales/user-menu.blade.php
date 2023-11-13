@@ -66,8 +66,9 @@
                     <!--User Menu-->
                     <div class="nav-item dropdown">
                         <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img class="rounded-circle me-lg-2" src="/dark/img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                            <span class="d-none d-lg-inline-flex"><b>{{ auth()->user()->name }}</b></span>
+                            <span class="d-lg-inline-flex me-lg-2"><b>{{ auth()->user()->name }}</b></span> <!--{--class = "d-none" Hacer que se esconda cuando se hace pequeña la pagina--}-->
+                            <img class="rounded-circle" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" style="width: 40px; height: 40px;">
+                            <!--<img style="margin-left: 10px;" class="h-8 w-8 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />-->                            
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
