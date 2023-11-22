@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
              'rol' => 1,
              'email' => 'alexhdezlego@live.com',
              'password' =>Hash::make('Alex.hd14'),
-             'profile_photo_path' => 'profile-photos/ie6l4HyWTu4LPAzr8whOUEjaEgJnYjfYZSTw20N6.jpg',
+             //'profile_photo_path' => 'profile-photos/ie6l4HyWTu4LPAzr8whOUEjaEgJnYjfYZSTw20N6.jpg',
          ]);
 
          \App\Models\Asesor::factory()->create([
