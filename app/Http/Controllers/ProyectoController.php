@@ -94,7 +94,7 @@ class ProyectoController extends Controller
         if (!Gate::allows('gate-proyecto', $proyecto)) {
             return redirect('/proyecto');
         }
-        
+
         /*$asesor = Asesor::where('id',$proyecto->asesor_id)->first(); //registro que solo pertenezcan al usuario logueado (1 solo arreglo)
 
         $competencia = Competencia::where('id',$proyecto->competencia_id)->first();*/
@@ -139,7 +139,9 @@ class ProyectoController extends Controller
         //$proyecto->categorias()->attach($request->categoria_id); //detach() elimina de la lista el usuario que le pasemos
 
         //return redirect() -> route('categoria.show', $categoria); //esto corresponde a el listado de route:list 
-        return redirect() -> route('proyecto.index'); //esto corresponde a el listado de route:list 
+        //return redirect() -> route('proyecto.index'); //esto corresponde a el listado de route:list 
+
+        return redirect() -> route('proyecto.show', $proyecto);
     }
 
     /**
