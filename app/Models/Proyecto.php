@@ -32,4 +32,8 @@ class Proyecto extends Model
         //return $this->belongsTo(Usuario::class);
         return $this->belongsTo(Competencia::class);
     }
+
+    public function categorias(){
+        return $this -> belongsToMany(Categoria::class); //Pertenece a muchos
+    }
 }

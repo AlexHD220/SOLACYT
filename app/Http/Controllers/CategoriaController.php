@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categoria;
+use App\Models\Competencia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -11,7 +12,8 @@ class CategoriaController extends Controller
 
     public function __construct()
     {
-        $this->middleware('can:only-admin');
+        $this->middleware('can:only-admin')->except('show');
+        //return redirect()->route('competencia.index');
         
         //$this->middleware('can:only-admin')->except('index');
         //return redirect()->route('competencia.index');
@@ -50,11 +52,12 @@ class CategoriaController extends Controller
      * Display the specified resource.
      */
     
-    /*public function show(Categoria $categoria)
+    public function show(Categoria $categoria)
     {
-        //
-    }*/
 
+        return view('categoria/showCategoria',compact('categoria'));
+        
+    }
     /**
      * Show the form for editing the specified resource.
      */
@@ -68,11 +71,12 @@ class CategoriaController extends Controller
      */
     public function update(Request $request, Categoria $categoria)
     {
-        Categoria::where('id', $categoria->id)
-                          ->update($request->except('_token','_method')); //opuesto de except (only)
+        Categoria::where('id', $categoria->id)->update($request->except('_token','_method')); //opuesto de except (only)
 
         //return redirect() -> route('categoria.show', $categoria); //esto corresponde a el listado de route:list 
-        return redirect() -> route('categoria.index'); //esto corresponde a el listado de route:list 
+        //return redirect() -> route('categoria.index'); //esto corresponde a el listado de route:list 
+
+        return redirect() -> route('categoria.show', $categoria);
     }
 
     /**
@@ -80,6 +84,6 @@ class CategoriaController extends Controller
      */
     public function destroy(Categoria $categoria)
     {
-        //
+        return redirect('/');
     }
 }

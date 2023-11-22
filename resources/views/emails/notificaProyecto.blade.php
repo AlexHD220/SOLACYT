@@ -1,12 +1,16 @@
-<!--<h1> Se creo el asesor {{ $asesor -> nombre }}. </h1>-->
 
 <x-mail::message>
-# Asesor creado
- 
-Se creo el asesor {{ $asesor -> nombre }}.
 
-<a href="{{route('asesor.show', $asesor->id) }}">Ver asesor</a>
+# Proyecto Registrado
  
-Thanks,<br>
-{{ config('app.name') }}
+Felicidades!! 
+El proyecto "{{ $proyecto -> nombre }}" se registró correctamente en la competencia:
+
+<h1>{{ $proyecto -> competencia -> identificador }}</h1>
+
+<a href="{{route('competencia.show', $proyecto -> competencia->id) }}">Ver detalles de la competencia</a>
+ 
+Los esperamos el próximo {{ date('d/m/Y', strtotime($competencia->fecha)) }}.<br>
+<h1><b><i>{{ config('app.name') }}</i></b></h1>
+
 </x-mail::message>

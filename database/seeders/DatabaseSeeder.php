@@ -18,27 +18,28 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
 
          \App\Models\User::factory()->withPersonalTeam()->create([
-             'name' => 'CUCEI',
-             'tipo' => 1,
+             'name' => 'Alejandro Hernández',
+             'rol' => 1,
              'email' => 'alexhdezlego@live.com',
              'password' =>Hash::make('Alex.hd14'),
+             'profile_photo_path' => 'profile-photos/ie6l4HyWTu4LPAzr8whOUEjaEgJnYjfYZSTw20N6.jpg',
          ]);
 
          \App\Models\Asesor::factory()->create([
             //'usuario' => 'AlexHD220',
-            'nombre' => 'Alejandro',
-            'correo' => 'alexhdezlego@live.com',
+            'nombre' => 'Prueba',
+            'correo' => 'prueba@live.com',
             'user_id' => 1,
         ]);
 
         //lista de seeders que quiero que se ejecuten
         $this->call([
             AsesorSeeder::class,
-            OrganizacionSeeder::class,
+            //OrganizacionSeeder::class,
         ]); // --> php artisan db:seed
 
 
-        Asesor::factory()->count(5)->create(); //--> generar informacion falsa
+        //Asesor::factory()->count(5)->create(); //--> generar informacion falsa
 
     }
 }

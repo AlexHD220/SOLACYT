@@ -12,18 +12,22 @@
     <h3> Inauguración: {{ date('d/m/Y', strtotime($competencia->fecha)) }} </h3>
     <h3> Cierre: {{ date('d/m/Y', strtotime($competencia->fecha . '+' . $competencia->duracion . 'days')) }}</h3>
 
-    @if ($competencia->categorias->count() > 0)
-        <br>
-        <h4>Categorias</h4>
 
-        <ul>
-            @foreach($competencia->categorias as $categoria)
-                <li>
-                    {{ $categoria -> nombre }}
-                </li>
-            @endforeach
-        </ul>
+    <br>
+    @if ($competencia->categorias->count() > 1)
+        <h4>Categorías</h4>
+    @else
+        <h4>Categoría</h4>
     @endif
+
+    <ul>
+        @foreach($competencia->categorias as $categoria)
+        <li>
+            {{ $categoria -> nombre }}
+        </li>
+        @endforeach
+    </ul>
+
 
     @can('only-admin')
         @if ($competencia->tipo == 'Equipo' && $equipos->count() > 0)
@@ -58,9 +62,6 @@
             </ul>
         @endif
     @endcan
-
-
-
 
 
     <div style="margin-top: 25px;">

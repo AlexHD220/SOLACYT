@@ -15,4 +15,15 @@ class Categoria extends Model
     public function competencias(){
         return $this -> belongsToMany(Competencia::class); //Pertenece a muchos
     }
+
+    // Definición de la relación con Equipo 
+    public function equipos()
+    {
+        //return $this->belongsTo(Usuario::class);
+        return $this->hasMany(Equipo::class);
+    }
+    
+    public function proyectos(){
+        return $this -> belongsToMany(Proyecto::class); //Pertenece a muchos
+    }
 }

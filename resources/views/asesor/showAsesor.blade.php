@@ -8,7 +8,7 @@
 <x-plantilla-body>
 
     <!--<h2> {{ $asesor -> usuario }}</h2>--> <!--Mostrar detalles-->
-    <h2 style="margin-bottom: 15px;"> {{ $asesor -> nombre }}</h2>
+    <h1 style="margin-bottom: 15px;"> {{ $asesor -> nombre }}</h1>
     <h3> Correo electronico: </h3>
     <p style="margin-left: 15px; font-size: 18px;"> {{ $asesor -> correo }} </p>
 
@@ -47,7 +47,7 @@
         </ul>
     @endif
 
-    <!--@if ($asesor->competencias->count() > 0)
+    <!--{{--@if ($asesor->competencias->count() > 0)
         <br>
         <h4>Competencias</h4>
 
@@ -66,7 +66,7 @@
         @foreach($asesor->organizaciones as $org)
             <li>{{ $org -> nombre }}</li>
         @endforeach
-    @endif-->
+    @endif--}}-->
 
     <!--Formulario para agregar las organizaciones desde aqui-->
     <!--{{--<br>

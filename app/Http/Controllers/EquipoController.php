@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\NotificaAsesorCreado;
 use App\Mail\NotificaEquipoRegistrado;
 use App\Models\Asesor;
 use App\Models\Categoria;
@@ -18,7 +17,8 @@ class EquipoController extends Controller
 
     public function __construct()
     {
-        $this->middleware('can:only-user')->except('index', 'show');
+        //$this->middleware('can:only-user')->except('index', 'show');
+        $this->middleware('can:only-user');
     }
 
     /**
@@ -27,14 +27,14 @@ class EquipoController extends Controller
     public function index()
     {
         // Uso de gate
-        if (Gate::allows('only-user')) {
+        /*if (Gate::allows('only-user')) {
             $equipos = Equipo::where('user_id',Auth::id())->get(); //registros que solo pertenezcan al usuario logueado
         }
         else{
             $equipos = Equipo::all();
-        }
+        }*/
 
-        //$asesores = Asesor::all();
+        $equipos = Equipo::where('user_id',Auth::id())->get(); //registros que solo pertenezcan al usuario logueado
 
         $asesores = Asesor::where('user_id',Auth::id())->get(); //registros que solo pertenezcan al usuario logueado
 
@@ -50,9 +50,9 @@ class EquipoController extends Controller
 
         $competencias = Competencia::where('tipo','Equipo')->get();
 
-        $categoria = Categoria::all();
+        $categorias = Categoria::all();
 
-        return view('equipo/createEquipo', compact('asesores','competencias'));
+        return view('equipo/createEquipo', compact('asesores','competencias', 'categorias'));
     }
 
     /**
@@ -66,9 +66,11 @@ class EquipoController extends Controller
 
         $competencia = Competencia::where('id',$equipo->competencia_id)->first();
 
+        $categoria = Categoria::where('id',$equipo->categoria_id)->first();
+
         //$categoria = Categoria::where('id',$equipo->categoria_id)->first();
 
-        Mail::to($request->user())->send(new NotificaEquipoRegistrado($equipo, $competencia));
+        Mail::to($request->user())->send(new NotificaEquipoRegistrado($equipo, $competencia, $categoria));
 
         return redirect('/equipo'); 
     }
@@ -78,13 +80,22 @@ class EquipoController extends Controller
      */
     public function show(Equipo $equipo)
     {
-        $asesor = Asesor::where('id',$equipo->asesor_id)->first(); //registro que solo pertenezcan al usuario logueado (1 solo arreglo)
+        // Uso de gate
+        if (!Gate::allows('gate-equipo', $equipo)) {
+            return redirect('/equipo');
+        }
+        
+        /*$asesor = Asesor::where('id',$equipo->asesor_id)->first(); //registro que solo pertenezcan al usuario logueado (1 solo arreglo)
 
         $competencia = Competencia::where('id',$equipo->competencia_id)->first();
 
+        $categoria = Categoria::where('id',$equipo->categoria_id)->first();*/
+
         //dd($asesor);
 
-        return view('equipo/showEquipo',compact('equipo', 'asesor', 'competencia')); //asesor es el usuario actual a mostrar
+        //return view('equipo/showEquipo',compact('equipo', 'asesor', 'competencia','categoria')); //asesor es el usuario actual a mostrar
+
+        return view('equipo/showEquipo',compact('equipo'));
     }
 
     /**
@@ -92,11 +103,18 @@ class EquipoController extends Controller
      */
     public function edit(Equipo $equipo)
     {
+        // Uso de gate
+        if (!Gate::allows('gate-equipo', $equipo)) {
+            return redirect('/equipo');
+        }
+
         $asesores = Asesor::where('user_id',Auth::id())->get(); //registros que solo pertenezcan al usuario logueado
 
         $competencias = Competencia::where('tipo','Equipo')->get();
+
+        $categorias = Categoria::all();
         
-        return view('equipo/editEquipo',compact('equipo', 'asesores', 'competencias'));
+        return view('equipo/editEquipo',compact('equipo', 'asesores', 'competencias','categorias'));
     }
 
     /**
@@ -104,11 +122,17 @@ class EquipoController extends Controller
      */
     public function update(Request $request, Equipo $equipo)
     {
-        Equipo::where('id', $equipo->id)
-                          ->update($request->except('_token','_method')); //opuesto de except (only)
+        // Uso de gate
+        if (!Gate::allows('gate-equipo', $equipo)) {
+            return redirect('/equipo');
+        }
+
+        Equipo::where('id', $equipo->id)->update($request->except('_token','_method')); //opuesto de except (only)
 
         //return redirect() -> route('categoria.show', $categoria); //esto corresponde a el listado de route:list 
-        return redirect() -> route('equipo.index'); //esto corresponde a el listado de route:list 
+        //return redirect() -> route('equipo.index'); //esto corresponde a el listado de route:list 
+
+        return redirect() -> route('equipo.show', $equipo);
     }
 
     /**
@@ -116,6 +140,12 @@ class EquipoController extends Controller
      */
     public function destroy(Equipo $equipo)
     {
-        //
+        // Uso de gate
+        if (!Gate::allows('gate-equipo', $equipo)) {
+            return redirect('/equipo');
+        }
+
+        $equipo -> delete();
+        return redirect('/equipo');
     }
 }

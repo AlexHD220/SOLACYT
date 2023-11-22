@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Mail\NotificaAsesorCreado;
 use App\Models\Asesor;
+use App\Models\Equipo;
 use App\Models\Organizacion;
+use App\Models\Proyecto;
 use App\Models\Usuario; //Insertar datos en la tabla usuarios
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; //ID Usuario
@@ -36,10 +38,10 @@ class AsesorController extends Controller
     {
        //$asesores = Asesor::all();
 
-       //DESCOMENTAR (solo los asesores relacionados con ese usuario)
+       //Solo los asesores relacionados con ese usuario)
        $asesores = Asesor::where('user_id',Auth::id())->get(); //registros que solo pertenezcan al usuario logueado
 
-       // Eager loading
+       // Eager loading (cargar solo la informacion de los asesors con equipos)
        //$asesores = Asesor::with('user:id,name')->with('competencias')->get(); //eager loading (CARGAR TDA LA INFORMACION DE TODOS LOS USUARIO EN UNA SOLACONSULTA, EN LUGAR DE LLAMAR VARIAS VECES A LA BASE DE DATOS ME TRAIGO TODA LA INFORMACION DE JALON)
 
         //dd($asesores); //para ver que hay en esa variable
@@ -52,8 +54,9 @@ class AsesorController extends Controller
      */
     public function create()
     {
-        $orgs = Organizacion::all();
-        return view('asesor/createAsesor', compact('orgs'));
+        //$orgs = Organizacion::all();
+        //return view('asesor/createAsesor', compact('orgs'));
+        return view('asesor/createAsesor');
     }
 
     /**
@@ -87,21 +90,26 @@ class AsesorController extends Controller
 
         // Insertar un dato en el request
         $request->merge(['user_id' => Auth::id()]); //Inyectar el user id en el request
-        
-        //Tabla pivote
+
+       
         //$asesor = Asesor::create($request->only('id'));
 
         //dd($request->organizacion_id); //PRUEBA DD
 
+        
         $asesor = Asesor::create($request->all()); // <-- hace todo lo que esta abajo desde new hasta save
 
+
+        //RELACION MUCHOS A MUCHOS prueba
         //Tabla pivote
-        $asesor->organizaciones()->attach($request->organizacion_id); //detach() elimina de la lista el usuario que le pasemos 
+        /*$asesor->organizaciones()->attach($request->organizacion_id);*/ //detach() elimina de la lista el usuario que le pasemos 
         
 
         //Asesor::create($request->all()); // <-- hace todo lo que esta abajo desde new hasta save
 
 //--------------------------------------------------------------------------------------------------------------> comentado
+
+        // EQUIVALENTE --> Asesor::create($request->all()); 
 
         /*$asesor = new Asesor(); //quiero una nueva instanciade este modelo que va a representar mi tabla (representante de alto nivel)
         $asesor->user_id = Auth::id();
@@ -121,11 +129,12 @@ class AsesorController extends Controller
         $usuario->pass = $request->pass;
         $usuario->save();*/
 
+        // Notificar por email que el asesor se creo correctamente
         Mail::to($request->user())->send(new NotificaAsesorCreado($asesor));
 
-        //return redirect() -> reoue('asesor.index');
+        return redirect() -> route('asesor.index');
     
-        return redirect('/asesor'); 
+        //return redirect('/asesor'); 
     }
 
     /**
@@ -133,6 +142,12 @@ class AsesorController extends Controller
      */
     public function show(Asesor $asesor)
     {
+
+        // Uso de gate
+        if (!Gate::allows('gate-asesor', $asesor)) {
+            return redirect('/asesor');
+        }
+
         return view('asesor/showAsesor',compact('asesor')); //asesor es el usuario actual a mostrar
     }
 
@@ -155,8 +170,9 @@ class AsesorController extends Controller
 
 
         // Uso de gate
-        if (!Gate::allows('admin-asesor', $asesor)) {
-            abort(403);
+        if (!Gate::allows('gate-asesor', $asesor)) {
+            //abort(403);
+            return redirect('/asesor');
         }
  
 
@@ -168,6 +184,11 @@ class AsesorController extends Controller
      */
     public function update(Request $request, Asesor $asesor) ///las reglas del store y el update deben ser las mismas o muy parecidas
     {
+
+        // Uso de gate
+        if (!Gate::allows('gate-asesor', $asesor)) {
+            return redirect('/asesor');
+        }
 
         $request->validate([ ///Validar datos, si los datos recibidos no cumplen estas regresas no les permite la entrada a la base de datos y regresa a la pagina original
             //'nombre' => 'required|string|max:255',
@@ -192,8 +213,7 @@ class AsesorController extends Controller
 
         //dd($request->except('_token','_method'));
 
-        Asesor::where('id', $asesor->id)
-                ->update($request->except('_token','_method')); //opuesto de except (only)
+        Asesor::where('id', $asesor->id)->update($request->except('_token','_method')); //opuesto de except (only)
 
         return redirect() -> route('asesor.show', $asesor); //esto corresponde a el listado de route:list 
         // como estoy mandando a show, necesito mandarle el id del usuario como egundo parametro $asesor <-- este es mi asesor actual
@@ -218,8 +238,11 @@ class AsesorController extends Controller
         /*$asesor->equipos()->delete(); // caso 1 a muchos eliminando los equipos de este asesor*/
         //$asesor->requerimentos()->detach(); // relacion de muchos a muchos
 
+        
+        //ELIMINADO (No se necesitó)
+        /*$asesor -> delete();
+        return redirect('/asesor');*/
 
-        $asesor -> delete();
-        return redirect('/asesor');
+        return redirect('/');
     }
 }

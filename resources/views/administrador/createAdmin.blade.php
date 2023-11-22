@@ -14,7 +14,7 @@
             @csrf
 
             <div>
-                <x-label for="name" value="{{ __('Nombre de la institución') }}" />
+                <x-label for="name" value="{{ __('Nombre completo') }}" />
                 <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
             </div>
 
@@ -53,10 +53,6 @@
             @endif
 
             <div class="flex items-center justify-center mt-4" style="margin-top: 20px; margin-bottom: 10px;">
-                {{--<a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}" style="font-size: 14px;">
-                    {{ __('¿Ya estas registrado?') }}
-                </a>--}}
-
                 <x-button class="ml-4">
                     {{ __('Registrar administrador') }}
                 </x-button>

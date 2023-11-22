@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; //ID Usuario
 use Illuminate\Support\Facades\Hash;
+use Laravel\Fortify\Rules\Password;
 
 class AdministradorController extends Controller
 {
@@ -22,7 +23,9 @@ class AdministradorController extends Controller
      */
     public function index()
     {
-        //
+        $administradores = User::where('rol',1)->get();
+
+        return view("administrador/indexAdmin",compact('administradores')); 
     }
 
     /**
@@ -47,51 +50,59 @@ class AdministradorController extends Controller
         //dd($request->organizacion_id); //PRUEBA DD
 
         //User::create($request->all()); // <-- hace todo lo que esta abajo desde new hasta save
-
+        
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', new Password, 'confirmed'],
+        ]);
 
         $user = User::create([
-                'tipo' => 2,
+                'rol' => 2,
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),                
-            ])
+        ]);
             /*, function (User $user) {
                 $this->createTeam($user);
-            }*/;
+            };*/
 
         $user->sendEmailVerificationNotification();
-
+        
+        return redirect('/administrador'); 
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Administrador $administrador)
+    public function show(User $user)
     {
-        //
+        return redirect('/');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Administrador $administrador)
+    public function edit(User $user)
     {
-        //
+        return redirect('/');
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Administrador $administrador)
+    public function update(Request $request, User $user)
     {
-        //
+        return redirect('/');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Administrador $administrador)
+    public function destroy(User $user) 
     {
-        //
+        $user->delete();
+
+        return redirect('/administrador');
     }
 }

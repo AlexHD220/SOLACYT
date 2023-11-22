@@ -32,10 +32,10 @@
         <input type="text" id="identificador" name="identificador" placeholder="Identificador" required value = "{{ old('identificador') }}"><br><br> <!--value = "{{old('name')}}"-->
 
         <label for = "fecha"><b>Fecha: </b></label>
-        <input type="date" name="fecha" value = "{{ old('fecha') }}" min="{{ now()->toDateString() }}" max="{{ now()->addYears(2)->toDateString() }}"><br><br>
+        <input type="date" name="fecha" required value = "{{ old('fecha') }}" min="{{ now()->toDateString() }}" max="{{ now()->addYears(2)->toDateString() }}"><br><br>
 
         <label for = "duracion"><b>Duración: </b></label>
-        <input type="number" name="duracion" id="duracion" value = "{{ old('duracion') }}" min="1" max="100" step="1" style="width: 50px;"> días <br><br>
+        <input type="number" name="duracion" id="duracion" required value = "{{ old('duracion') }}" min="1" max="100" step="1" style="width: 50px;"> días <br><br>
 
         <!--{{--<label for = "asesor_id"><b>Asesor: </b></label>
         <select name="asesor_id">
@@ -48,14 +48,14 @@
         </select><br><br>--}}-->
 
         <label for="tipo"><b>Tipo: </b></label>
-        <select name="tipo">
+        <select name="tipo" required>
             <option selected> - </option>
             <option value="Equipo" @selected(old('tipo') == 'Equipo')>Equipo</option>
             <option value="Proyecto" @selected(old('tipo') == 'Proyecto')>Proyecto</option>
         </select><br><br>
 
         <label for = "Categorias:" style="margin-bottom: 5px;"><b>Categorías: </b></label><br>
-        <select name="categoria_id[]" multiple style="width: 200px;"> <!--Seleccion multiple []-->
+        <select name="categoria_id[]" multiple style="width: 200px;" required> <!--Seleccion multiple []-->
             @foreach($categorias as $categoria)
                 <option value="{{ $categoria -> id }}" @selected(array_search($categoria->id, old('categoria_id') ?? []) !== false)>
                     {{ $categoria->nombre }}

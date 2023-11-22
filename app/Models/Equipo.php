@@ -10,7 +10,7 @@ class Equipo extends Model
     use HasFactory;
     public $timestamps = false; //--> ignorar una valor de la tabla 
 
-    protected $fillable = ['user_id','nombre','asesor_id','competencia_id']; // <-- columnas llenables por el usuario (fillable) opuesto es guarded ES MEJOR ESTE
+    protected $fillable = ['user_id','nombre','asesor_id','competencia_id', 'categoria_id']; // <-- columnas llenables por el usuario (fillable) opuesto es guarded ES MEJOR ESTE
 
 
     public function user()
@@ -31,5 +31,12 @@ class Equipo extends Model
     {
         //return $this->belongsTo(Usuario::class);
         return $this->belongsTo(Competencia::class);
+    }
+
+    // Definición de la relación con Usuario 
+    public function categoria()
+    {
+        //return $this->belongsTo(Usuario::class);
+        return $this->belongsTo(Categoria::class);
     }
 }

@@ -31,11 +31,11 @@
         <input type="text" id="nombre" name="nombre" placeholder="Nombre del proyecto" required value = "{{old('nombre') ?? $proyecto -> nombre}}"><br><br>
 
         <label for="descripcion" style="margin-bottom: 5px;"><b> Descripción: </b></label><br>
-        <textarea id="descripcion" name="descripcion" rows="4" style="resize: none; width: 400px;">{{old('descripcion') ?? $proyecto -> descripcion}}</textarea><br><br>
+        <textarea id="descripcion" name="descripcion" rows="4" style="resize: none; width: 400px;" required>{{old('descripcion') ?? $proyecto -> descripcion}}</textarea><br><br>
 
 
         <label for="asesor" style="margin-bottom: 5px;"><b> Asesor: </b></label><br>
-        <select name="asesor_id">
+        <select name="asesor_id" required>
             <option selected>Selecciona una opción</option>
             @foreach($asesores as $asesor)
                 <option value="{{ $asesor -> id }}" @if(old('asesor_id') == $asesor->id || $proyecto->asesor_id == $asesor->id) selected @endif>
@@ -45,11 +45,20 @@
         </select><br><br>
 
         <label for="competencia" style="margin-bottom: 5px;"><b> Competencia: </b></label><br>
-        <select name="competencia_id">
+        <select name="competencia_id" required>
             <option selected>Selecciona una opción</option>
             @foreach($competencias as $competencia)
                 <option value="{{ $competencia -> id }}" @if(old('competencia_id') == $competencia->id || $proyecto->competencia_id == $competencia->id) selected @endif>
                     {{ $competencia->identificador }}
+                </option>
+            @endforeach
+        </select><br><br>
+
+        <label for = "Categorias:" style="margin-bottom: 5px;"><b>Categorías: </b></label><br>
+        <select name="categoria_id[]" multiple style="width: 200px;" required> <!--Seleccion multiple []-->
+            @foreach($categorias as $categoria)
+                <option value="{{ $categoria -> id }}" @selected(array_search($categoria->id, old('categoria_id') ?? []) !== false)>
+                    {{ $categoria->nombre }}
                 </option>
             @endforeach
         </select><br><br>

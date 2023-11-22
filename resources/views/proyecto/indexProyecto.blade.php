@@ -13,29 +13,42 @@
                 @can('only-user')
                     @if ($asesores->count() > 0)
                         <button class="btn btn-primary" onclick="window.location.href = '/proyecto/create';">Registrar nuevo Proyecto</button>
+                    @else
+                        <div style="text-align: center;">
+                            <a href="/categoria" style="font-size: 14px;"><i>Para registrar un nuevo proyecto,<br>
+                                                                             primero agrega el asesor asignado.</i></a>
+                        </div> 
                     @endif
                 @endcan
             @endauth
         </div>
+
+        @if ($proyectos->count() == 0)
+            <p style="margin-left: 20px;"><i>Aún no hay ningún proyecto registrado.</i></p>
+        @endif
 
 
         @foreach ($proyectos as $proyecto) <!--Listar todos los datos de la tabla Proyectos-->
 
             <li>
                 <a onmouseover="this.style.color='white'" onmouseout="this.style.color='#6c7293'" href="{{route('proyecto.show', $proyecto)}}" style="text-decoration: none; color: inherit; display: inline-block; margin-bottom: 5px;">
-                    <b>{{ $proyecto -> nombre }}</b>
+                    <b style="font-size: 20px;">{{ $proyecto -> nombre }}</b>
                 </a>
-                |
+                ({{ $proyecto -> competencia -> identificador }}) |
+
                 <a href="{{route('proyecto.edit', $proyecto)}}" style="display: inline-block;">
                     Editar
                 </a>
-                <!--|
+                
+                |
                 <form action="{{route('proyecto.destroy', $proyecto)}}" method = "POST" style="display: inline-block;">
                     @csrf
                     @method('DELETE')
 
-                    <button type = "submit">Eliminar </button>
-                </form>-->
+                    <button type="submit" onmouseover="this.style.backgroundColor='#ff6666';" onmouseout="this.style.backgroundColor='red';"  style="background-color: red; color: white;">
+                        Eliminar 
+                    </button>
+                </form>
             </li>
             <p style="text-align: justify; max-width: 80%; margin-left: 22px;">{{ $proyecto -> descripcion}}</p>
             <br>

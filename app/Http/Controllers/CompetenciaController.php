@@ -20,7 +20,7 @@ class CompetenciaController extends Controller
      */
 
      public function __construct() //proteger con inicio de sesion aquellas pestañas que yo quiera
-     {
+     {        
         $this->middleware('auth')->except(['index','show']); //excepto estas necesitan iniciar sesion 
 
         $this->middleware('can:only-admin')->except('index', 'show');
@@ -47,10 +47,10 @@ class CompetenciaController extends Controller
 
         $categorias = Categoria::all();
         
-        $asesores = Asesor::where('user_id',Auth::id())->get(); //registros que solo pertenezcan al usuario logueado
+        //$asesores = Asesor::where('user_id',Auth::id())->get(); //registros que solo pertenezcan al usuario logueado
 
-        return view('competencia/createCompetencia', compact('asesores','categorias'));
-        //return view('competencia/createCompetencia', compact('categorias'));
+        //return view('competencia/createCompetencia', compact('asesores','categorias'));
+        return view('competencia/createCompetencia', compact('categorias'));
     }
 
     /**
@@ -106,7 +106,6 @@ class CompetenciaController extends Controller
     {
         //$competencias = Competencia::all();
 
-        // Uso de gate PENDIENTE
         if (Gate::allows('only-admin')) {
             $equipos = Equipo::where('competencia_id',$competencia->id)->get(); 
             $proyectos = Proyecto::where('competencia_id',$competencia->id)->get(); 
@@ -127,7 +126,9 @@ class CompetenciaController extends Controller
      */
     public function edit(Competencia $competencia)
     {
-        return view('competencia/editcompetencia',compact('competencia')); //formulario para editar la base, asesor es el usuario a editar
+        $categorias = Categoria::all();
+
+        return view('competencia/editcompetencia',compact('competencia', 'categorias')); //formulario para editar la base, asesor es el usuario a editar
     }
 
     /**
@@ -135,11 +136,28 @@ class CompetenciaController extends Controller
      */
     public function update(Request $request, Competencia $competencia)
     {
-        Competencia::where('id', $competencia->id)
-                          ->update($request->except('_token','_method')); //opuesto de except (only)
+        if ($request->hasFile('imagen')) {
+            //dd($request);
+            $request -> merge([
+                'nombre_imagen' =>  $request->file('imagen')->getClientOriginalName(),
+                //'ubicacion_imagen' =>  $request->file('imagen')->store('imagenes_competencias'),
+                'ubicacion_imagen' =>  $request->file('imagen')->storeAs('public/imagenes_competencias', 'Logo_'.$request->identificador.'.'. $request->file('imagen')->extension()),
+            ]);
+        } 
+
+        Competencia::where('id', $competencia->id)->update($request->except('_token','_method','categoria_id','imagen'));
+
+        // Insertar en la tabla pivote relacion m:n --> PENDIENTE FINAL
+        //$competencia->categorias()->attach($request->categoria_id); //detach() elimina de la lista el usuario que le pasemos
+
+
+        //Competencia::where('id', $competencia->id)->update($request->except('_token','_method')); //opuesto de except (only)
 
         //return redirect() -> route('categoria.show', $categoria); //esto corresponde a el listado de route:list 
-        return redirect() -> route('competencia.index'); //esto corresponde a el listado de route:list 
+        
+        //return redirect() -> route('competencia.index'); //esto corresponde a el listado de route:list 
+
+        return redirect() -> route('competencia.show', $competencia);
     }
 
     /**
@@ -147,6 +165,7 @@ class CompetenciaController extends Controller
      */
     public function destroy(Competencia $competencia)
     {
-        //
+        $competencia -> delete();
+        return redirect('/competencia');
     }
 }

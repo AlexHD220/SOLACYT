@@ -14,18 +14,22 @@
             @endauth
         </div>
 
+        @if ($asesores->count() == 0)
+            <p style="margin-left: 20px;"><i>Aún no hay ningún asesor registrado.</i></p>
+        @endif
+
 
         @foreach ($asesores as $asesor) <!--Listar todos los datos de la tabla asesores-->
 
             <li>
                 <a onmouseover="this.style.color='white'" onmouseout="this.style.color='#6c7293'" href="{{route('asesor.show', $asesor)}}" style="text-decoration: none; color: inherit; display: inline-block;">
-                    <b>{{ $asesor -> nombre }}</b>
+                    <b style="font-size: 20px;">{{ $asesor -> nombre }}</b>
                 </a>
                 |
                 <a href="{{route('asesor.edit', $asesor)}}" style="display: inline-block;">
                     Editar
                 </a>
-                |
+                <!--|
 
                 @can('delete', $asesor)
                     <form action="{{route('asesor.destroy', $asesor)}}" method = "POST" style="display: inline-block;">
@@ -34,7 +38,7 @@
 
                         <button type = "submit">Eliminar </button>
                     </form>
-                @endcan
+                @endcan-->
             </li><br>
         @endforeach
 

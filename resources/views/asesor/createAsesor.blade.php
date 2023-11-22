@@ -45,7 +45,7 @@
         <button type="button" id="showPassword" onclick="cambiarTexto()" style="margin-left: 5px">Mostrar</button><br><br>-->
 
         <!--Seleccion multiple []-->
-        <!--<br>
+        <!--{{--<br>
         <select name="organizacion_id[]" multiple>
             @foreach($orgs as $org)
                 <option value="{{ $org -> id }}" @selected(array_search($org->id, old('organizacion_id') ?? []) !== false)>
@@ -53,7 +53,7 @@
                 </option>
             @endforeach
         </select>
-        <br>-->
+        <br>--}}-->
 
         <input type="submit" value="Registrar" style="margin-top: 10px;"> 
         <a href="{{ route('asesor.index') }}" style="margin-left:10px;">Cancelar</a>

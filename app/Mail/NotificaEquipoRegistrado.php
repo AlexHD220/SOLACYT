@@ -22,11 +22,11 @@ class NotificaEquipoRegistrado extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(Equipo $equipo, Competencia $competencia)
+    public function __construct(Equipo $equipo, Competencia $competencia, Categoria $categoria)
     {
         $this->equipo = $equipo;
         $this->competencia = $competencia;
-        //$this->categoria = $categoria;
+        $this->categoria = $categoria;
     }
 
     /**

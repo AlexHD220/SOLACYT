@@ -20,10 +20,11 @@ return new class extends Migration
 
             $table->string('ubicacion_imagen');
             $table->string('nombre_imagen');
+            $table->softDeletes();
 
             //$table->softdelete(); // Borrado logico
             
-            //$table->foreignId('asesor_id')->constrained(); // Otra forma de hacerlo cuando la tabla no se renombra
+            //$table->foreignId('asesor_id')->constrained(); // Primera forma de hacerlo cuando la tabla no se renombra
             
             // Llave foranea de asesor_id
             //$table->unsignedBigInteger('asesor_id'); //--> crear columna dentro de la tabla competencias

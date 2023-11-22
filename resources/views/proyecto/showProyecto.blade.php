@@ -16,18 +16,28 @@
 
     <div style="display: flex; ">
         <h4 style="margin-right: 15px;">Asesor:</h4>
-        <p style="font-size: 18px; margin-bottom: 15px;">{{ $asesor->nombre }}</p>
+        <p style="font-size: 18px; margin-bottom: 15px;">{{ $proyecto -> asesor->nombre }}</p>
     </div>
 
     <div style="display: flex;">
         <h4 style="margin-right: 15px;"> Competencia: </h4>
-        <p style="font-size: 18px; margin-right: 8px;"> {{ $competencia -> identificador }} </p>
-        <p style="font-size: 18px; margin-bottom: 15px;"> ({{ date('d/m/Y', strtotime($competencia->fecha)) }}) </p>
+        <p style="font-size: 18px; margin-right: 8px;"> {{ $proyecto -> competencia -> identificador }} </p>
+        <p style="font-size: 18px; margin-bottom: 15px;"> ({{ date('d/m/Y', strtotime($proyecto -> competencia->fecha)) }}) </p>
     </div>
 
-    <div style="display: flex;">
-        <h4 style="margin-right: 15px;"> Categoria: </h4>
-        <p style="font-size: 18px; margin-bottom: 15px;"></p>
+    <div>
+        @if($proyecto -> categorias -> count() > 1)
+            <h4 style="margin-right: 15px;"> Categorías: </h4>
+        @else
+            <h4 style="margin-right: 15px;"> Categoría: </h4>
+        @endif
+        <ul>
+            @foreach($proyecto->categorias as $categoria)
+                <li>
+                    {{ $categoria -> nombre }}
+                </li>
+            @endforeach
+        </ul>
     </div>
 
     <div style="margin-top: 25px;">

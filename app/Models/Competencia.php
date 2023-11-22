@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Competencia extends Model
 {
     use HasFactory;
+    use SoftDeletes;
+
     public $timestamps = false; //--> ignorar una valor de la tabla 
 
     protected $fillable = ['identificador','fecha', 'duracion', 'tipo','asesor_id', 'ubicacion_imagen', 'nombre_imagen']; // <-- columnas llenables por el usuario (fillable) opuesto es guarded ES MEJOR ESTE

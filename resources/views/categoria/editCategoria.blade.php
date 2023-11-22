@@ -31,7 +31,7 @@
         <input type="text" id="nombre" name="nombre" placeholder="Categoría" required value = "{{old('nombre') ?? $categoria -> nombre}}"><br><br> <!--value = "{{old('name')}}"-->
 
         <label for="descripcion" style="margin-bottom: 5px;"><b> Descripción: </b></label><br>
-        <textarea id="descripcion" name="descripcion" rows="4" style="resize: none; width: 400px;">{{old('descripcion') ?? $categoria -> descripcion}}</textarea><br><br>
+        <textarea id="descripcion" name="descripcion" rows="4" style="resize: none; width: 400px;" required>{{old('descripcion') ?? $categoria -> descripcion}}</textarea><br><br>
 
         <!--<label for="escuela"><b> Escuela: </b></label>
         <input type="text" name="escuela" list="listaEscuelas" value = "{{ old('escuela') }}"><br><br>-->

@@ -14,9 +14,11 @@ return new class extends Migration
         Schema::create('categoria_competencia', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignID('competencia_id')->constrained(); //reestriccion para no meter ids que no existan
+            $table->foreignID('competencia_id')->constrained()->onDelete('cascade'); // ->constrained() = reestriccion para no meter ids que no existan
 
             $table->foreignID('categoria_id')->constrained(); //reestriccion para no meter ids que no existan
+
+            $table->softDeletes();
             
             //$table->foreign('competencia_id')->references('id')->on('competencias'); //--> referenciar columna de ID dentro de la tabla competencias 
 

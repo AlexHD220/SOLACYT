@@ -16,18 +16,18 @@
 
     <div style="display: flex; ">
         <h4 style="margin-right: 15px;">Asesor:</h4>
-        <p style="font-size: 18px; margin-bottom: 15px;">{{ $asesor->nombre }}</p>
+        <p style="font-size: 18px; margin-bottom: 15px;">{{ $equipo->asesor->nombre }}</p>
     </div>
 
     <div style="display: flex;">
         <h4 style="margin-right: 15px;"> Competencia: </h4>
-        <p style="font-size: 18px; margin-right: 8px;"> {{ $competencia -> identificador }} </p>
-        <p style="font-size: 18px; margin-bottom: 15px;"> ({{ date('d/m/Y', strtotime($competencia->fecha)) }}) </p>
+        <p style="font-size: 18px; margin-right: 8px;"> {{ $equipo->competencia->identificador }} </p>
+        <p style="font-size: 18px; margin-bottom: 15px;"> ({{ date('d/m/Y', strtotime($equipo->competencia->fecha)) }}) </p>
     </div>
 
     <div style="display: flex;">
         <h4 style="margin-right: 15px;"> Categoria: </h4>
-        <p style="font-size: 18px; margin-bottom: 15px;"></p>
+        <p style="font-size: 18px; margin-bottom: 15px;"> {{ $equipo->categoria->nombre }} </p>
     </div>
 
     <div style="margin-top: 25px;">

@@ -19,17 +19,26 @@ $timestampNow = now()->toDateString();
                 @can('only-admin')
                     @if ($categorias->count() > 0)
                         <button class="btn btn-primary" onclick="window.location.href = '/competencia/create';">Registrar nueva competencia</button>
+                    @else
+                        <div style="text-align: center;">
+                            <a href="/categoria" style="font-size: 14px;"><i>Para registrar una nueva competencia,<br>
+                                                                             primero agrega sus categorías.</i></a>
+                        </div>                        
                     @endif
                 @endcan
             @endauth
         </div>
+
+        @if ($competencias->count() == 0)
+            <p style="margin-left: 20px;"><i>Aún no hay ninguna competencia registrada.</i></p>
+        @endif
 
 
         @foreach ($competencias as $competencia) <!--Listar todos los competencias de la tabla competencias-->
             @if (strtotime($competencia->fecha) >= strtotime(now()->toDateString()))
                 
                 <div class="flex justify-center">
-                    <img src="{{ \Storage::url($competencia->ubicacion_imagen) }}" alt="Logo competencia" style="width: 50%;">
+                    <img src="{{ \Storage::url($competencia->ubicacion_imagen) }}" alt="Logo competencia" style="width: 500px;">
                 </div>
             
                 <div class="table-responsive flex justify-center" style="margin-bottom: 10px;">
@@ -44,7 +53,7 @@ $timestampNow = now()->toDateString();
                         </tr>
                     </thead>-->
 
-                    <table class="table text-start align-middle table-bordered table-hover mb-0" style="width: auto; border-bottom: 1px solid white;">                
+                    <table class="table text-start align-middle table-bordered table-hover mb-0" style="width: auto; border-bottom: 2px solid white;">                
                         <tbody>
                             <tr style="text-align: center;">
                                 <td style="padding-left: 20px; padding-right: 20px;"><a onmouseover="this.style.color='white'" onmouseout="this.style.color='#6c7293'" href="{{route('competencia.show', $competencia)}}" style="text-decoration: none; color: inherit;">
@@ -61,6 +70,17 @@ $timestampNow = now()->toDateString();
                                             <a href="{{route('competencia.edit', $competencia)}}">
                                                 Editar
                                             </a>
+                                        </td>
+
+                                        <td style="padding-left: 20px; padding-right: 20px;">
+                                            <form action="{{route('competencia.destroy', $competencia)}}" method = "POST" style="display: inline-block;">
+                                                @csrf
+                                                @method('DELETE')
+
+                                                <button type="submit" onmouseover="this.style.backgroundColor='#ff6666';" onmouseout="this.style.backgroundColor='red';"  style="background-color: red; color: white;">
+                                                    Eliminar 
+                                                </button>
+                                            </form>
                                         </td>
                                     @endcan
                                 @endauth

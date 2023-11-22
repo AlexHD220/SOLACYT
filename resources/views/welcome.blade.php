@@ -113,7 +113,7 @@
                             @can('only-user')
                                 <b>{{ auth()->user()->name }}</b>
                             @else                    
-                                <b>Administrador</b>
+                                <b><i>Administrador</i></b>
                             @endcan
                             </a>
                         </h1>
@@ -145,19 +145,27 @@
                 <!--Botones-->
                 <div class="flex justify-center" style="margin-top: 30px;">
                     @auth <!--Cuando el usuario este logueado muestrame lo sigiente-->
+
+                        @can('only-admin')
+                            <button onclick="window.location.href = '/administrador';" class="boton" style="margin-right: 25px;"> <!--style="margin-left: 20px;"-->
+                                Administradores
+                            </button>
+                        @endcan
+
                         @can('only-user')
                             <button onclick="window.location.href = '/asesor';" class="boton" style="margin-right: 25px;">
                                 Asesores
                             </button>
+                        
+
+                            <button onclick="window.location.href = '/equipo';" class="boton" style="margin-right: 25px;">
+                                Equipos
+                            </button>
+
+                            <button onclick="window.location.href = '/proyecto';" class="boton" style="margin-right: 25px;">
+                                Proyectos
+                            </button>
                         @endcan
-
-                        <button onclick="window.location.href = '/equipo';" class="boton" style="margin-right: 25px;">
-                            Equipos
-                        </button>
-
-                        <button onclick="window.location.href = '/proyecto';" class="boton" style="margin-right: 25px;">
-                            Proyectos
-                        </button>
 
                     @endauth
 

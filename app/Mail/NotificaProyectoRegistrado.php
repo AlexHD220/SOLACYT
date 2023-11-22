@@ -2,6 +2,9 @@
 
 namespace App\Mail;
 
+use App\Models\Categoria;
+use App\Models\Competencia;
+use App\Models\Proyecto;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -12,13 +15,18 @@ use Illuminate\Queue\SerializesModels;
 class NotificaProyectoRegistrado extends Mailable
 {
     use Queueable, SerializesModels;
+    public $proyecto; //Variable publica
+    public $competencia; //Variable publica
+    //public $categoria; //Variable publica
 
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct(Proyecto $proyecto, Competencia $competencia)
     {
-        //
+        $this->proyecto = $proyecto;
+        $this->competencia = $competencia;
+        //$this->categoria = $categoria;
     }
 
     /**
@@ -26,8 +34,10 @@ class NotificaProyectoRegistrado extends Mailable
      */
     public function envelope(): Envelope
     {
+        $asunto = 'Proyecto ' . $this->proyecto->nombre . ' registrado.';
+
         return new Envelope(
-            subject: 'Notifica Proyecto Registrado',
+            subject: $asunto,
         );
     }
 
@@ -37,7 +47,7 @@ class NotificaProyectoRegistrado extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            markdown: 'emails/notificaProyecto',
         );
     }
 

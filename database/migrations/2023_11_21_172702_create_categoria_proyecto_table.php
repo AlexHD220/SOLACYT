@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('teams', function (Blueprint $table) {
+        Schema::create('categoria_proyecto', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->index();
-            $table->string('name');
-            $table->boolean('personal_team');
-            $table->softDeletes();
-            $table->timestamps();
+
+            $table->foreignID('categoria_id')->constrained(); //reestriccion para no meter ids que no existan
+
+            $table->foreignID('proyecto_id')->constrained()->onDelete('cascade'); // ->constrained() = reestriccion para no meter ids que no existan
         });
     }
 
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('teams');
+        Schema::dropIfExists('categoria_proyecto');
     }
 };
