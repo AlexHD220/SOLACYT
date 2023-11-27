@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('tipo');
 
             $table->string('ubicacion_imagen');
-            $table->string('nombre_imagen');
+            $table->string('nombre_original_imagen');
             $table->softDeletes();
 
             //$table->softdelete(); // Borrado logico

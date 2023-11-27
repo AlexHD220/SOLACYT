@@ -68,8 +68,8 @@ class AsesorController extends Controller
             //'nombre' => 'required|string|max:255',
             //'telefono' => ['required','min:10','max:10']
             /*'usuario' => ['required', 'string', 'min:5', 'regex:/^[A-Za-z0-9_-]+$/'],*/
-            'nombre' => ['required', 'string', 'min:4', 'regex:/^[A-Za-z\s]+$/'],
-            'correo' => ['required','email'],
+            'nombre' => ['required', 'string', 'min:10', 'max:50', 'regex:/^[A-Za-z\s]+$/'],
+            'correo' => ['required', 'string', 'email', 'min:5', 'max:50'],
             'telefono' => ['nullable','numeric','regex:/^\d{10}$/',],
             
             /*'pass' => ['required', 'min:5','max:15', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/']*/
@@ -194,8 +194,8 @@ class AsesorController extends Controller
             //'nombre' => 'required|string|max:255',
             //'telefono' => ['required','min:10','max:10']
             /*'usuario' => ['required', 'string', 'min:5', 'regex:/^[A-Za-z0-9_-]+$/'],*/
-            'nombre' => ['required', 'string', 'min:4', 'regex:/^[A-Za-z\s]+$/'],
-            'correo' => ['required','email'],
+            'nombre' => ['required', 'string', 'min:10', 'max:50', 'regex:/^[A-Za-z\s]+$/'],
+            'correo' => ['required', 'string', 'email', 'min:5', 'max:50'],
             'telefono' => ['nullable','numeric','regex:/^\d{10}$/',],
             
             //'pass' => ['required', 'min:5','max:15', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/']

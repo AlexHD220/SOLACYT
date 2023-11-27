@@ -24,15 +24,16 @@ class UserFactory extends Factory
         return [
             //'name' => $this->faker->name(),
             'name' => $this->faker->company(),
-            'email' => $this->faker->unique()->safeEmail(),
+            //'email' => $this->faker->unique()->safeEmail(),
+            'email' => fake()->unique()->email(),
             'email_verified_at' => now(),
-            'password' =>Hash::make('Alex.hd14'),
+            'password' =>Hash::make('Pruebas.tc23'),
             'rol' => 2,
             //'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            //'password' => '$2y$10$9PeOUkcK6T4ZfRIwa48uvu2a1tM.jjTy7zp6v7KzZVUyN1gPWIDvO', // Password: Alex.hd14
             'two_factor_secret' => null,
             'two_factor_recovery_codes' => null,
-            'remember_token' => Str::random(10),
+            //'remember_token' => Str::random(10),
+            'remember_token' => null,
             'profile_photo_path' => null,
             'current_team_id' => null,
         ];

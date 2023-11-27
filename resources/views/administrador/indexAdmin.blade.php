@@ -2,16 +2,14 @@
 <html lang="es">
 
 <x-plantilla-head>
-    <title>administradores</title>
+    <title>Administradores</title>
 </x-plantilla-head>
 
 <x-plantilla-body>
 
         <div class="d-flex justify-content-between align-items-center" style="margin-bottom: 15px;">
             <h1 style="display: inline;">Listado de Administradores</h1>
-            @auth <!--Cuando el usuario este logueado muestrame lo sigiente-->
-                <!--<button class="btn btn-primary" onclick="window.location.href = '/administrador/create';">Registrar nuevo administrador</button>-->
-            @endauth
+            <!--<button class="btn btn-primary" onclick="window.location.href = '/administrador/create';">Registrar nuevo administrador</button>-->
         </div>
 
         @if ($administradores->count() == 1)
@@ -28,13 +26,13 @@
                     (<i>{{ $administrador -> email }}</i>)
 
                     |
-
+                    
                     <form action="{{route('administrador.destroy', $administrador)}}" method = "POST" style="display: inline-block;">
                         @csrf
                         @method('DELETE')
                         
-                        <button type="submit" onmouseover="this.style.backgroundColor='#ff6666';" onmouseout="this.style.backgroundColor='red';"  style="background-color: red; color: white;">
-                            Eliminar
+                        <button type="submit" onclick="return confirm('¿Está seguro que desea deshabilitar la cuenta de este administrador?')" onmouseover="this.style.backgroundColor='#ff6666';" onmouseout="this.style.backgroundColor='red';"  style="background-color: red; color: white;">
+                            Deshabilitar cuenta
                         </button>
 
                     </form>

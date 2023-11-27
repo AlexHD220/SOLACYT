@@ -35,10 +35,15 @@
 
             @if (Laravel\Jetstream\Jetstream::hasAccountDeletionFeatures())
                 <x-section-border />
-
-                <div class="mt-10 sm:mt-0">
-                    @livewire('profile.delete-user-form')
-                </div>
+                @if(Auth::id() != 1) <!-- Si el usuario logueado es el super administrador, no se puede eliminar -->
+                    <div class="mt-10 sm:mt-0">
+                        @livewire('profile.delete-user-form')
+                    </div>
+                @else
+                    <div class="mt-10 sm:mt-0" style="text-align: center;">
+                    <h1 class="text-lg font-medium text-gray-900 dark:text-gray-100">No es posible eliminar este usuario</h1>
+                    </div>
+                @endif
             @endif
         </div>
     </div>

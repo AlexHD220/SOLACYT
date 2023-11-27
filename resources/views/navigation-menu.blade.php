@@ -16,7 +16,7 @@
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Perfil') }}
                     </x-nav-link>
-                    <x-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('dashboard')">
+                    <x-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
                         {{ __('Configuración') }}
                     </x-nav-link>
                 </div>
@@ -24,7 +24,7 @@
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 <!-- Teams Dropdown -->
-                @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
+                @if(Laravel\Jetstream\Jetstream::hasTeamFeatures() && false)
                     <div class="ml-3 relative">
                         <x-dropdown align="right" width="60">
                             <x-slot name="trigger">
@@ -103,6 +103,10 @@
                             <div class="block px-4 py-2 text-xs text-gray-400">
                                 {{ __('Administrar cuenta') }}
                             </div>
+
+                            <x-dropdown-link href="{{ route('dashboard') }}">
+                                {{ __('Perfil') }}
+                            </x-dropdown-link>
 
                             <x-dropdown-link href="{{ route('profile.show') }}">
                                 {{ __('Configuración del perfil') }}

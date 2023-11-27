@@ -29,31 +29,31 @@
 
 
         <label for="identificador"><b> Identificador: </b></label>
-        <input type="text" id="identificador" name="identificador" placeholder="Identificador" required value = "{{old('identificador') ?? $competencia -> identificador}}"><br><br> <!--value = "{{old('name')}}"-->
+        <input type="text" id="identificador" name="identificador" placeholder="Identificador" minlength="5" maxlength="50" required value = "{{old('identificador') ?? $competencia -> identificador}}" autofocus><br><br> <!--value = "{{old('name')}}"-->
 
         <label for = "fecha"><b>Fecha: </b></label>
-        <input type="date" name="fecha" required value = "{{old('fecha') ?? $competencia -> fecha}}" min="{{ now()->toDateString() }}" max="{{ now()->addYears(2)->toDateString() }}"><br><br>
+        <input type="date" name="fecha" required value = "{{old('fecha') ?? $competencia -> fecha}}" max="{{ now()->addYears(2)->toDateString() }}"><br><br>
 
         <label for = "duracion"><b>Duración: </b></label>
         <input type="number" name="duracion" id="duracion" required value = "{{old('duracion') ?? $competencia -> duracion}}" min="1" max="100" step="1" style="width: 50px;"> días <br><br>
 
         <label for="tipo"><b>Tipo: </b></label>
-        <select name="tipo" required>
+        <select name="tipo" required style="width: 90px;">
             <option value="Equipo" @selected( (old('tipo') ?? $competencia->tipo) == 'Equipo')>Equipo</option>
             <option value="Proyecto" @selected( (old('tipo') ?? $competencia->tipo) == 'Proyecto')>Proyecto</option>
         </select><br><br>
 
-        <label for = "Categorias:" style="margin-bottom: 5px;"><b>Categorías: </b></label><br>
-        <select name="categoria_id[]" multiple style="width: 200px;" required> <!--Seleccion multiple []-->
-            @foreach($categorias as $categoria)
-                <option value="{{ $categoria -> id }}" @selected(array_search($categoria->id, old('categoria_id') ?? []) !== false)>
+        <label for = "categoria_id" style="margin-bottom: 5px;"><b>Categorías: </b></label><br>
+        <select name="categoria_id[]" id="categoria_id" multiple style="width: 200px;" required> <!--Seleccion multiple []-->
+            @foreach($categorias as $categoria)                
+                <option value="{{ $categoria->id }}" @if(in_array($categoria->id, old('categoria_id', $competencia->categorias->pluck('id')->toArray()) ?? [])) selected @endif>
                     {{ $categoria->nombre }}
                 </option>
             @endforeach
         </select><br><br>
 
         <label for="imagen" style="margin-bottom: 5px;"><b> Cargar nueva imagen: </b></label><br>
-        <input type="file" id="imagen" name="imagen" placeholder="imagen"><br><br> <!--value = "{{old('name')}}"-->
+        <input type="file" id="imagen" name="imagen" placeholder="imagen" accept=".png, .jpg, .jpeg"><br><br> <!--value = "{{old('name')}}"-->
 
 
         <input type="submit" value="Actualizar" style="margin-top: 10px;">

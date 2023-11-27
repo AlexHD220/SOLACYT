@@ -13,6 +13,6 @@ class AsesorSeeder extends Seeder
      */
     public function run(): void
     {
-        Asesor::factory()->count(5)->create(); //--> generar informacion falsa
+        Asesor::factory()->count(10)->create(); //--> generar informacion falsa
     }
 }

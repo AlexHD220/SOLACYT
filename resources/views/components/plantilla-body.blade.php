@@ -48,6 +48,8 @@
                         </div>
                     </div>-->
 
+                    <a href="/" class="nav-item nav-link"><i class="fa fa-home me-2"></i>Página principal</a>
+
                     @auth <!--Cuando el usuario este logueado muestrame lo sigiente-->
                         @can('only-user')
                             <div class="nav-item dropdown">

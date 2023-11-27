@@ -112,10 +112,20 @@
                             <a onmouseover="this.style.color='#eb1616'" onmouseout="this.style.color='#ed5048'" href="{{ url('/dashboard') }}">
                             @can('only-user')
                                 <b>{{ auth()->user()->name }}</b>
-                            @else                    
-                                <b><i>Administrador</i></b>
+                            @else
+                                @if(Auth::id() == 1)              
+                                    <b><i>Super Administrador</i></b>
+                                @else
+                                    <b><i>Administrador</i></b>
+                                @endif
                             @endcan
                             </a>
+                        </h1>
+                    </div>
+                @else
+                    <div class="flex justify-center" style="margin-top: 10px;">
+                        <h1 style="color: #ed5048; font-size: 35px; font-weight: bold; margin-bottom: 10px; margin-top: 20px; font-family: 'Montserrat'; letter-spacing: 5px;">
+                            <b>Bienvenido</b>
                         </h1>
                     </div>
                 @endauth

@@ -30,7 +30,11 @@ $timestampNow = now()->toDateString();
         </div>
 
         @if ($competencias->count() == 0)
-            <p style="margin-left: 20px;"><i>Aún no hay ninguna competencia registrada.</i></p>
+            @can('only-admin')
+                <p style="margin-left: 20px;"><i>Aún no hay ninguna competencia registrada.</i></p>
+            @else
+                <p style="margin-left: 20px;"><i>No hay nuevas competencias disponibles.</i></p>
+            @endcan
         @endif
 
 
@@ -77,7 +81,7 @@ $timestampNow = now()->toDateString();
                                                 @csrf
                                                 @method('DELETE')
 
-                                                <button type="submit" onmouseover="this.style.backgroundColor='#ff6666';" onmouseout="this.style.backgroundColor='red';"  style="background-color: red; color: white;">
+                                                <button type="submit" onclick="return confirm('¿Está seguro que desea eliminar la publicación de esta competencia?')" onmouseover="this.style.backgroundColor='#ff6666';" onmouseout="this.style.backgroundColor='red';"  style="background-color: red; color: white;">
                                                     Eliminar 
                                                 </button>
                                             </form>

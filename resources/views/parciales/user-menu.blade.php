@@ -67,6 +67,13 @@
                     <div class="nav-item dropdown">
                         <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <span class="d-lg-inline-flex me-lg-2"><b>{{ auth()->user()->name }}</b></span> <!--{--class = "d-none" Hacer que se esconda cuando se hace pequeña la pagina--}-->
+                            @can('only-admin')
+                                @if(Auth::id() == 1)  
+                                    <span class="d-lg-inline-flex me-lg-2"><b>(Super Admin)</b></span>
+                                @else
+                                    <span class="d-lg-inline-flex me-lg-2"><b>(Admin)</b></span>
+                                @endif
+                            @endcan
                             <img class="rounded-circle" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" style="width: 40px; height: 40px;">
                             <!--<img style="margin-left: 10px;" class="h-8 w-8 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />-->                            
                         </a>

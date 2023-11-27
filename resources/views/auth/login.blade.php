@@ -18,7 +18,7 @@
 
             <div>
                 <x-label for="email" value="{{ __('Correo electrónico') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" minlength="5" maxlength="50" required autofocus autocomplete="username" />
             </div>
 
             <div class="mt-4">

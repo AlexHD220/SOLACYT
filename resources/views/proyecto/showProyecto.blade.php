@@ -21,24 +21,42 @@
 
     <div style="display: flex;">
         <h4 style="margin-right: 15px;"> Competencia: </h4>
-        <p style="font-size: 18px; margin-right: 8px;"> {{ $proyecto -> competencia -> identificador }} </p>
-        <p style="font-size: 18px; margin-bottom: 15px;"> ({{ date('d/m/Y', strtotime($proyecto -> competencia->fecha)) }}) </p>
+
+        @if($proyecto -> competencia)
+            <p style="font-size: 18px; margin-right: 8px;"> {{ $proyecto -> competencia -> identificador }} </p>
+            <p style="font-size: 18px; margin-bottom: 15px;"> ({{ date('d/m/Y', strtotime($proyecto -> competencia->fecha)) }}) </p>
+        @else
+            <p style="font-size: 18px; margin-right: 8px;"> Esta competencia fue temporalmente deshabilitada </p>
+        @endif
     </div>
 
-    <div>
-        @if($proyecto -> categorias -> count() > 1)
-            <h4 style="margin-right: 15px;"> Categorías: </h4>
-        @else
-            <h4 style="margin-right: 15px;"> Categoría: </h4>
-        @endif
-        <ul>
-            @foreach($proyecto->categorias as $categoria)
-                <li>
-                    {{ $categoria -> nombre }}
-                </li>
-            @endforeach
-        </ul>
-    </div>
+    @if($proyecto -> competencia)
+        <div>
+            @if($proyecto -> categorias -> count() > 1)
+                <h4 style="margin-right: 15px;"> Categorías: </h4>
+            @else
+                <h4 style="margin-right: 15px;"> Categoría: </h4>
+            @endif
+            <ul>
+                @foreach($proyecto->categorias as $categoria)
+                    <li>
+                        {{ $categoria -> nombre }}
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    @else
+        <div style="margin-top: 10px;">
+            <form action="{{route('proyecto.destroy', $proyecto)}}" method = "POST" style="display: inline-block;">
+                @csrf
+                @method('DELETE')
+
+                <button type="submit" onclick="return confirm('¿Está seguro que desea eliminar de forma permanente este proyecto?')" onmouseover="this.style.backgroundColor='#ff6666';" onmouseout="this.style.backgroundColor='red';"  style="background-color: red; color: white;">
+                    Eliminar proyecto
+                </button>
+            </form>
+        </div>
+    @endif
 
     <div style="margin-top: 25px;">
         <a href="/proyecto">Regresar</a> 

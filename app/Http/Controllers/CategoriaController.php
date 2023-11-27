@@ -6,12 +6,15 @@ use App\Models\Categoria;
 use App\Models\Competencia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\Rule;
 
 class CategoriaController extends Controller
 {
 
     public function __construct()
     {
+        $this->middleware('auth')->except(['show']); //excepto estas necesitan iniciar sesion 
+        
         $this->middleware('can:only-admin')->except('show');
         //return redirect()->route('competencia.index');
         
@@ -44,6 +47,11 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nombre' => ['required', 'string', 'min:5', 'max:50', 'unique:categorias'],
+            'descripcion' => ['required', 'string', 'min:10', 'max:500'],
+        ]);
+
         Categoria::create($request->all()); // <-- hace todo lo que esta abajo desde new hasta save
         return redirect('/categoria'); 
     }
@@ -71,12 +79,18 @@ class CategoriaController extends Controller
      */
     public function update(Request $request, Categoria $categoria)
     {
+        $request->validate([
+            'nombre' => ['required', 'string', 'min:5', 'max:50', Rule::unique('categorias')->ignore($categoria)],
+            'descripcion' => ['required', 'string', 'min:10', 'max:500'],
+        ]);
+
         Categoria::where('id', $categoria->id)->update($request->except('_token','_method')); //opuesto de except (only)
 
         //return redirect() -> route('categoria.show', $categoria); //esto corresponde a el listado de route:list 
         //return redirect() -> route('categoria.index'); //esto corresponde a el listado de route:list 
 
-        return redirect() -> route('categoria.show', $categoria);
+        //return redirect() -> route('categoria.show', $categoria);
+        return redirect() -> route('categoria.index');
     }
 
     /**

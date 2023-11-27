@@ -9,11 +9,11 @@
 
     <!--<h2> {{ $asesor -> usuario }}</h2>--> <!--Mostrar detalles-->
     <h1 style="margin-bottom: 15px;"> {{ $asesor -> nombre }}</h1>
-    <h3> Correo electronico: </h3>
+    <h4> Correo electronico: </h3>
     <p style="margin-left: 15px; font-size: 18px;"> {{ $asesor -> correo }} </p>
 
     @if (!empty($asesor->telefono))
-        <h3> Teléfono: </h3>
+        <h4> Teléfono: </h4>
         <p style="margin-left: 15px; font-size: 18px;"> {{ $asesor -> telefono }} </p>
     @endif
 

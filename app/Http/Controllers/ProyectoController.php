@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\Rule;
 
 class ProyectoController extends Controller
 {
@@ -41,7 +42,9 @@ class ProyectoController extends Controller
 
         $asesores = Asesor::where('user_id',Auth::id())->get(); //registros que solo pertenezcan al usuario logueado
 
-        return view('proyecto/indexProyecto', compact('proyectos','asesores'));
+        $competencias = Competencia::where('tipo','Proyecto')->get();
+
+        return view('proyecto/indexProyecto', compact('proyectos','asesores','competencias'));
     }
 
     /**
@@ -53,7 +56,11 @@ class ProyectoController extends Controller
 
         $competencias = Competencia::where('tipo','Proyecto')->get();
 
-        $categorias = Categoria::all();
+        //$categorias = Categoria::all();
+
+        $categorias = Categoria::whereHas('competencias', function ($query) {
+            $query->where('tipo', 'Proyecto');
+        })->get();
 
         return view('proyecto/createProyecto', compact('asesores','competencias','categorias'));
     }
@@ -63,6 +70,14 @@ class ProyectoController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([ ///Validar datos, si los datos recibidos no cumplen estas regresas no les permite la entrada a la base de datos y regresa a la pagina original
+            'nombre' => ['required', 'string', 'min:4', 'max:50', 'unique:proyectos'],
+            'descripcion' => ['required', 'string', 'min:10', 'max:300'],
+            'asesor_id' => ['required', 'not_in: Selecciona una opción'],
+            'competencia_id' => ['required', 'not_in: Selecciona una opción'],
+            'categoria_id' => ['required'],
+        ]);
+
         $request->merge(['user_id' => Auth::id()]); //Inyectar el user id en el request
 
         /*Proyecto::create($request->all());
@@ -118,7 +133,10 @@ class ProyectoController extends Controller
 
         $competencias = Competencia::where('tipo','Proyecto')->get();
 
-        $categorias = Categoria::all();
+        $categorias = Categoria::whereHas('competencias', function ($query) {
+            $query->where('tipo', 'Proyecto');
+        })->get();
+        
         
         return view('proyecto/editProyecto',compact('proyecto', 'asesores', 'competencias','categorias'));
     }
@@ -133,7 +151,20 @@ class ProyectoController extends Controller
             return redirect('/proyecto');
         }
 
+        $request->validate([ ///Validar datos, si los datos recibidos no cumplen estas regresas no les permite la entrada a la base de datos y regresa a la pagina original
+            'nombre' => ['required', 'string', 'min:4', 'max:50', Rule::unique('proyectos')->ignore($proyecto)],
+            'descripcion' => ['required', 'string', 'min:10', 'max:300'],
+            'asesor_id' => ['required'],
+            'competencia_id' => ['required'],
+            'categoria_id' => ['required'],
+        ]);
+
+
         Proyecto::where('id', $proyecto->id)->update($request->except('_token','_method','categoria_id')); //opuesto de except (only)
+
+        // Actualizar tabla pivote con los nuevos registros  
+        $proyecto->categorias()->sync($request->input('categoria_id'));
+
 
         // Insertar en la tabla pivote relacion m:n --> PENDIENTE FINAL
         //$proyecto->categorias()->attach($request->categoria_id); //detach() elimina de la lista el usuario que le pasemos

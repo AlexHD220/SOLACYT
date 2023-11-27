@@ -7,9 +7,11 @@
 
 <x-plantilla-body>
     <div class="justify-center" style="text-align: center;">
-        <p style="margin-bottom: 0px;"> Categoria:</p> 
+        <p style="margin-bottom: 0px;"> Categoría:</p> 
         <h1 style="margin-bottom: 10px;">{{ $categoria -> nombre }}</h1>
-        <p style="margin-left: 100px; margin-right: 100px;">{{ $categoria -> descripcion}}</p>
+        <div style="text-align: justify;text-justify: distribute-all-lines;">
+            <p style="margin-left: 100px; margin-right: 100px;">{{ $categoria -> descripcion}}</p>
+        </div>
     </div>
 
 </x-plantilla-body>

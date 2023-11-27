@@ -50,11 +50,6 @@ Route::get('/correo', function () {
 //cabiar el nombre de mis rutas
 
 Route::middleware('auth', 'verified')->group(function(){
-
-    Route::resource('categoria', CategoriaController::class)->parameters([
-        'categoria' => 'categoria',
-    ]);
-
     
     Route::resource('asesor', AsesorController::class);
 
@@ -70,6 +65,17 @@ Route::middleware('auth', 'verified')->group(function(){
     
 });
 
+Route::resource('competencia', CompetenciaController::class)->parameters([
+    'competencia' => 'competencia', //Corregir error {competencium} en -> php artisan route:list
+]);
+
+Route::resource('categoria', CategoriaController::class)->parameters([
+    'categoria' => 'categoria',
+]);
+
+
+
+// Prueba
 Route::get('/admin', function () {
     if (Gate::allows('adminAccess', auth()->user())) {
         return view('admin.index');
@@ -78,13 +84,10 @@ Route::get('/admin', function () {
     }
 });
 
+// Prueba
 Route::resource('usuario', UsuarioController::class); //este hace que el CRUD sirva hay que agregarlo por cada tabla
 
 //Route::resource('asesor', AsesorController::class);
-
-Route::resource('competencia', CompetenciaController::class)->parameters([
-    'competencia' => 'competencia', //Corregir error {competencium} en -> php artisan route:list
-]);
 
 //Proteccion del dashboard
 Route::middleware([

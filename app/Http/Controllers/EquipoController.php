@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\Rule;
 
 class EquipoController extends Controller
 {
@@ -38,7 +39,9 @@ class EquipoController extends Controller
 
         $asesores = Asesor::where('user_id',Auth::id())->get(); //registros que solo pertenezcan al usuario logueado
 
-        return view('equipo/indexEquipo', compact('equipos','asesores'));
+        $competencias = Competencia::where('tipo','Equipo')->get();
+
+        return view('equipo/indexEquipo', compact('equipos','asesores','competencias'));
     }
 
     /**
@@ -50,7 +53,11 @@ class EquipoController extends Controller
 
         $competencias = Competencia::where('tipo','Equipo')->get();
 
-        $categorias = Categoria::all();
+        //$categorias = Categoria::all();
+
+        $categorias = Categoria::whereHas('competencias', function ($query) {
+            $query->where('tipo', 'Equipo');
+        })->get();
 
         return view('equipo/createEquipo', compact('asesores','competencias', 'categorias'));
     }
@@ -60,10 +67,19 @@ class EquipoController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([ ///Validar datos, si los datos recibidos no cumplen estas regresas no les permite la entrada a la base de datos y regresa a la pagina original
+            'nombre' => ['required', 'string', 'min:4', 'max:20', 'unique:equipos'],
+            'asesor_id' => ['required', 'not_in: Selecciona una opción'],
+            'competencia_id' => ['required', 'not_in: Selecciona una opción'],
+            'categoria_id' => ['required', 'not_in: Selecciona una opción'],
+        ]);
+
         $request->merge(['user_id' => Auth::id()]); //Inyectar el user id en el request
 
         $equipo = Equipo::create($request->all());
 
+        // Correo elecronico
+        
         $competencia = Competencia::where('id',$equipo->competencia_id)->first();
 
         $categoria = Categoria::where('id',$equipo->categoria_id)->first();
@@ -112,7 +128,9 @@ class EquipoController extends Controller
 
         $competencias = Competencia::where('tipo','Equipo')->get();
 
-        $categorias = Categoria::all();
+        $categorias = Categoria::whereHas('competencias', function ($query) {
+            $query->where('tipo', 'Equipo');
+        })->get();
         
         return view('equipo/editEquipo',compact('equipo', 'asesores', 'competencias','categorias'));
     }
@@ -126,6 +144,13 @@ class EquipoController extends Controller
         if (!Gate::allows('gate-equipo', $equipo)) {
             return redirect('/equipo');
         }
+
+        $request->validate([ ///Validar datos, si los datos recibidos no cumplen estas regresas no les permite la entrada a la base de datos y regresa a la pagina original
+            'nombre' => ['required', 'string', 'min:4', 'max:20', Rule::unique('equipos')->ignore($equipo)],
+            'asesor_id' => ['required'],
+            'competencia_id' => ['required'],
+            'categoria_id' => ['required'],
+        ]);
 
         Equipo::where('id', $equipo->id)->update($request->except('_token','_method')); //opuesto de except (only)
 

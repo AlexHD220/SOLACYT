@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\Administrador;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class AdministradorSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Administrador::factory()->withPersonalTeam()->count(3)->create(); //--> generar informacion falsa
+        User::factory()->withPersonalTeam()->count(3)->create(); //--> generar informacion falsa
     }
 }

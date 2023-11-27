@@ -12,7 +12,7 @@
     <!--<form action = "{{ route('competencia.store') }}">-->
 
                                               <!-- Agregar archivos al formulario -->
-    <form action="/competencia" method="post" enctype="multipart/form-data"> <!--la diagonal me envia al principio de la url "solacyt.test/"-->
+    <form action="/competencia" method="post" enctype="multipart/form-data" id = "createCompetencia"> <!--la diagonal me envia al principio de la url "solacyt.test/"-->
 
         <!--Mostrar errores-->
         @if ($errors->any())
@@ -29,7 +29,7 @@
         @csrf <!--permite entrar al formulario muy importante agregar-->
 
         <label for="identificador"><b> Identificador: </b></label>
-        <input type="text" id="identificador" name="identificador" placeholder="Identificador" required value = "{{ old('identificador') }}"><br><br> <!--value = "{{old('name')}}"-->
+        <input type="text" id="identificador" name="identificador" placeholder="Identificador" required value = "{{ old('identificador') }}" autofocus><br><br> <!--value = "{{old('name')}}"-->
 
         <label for = "fecha"><b>Fecha: </b></label>
         <input type="date" name="fecha" required value = "{{ old('fecha') }}" min="{{ now()->toDateString() }}" max="{{ now()->addYears(2)->toDateString() }}"><br><br>
@@ -48,14 +48,14 @@
         </select><br><br>--}}-->
 
         <label for="tipo"><b>Tipo: </b></label>
-        <select name="tipo" required>
-            <option selected> - </option>
+        <select name="tipo" required style="width: 90px;">
+            <option disabled selected> - </option>
             <option value="Equipo" @selected(old('tipo') == 'Equipo')>Equipo</option>
             <option value="Proyecto" @selected(old('tipo') == 'Proyecto')>Proyecto</option>
         </select><br><br>
 
-        <label for = "Categorias:" style="margin-bottom: 5px;"><b>Categorías: </b></label><br>
-        <select name="categoria_id[]" multiple style="width: 200px;" required> <!--Seleccion multiple []-->
+        <label for = "categoria_id" style="margin-bottom: 5px;"><b>Categorías: </b></label><br>
+        <select name="categoria_id[]" id="categoria_id" multiple style="width: 200px;" required> <!--Seleccion multiple []-->
             @foreach($categorias as $categoria)
                 <option value="{{ $categoria -> id }}" @selected(array_search($categoria->id, old('categoria_id') ?? []) !== false)>
                     {{ $categoria->nombre }}
@@ -64,7 +64,7 @@
         </select><br><br>
 
         <label for="imagen" style="margin-bottom: 5px;"><b> Cargar imagen: </b></label><br>
-        <input type="file" id="imagen" name="imagen" placeholder="imagen" required value = "{{ old('imagen') }}"><br><br> <!--value = "{{old('name')}}"-->
+        <input type="file" id="imagen" name="imagen" placeholder="imagen" required accept=".png, .jpg, .jpeg"><br><br> <!-- value = "{{ old('imagen') }}" -->
 
 
         <input type="submit" value="Registrar" style="margin-top: 10px;">

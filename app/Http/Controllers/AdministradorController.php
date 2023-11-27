@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Administrador;
+use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; //ID Usuario
@@ -11,6 +12,7 @@ use Laravel\Fortify\Rules\Password;
 
 class AdministradorController extends Controller
 {
+    protected $model = User::class;
 
     public function __construct()
     {
@@ -52,17 +54,22 @@ class AdministradorController extends Controller
         //User::create($request->all()); // <-- hace todo lo que esta abajo desde new hasta save
         
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', new Password, 'confirmed'],
+            'name' => ['required', 'string', 'min:10', 'max:50', 'regex:/^[A-Za-z\s]+$/'],
+            'email' => ['required', 'string', 'email', 'min:5', 'max:50', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'max:50', new Password, 'confirmed', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/'],
         ]);
 
         $user = User::create([
-                'rol' => 2,
+                'rol' => 1,
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),                
         ]);
+        
+        $this->createTeam($user);
+        
+
+
             /*, function (User $user) {
                 $this->createTeam($user);
             };*/
@@ -70,6 +77,18 @@ class AdministradorController extends Controller
         $user->sendEmailVerificationNotification();
         
         return redirect('/administrador'); 
+    }
+
+    /**
+     * Create a personal team for the user.
+     */
+    protected function createTeam(User $user): void
+    {
+        $user->ownedTeams()->save(Team::forceCreate([
+            'user_id' => $user->id,
+            'name' => explode(' ', $user->name, 2)[0]."'s Team",
+            'personal_team' => true,
+        ]));
     }
 
     /**
@@ -99,9 +118,10 @@ class AdministradorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user) 
+    public function destroy(User $administrador) 
     {
-        $user->delete();
+        //dd($administrador);
+        $administrador->delete();
 
         return redirect('/administrador');
     }

@@ -9,8 +9,8 @@
 
     <h1> {{ $competencia -> identificador }}</h1> <!--Mostrar detalles-->
     <h4> Duración: {{ $competencia->duracion }} días</h4>
-    <h3> Inauguración: {{ date('d/m/Y', strtotime($competencia->fecha)) }} </h3>
-    <h3> Cierre: {{ date('d/m/Y', strtotime($competencia->fecha . '+' . $competencia->duracion . 'days')) }}</h3>
+    <h4> Inauguración: {{ date('d/m/Y', strtotime($competencia->fecha)) }} </h4>
+    <h4> Cierre: {{ date('d/m/Y', strtotime($competencia->fecha . '+' . ($competencia->duracion)-1 . 'days')) }}</h4>
 
 
     <br>
@@ -23,7 +23,9 @@
     <ul>
         @foreach($competencia->categorias as $categoria)
         <li>
-            {{ $categoria -> nombre }}
+            <a onmouseover="this.style.color='white'" onmouseout="this.style.color='#6c7293'" href="{{route('categoria.show', $categoria)}}" style="text-decoration: none; color: inherit;">
+                {{ $categoria -> nombre }}
+            </a>
         </li>
         @endforeach
     </ul>
@@ -54,7 +56,7 @@
                 @foreach($proyectos as $proyecto)
                     <li>
                         <!--{{ $proyecto -> nombre }}-->
-                        <a onmouseover="this.style.color='white'" onmouseout="this.style.color='#6c7293'" href="{{route('equipo.show', $equipo)}}" style="text-decoration: none; color: inherit; display: inline-block;">
+                        <a onmouseover="this.style.color='white'" onmouseout="this.style.color='#6c7293'" href="{{route('proyecto.show', $proyecto)}}" style="text-decoration: none; color: inherit; display: inline-block;">
                             <b>{{ $proyecto -> nombre }}</b>
                         </a>
                     </li>

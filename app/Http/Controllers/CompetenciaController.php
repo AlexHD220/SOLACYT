@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Validation\Rule;
 
 class CompetenciaController extends Controller
 {
@@ -19,12 +19,12 @@ class CompetenciaController extends Controller
      * Display a listing of the resource.
      */
 
-     public function __construct() //proteger con inicio de sesion aquellas pestañas que yo quiera
-     {        
+    public function __construct() //proteger con inicio de sesion aquellas pestañas que yo quiera
+    {        
         $this->middleware('auth')->except(['index','show']); //excepto estas necesitan iniciar sesion 
 
         $this->middleware('can:only-admin')->except('index', 'show');
-     }
+    }
      
     //otra variante es "only" para autenticar solo aquellas que notros queramos 
     
@@ -60,12 +60,13 @@ class CompetenciaController extends Controller
     {
 
         $request->validate([ ///Validar datos, si los datos recibidos no cumplen estas regresas no les permite la entrada a la base de datos y regresa a la pagina original
-            'identificador' => ['required', 'string', 'min:3'],
+            'identificador' => ['required', 'string', 'min:5', 'max:50', 'unique:competencias'],
             'fecha' => ['required', 'date', 'after_or_equal:today', 'before_or_equal:' . now()->addYears(2)->format('Y-m-d')],
             'duracion' => ['required','integer','min:1','max:100'],
             //'asesor_id' => ['required', 'not_in:Selecciona una opción'],
             'tipo' => ['required', 'not_in:-'],
-
+            'categoria_id' => ['required'],
+            'imagen' => ['required', 'file', 'mimes:png,jpg,jpeg', 'max:5120'], // Máximo 5 Mb
         ]);
 
         /*$competencia = new Competencia();
@@ -84,7 +85,7 @@ class CompetenciaController extends Controller
         }*/
 
         $request -> merge([
-            'nombre_imagen' =>  $request->file('imagen')->getClientOriginalName(),
+            'nombre_original_imagen' =>  $request->file('imagen')->getClientOriginalName(),
             //'ubicacion_imagen' =>  $request->file('imagen')->store('imagenes_competencias'),
             'ubicacion_imagen' =>  $request->file('imagen')->storeAs('public/imagenes_competencias', 'Logo_'.$request->identificador.'.'. $request->file('imagen')->extension()),
         ]);
@@ -136,16 +137,31 @@ class CompetenciaController extends Controller
      */
     public function update(Request $request, Competencia $competencia)
     {
+        //dd($request);
+
+        $request->validate([ ///Validar datos, si los datos recibidos no cumplen estas regresas no les permite la entrada a la base de datos y regresa a la pagina original
+            'identificador' => ['required', 'string', 'min:5', 'max:50', Rule::unique('competencias')->ignore($competencia)],
+            'fecha' => ['required', 'date', 'before_or_equal:' . now()->addYears(2)->format('Y-m-d')],
+            'duracion' => ['required','integer','min:1','max:100'],
+            //'asesor_id' => ['required', 'not_in:Selecciona una opción'],
+            'tipo' => ['required'],
+            'categoria_id' => ['required'],
+            'imagen' => ['file', 'mimes:png,jpg,jpeg', 'max:5120'], // Máximo 5 Mb
+        ]);
+
         if ($request->hasFile('imagen')) {
             //dd($request);
             $request -> merge([
-                'nombre_imagen' =>  $request->file('imagen')->getClientOriginalName(),
+                'nombre_original_imagen' =>  $request->file('imagen')->getClientOriginalName(),
                 //'ubicacion_imagen' =>  $request->file('imagen')->store('imagenes_competencias'),
                 'ubicacion_imagen' =>  $request->file('imagen')->storeAs('public/imagenes_competencias', 'Logo_'.$request->identificador.'.'. $request->file('imagen')->extension()),
             ]);
         } 
 
         Competencia::where('id', $competencia->id)->update($request->except('_token','_method','categoria_id','imagen'));
+
+        // Actualizar tabla pivote con los nuevos registros  
+        $competencia->categorias()->sync($request->input('categoria_id'));
 
         // Insertar en la tabla pivote relacion m:n --> PENDIENTE FINAL
         //$competencia->categorias()->attach($request->categoria_id); //detach() elimina de la lista el usuario que le pasemos
@@ -165,6 +181,13 @@ class CompetenciaController extends Controller
      */
     public function destroy(Competencia $competencia)
     {
+        //dd($competencia);
+        
+        //$competencia->categorias()->detach(); // Eliminar registros de tabla pivote
+
+        // Soft delete tabla pivote
+        $competencia->categorias()->update(['deleted_at' => now()]);
+
         $competencia -> delete();
         return redirect('/competencia');
     }

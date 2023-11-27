@@ -21,14 +21,32 @@
 
     <div style="display: flex;">
         <h4 style="margin-right: 15px;"> Competencia: </h4>
-        <p style="font-size: 18px; margin-right: 8px;"> {{ $equipo->competencia->identificador }} </p>
-        <p style="font-size: 18px; margin-bottom: 15px;"> ({{ date('d/m/Y', strtotime($equipo->competencia->fecha)) }}) </p>
+
+        @if($equipo -> competencia)
+            <p style="font-size: 18px; margin-right: 8px;"> {{ $equipo->competencia->identificador }} </p>
+            <p style="font-size: 18px; margin-bottom: 15px;"> ({{ date('d/m/Y', strtotime($equipo->competencia->fecha)) }}) </p>
+        @else
+            <p style="font-size: 18px; margin-right: 8px;"> Esta competencia fue temporalmente deshabilitada </p>
+        @endif
     </div>
 
-    <div style="display: flex;">
-        <h4 style="margin-right: 15px;"> Categoria: </h4>
-        <p style="font-size: 18px; margin-bottom: 15px;"> {{ $equipo->categoria->nombre }} </p>
-    </div>
+    @if($equipo -> competencia)
+        <div style="display: flex;">
+            <h4 style="margin-right: 15px;"> Categoria: </h4>
+            <p style="font-size: 18px; margin-bottom: 15px;"> {{ $equipo->categoria->nombre }} </p>
+        </div>
+    @else
+        <div style="margin-top: 10px;">
+            <form action="{{route('equipo.destroy', $equipo)}}" method = "POST" style="display: inline-block;">
+                @csrf
+                @method('DELETE')
+
+                <button type="submit" onclick="return confirm('¿Está seguro que desea eliminar de forma permanente este equipo?')" onmouseover="this.style.backgroundColor='#ff6666';" onmouseout="this.style.backgroundColor='red';"  style="background-color: red; color: white;">
+                    Eliminar equipo
+                </button>
+            </form>
+        </div>
+    @endif
 
     <div style="margin-top: 25px;">
         <a href="/equipo">Regresar</a> 

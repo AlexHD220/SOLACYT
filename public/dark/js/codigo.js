@@ -114,3 +114,23 @@ document.getElementById('pagAnterior').addEventListener('click', function() {
 if (document.referrer) {
     paginaAnterior = document.referrer;
 }*/
+
+function validarImagen() {
+  var input = document.getElementById('imagen');
+  var archivo = input.files[0];
+
+  if (archivo) {
+      var tipoImagen = archivo.type;
+      if (tipoImagen === 'image/png' || tipoImagen === 'image/jpeg' || tipoImagen === 'image/jpg') {
+          alert('Archivo válido: ' + tipoImagen);
+      } else {
+          alert('Por favor, selecciona un archivo PNG o JPG válido.');
+          input.value = ''; // Limpiar el input para permitir seleccionar otro archivo
+      }
+  }
+}
+
+document.getElementById('createCompetencia').addEventListener('submit', function(event) {
+  // Agrega aquí cualquier lógica adicional que necesites antes de enviar el formulario
+  event.preventDefault(); // Evitar el envío real del formulario en este ejemplo
+});
