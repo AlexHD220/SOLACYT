@@ -38,10 +38,13 @@ class AsesorController extends Controller
     {
        //$asesores = Asesor::all();
 
-       //Solo los asesores relacionados con ese usuario)
+       //Solo los asesores relacionados con ese usuario) (ULTIMO FUNCIONAL)
        $asesores = Asesor::where('user_id',Auth::id())->get(); //registros que solo pertenezcan al usuario logueado
 
-       // Eager loading (cargar solo la informacion de los asesors con equipos)
+       // Eager Loading
+       //$asesores = Asesor::with('user')->where('user_id',Auth::id())->get(); // Hace una consulta más
+
+       // Eager loading viejo (cargar solo la informacion de los asesors con equipos)
        //$asesores = Asesor::with('user:id,name')->with('competencias')->get(); //eager loading (CARGAR TDA LA INFORMACION DE TODOS LOS USUARIO EN UNA SOLACONSULTA, EN LUGAR DE LLAMAR VARIAS VECES A LA BASE DE DATOS ME TRAIGO TODA LA INFORMACION DE JALON)
 
         //dd($asesores); //para ver que hay en esa variable

@@ -35,11 +35,16 @@ class EquipoController extends Controller
             $equipos = Equipo::all();
         }*/
 
-        $equipos = Equipo::where('user_id',Auth::id())->get(); //registros que solo pertenezcan al usuario logueado
+        //$equipos = Equipo::where('user_id',Auth::id())->get(); //registros que solo pertenezcan al usuario logueado
 
         $asesores = Asesor::where('user_id',Auth::id())->get(); //registros que solo pertenezcan al usuario logueado
 
         $competencias = Competencia::where('tipo','Equipo')->get();
+
+        // Eager Loading
+        $equipos = Equipo::with('user')->where('user_id',Auth::id())
+        ->with('competencia')
+        ->get();
 
         return view('equipo/indexEquipo', compact('equipos','asesores','competencias'));
     }

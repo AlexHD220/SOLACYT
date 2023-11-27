@@ -36,13 +36,19 @@ class ProyectoController extends Controller
             $proyectos = Proyecto::all();
         }*/
 
-        $proyectos = Proyecto::where('user_id',Auth::id())->get(); //registros que solo pertenezcan al usuario logueado
-
         //$asesores = Asesor::all();
+
+
+        //$proyectos = Proyecto::where('user_id',Auth::id())->get(); //registros que solo pertenezcan al usuario logueado
 
         $asesores = Asesor::where('user_id',Auth::id())->get(); //registros que solo pertenezcan al usuario logueado
 
         $competencias = Competencia::where('tipo','Proyecto')->get();
+
+        // Eager Loading
+        $proyectos = Proyecto::with('user')->where('user_id',Auth::id())
+        ->with('competencia')
+        ->get();
 
         return view('proyecto/indexProyecto', compact('proyectos','asesores','competencias'));
     }

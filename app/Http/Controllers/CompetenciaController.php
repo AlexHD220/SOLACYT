@@ -34,6 +34,9 @@ class CompetenciaController extends Controller
         $competencias = Competencia::all();
 
         $categorias = Categoria::all();
+        
+        // Eager Loading
+        //$competencias = Competencia::with('categorias')->get(); // Hace una consulta más
 
         return view('competencia/indexCompetencia', compact('competencias','categorias'));
     }
