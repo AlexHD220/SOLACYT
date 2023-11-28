@@ -3,10 +3,9 @@
 <x-mail::message>
 # Asesor creado
  
-Se creo el asesor {{ $asesor -> nombre }}.
+Se creó el asesor {{ $asesor -> nombre }}.
 
-<a href="{{route('asesor.show', $asesor->id) }}">Ver asesor</a>
+<a href="{{route('asesor.show', $asesor->id) }}" style="font-size: 15px;">Ver asesor</a>
  
-Thanks,<br>
-{{ config('app.name') }}
+<h1><b><i>{{ config('app.name') }}</i></b></h1>
 </x-mail::message>

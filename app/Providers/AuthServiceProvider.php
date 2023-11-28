@@ -43,6 +43,11 @@ class AuthServiceProvider extends ServiceProvider
             return $user->id === $proyecto->user_id;
         });
 
+        ///Evitar que un usuario acceda a un proyecto que no le pertenece
+        Gate::define('gate-participante', function () { // Gate para limitar el acceso de un usuario a ciertos metodos o peticiones
+            return false;
+        });
+
 
         /// Limitar permisos de administrador
         Gate::define('only-admin', function (User $user) { // Gate para limitar el acceso de un usuario a ciertos metodos o peticiones

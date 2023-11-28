@@ -28,7 +28,9 @@
         <ul>
             @foreach($asesor->equipos as $equipo)
                 <li>
-                    {{ $equipo -> nombre }}
+                    <a onmouseover="this.style.color='white'" onmouseout="this.style.color='#6c7293'" href="{{route('equipo.show', $equipo)}}" style="text-decoration: none; color: inherit; display: inline-block;">
+                        {{ $equipo -> nombre }}
+                    </a>
                 </li>
             @endforeach
         </ul>
@@ -41,7 +43,9 @@
         <ul>
             @foreach($asesor->proyectos as $proyecto)
                 <li>
-                    {{ $proyecto -> nombre }}
+                    <a onmouseover="this.style.color='white'" onmouseout="this.style.color='#6c7293'" href="{{route('proyecto.show', $proyecto)}}" style="text-decoration: none; color: inherit; display: inline-block; margin-bottom: 5px;">
+                        {{ $proyecto -> nombre }}
+                    </a>
                 </li>
             @endforeach
         </ul>
@@ -83,10 +87,13 @@
         </select>
     </form>
     <br>--}}-->
-
-    <div style="margin-top: 25px;">
-        <a href="/asesor">Regresar</a> 
-    </div>
+    
+    
+    @can('only-user')
+        <div style="margin-top: 25px;">
+            <a href="/asesor">Regresar</a> 
+        </div>
+    @endcan
 
 </x-plantilla-body>
 

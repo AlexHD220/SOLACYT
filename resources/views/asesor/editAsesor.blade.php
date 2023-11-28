@@ -31,13 +31,13 @@
         <input type="text" id="usuario" name="usuario" placeholder="Usuario" required value = "{{old('usuario') ?? $asesor -> usuario}}"><br><br>-->
 
         <label for="nombre"><b> Nombre: </b></label>
-        <input type="text" name="nombre" placeholder="Nombre Completo" minlength="10" maxlength="50" required value = "{{old('nombre') ?? $asesor -> nombre}}" autofocus><br><br>
+        <input type="text" name="nombre" placeholder="Nombre Completo" minlength="10" maxlength="50" required value = "{{old('nombre') ?? $asesor -> nombre}}" style="width: 300px;" autofocus><br><br>
 
         <label for = "correo"><b>Correo: </b></label>
-        <input type="email" name="correo" minlength="5" maxlength="50" required value = "{{old('correo') ?? $asesor -> correo}}"><br><br>
+        <input type="email" name="correo" minlength="5" maxlength="50" required value = "{{old('correo') ?? $asesor -> correo}}" style="width: 300px;"><br><br>
 
         <label for = "telefono"><b>Telefono: </b></label>
-        <input type="tel" name="telefono" maxlength="10" value = "{{old('telefono') ?? $asesor -> telefono}}"><br><br>
+        <input type="tel" name="telefono" placeholder="10 dígitos" maxlength="10" value = "{{old('telefono') ?? $asesor -> telefono}}"> (opcional)<br><br>
 
         <!--<label for="escuela"><b> Escuela: </b></label>
         <input type="text" name="escuela" list="listaEscuelas" value = "{{old('pass') ?? $asesor -> escuela}}"><br><br>-->

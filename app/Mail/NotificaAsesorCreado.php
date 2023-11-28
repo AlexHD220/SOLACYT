@@ -28,8 +28,10 @@ class NotificaAsesorCreado extends Mailable
      */
     public function envelope(): Envelope
     {
+        $asunto = 'Asesor ' . $this->asesor->nombre . ' creado.';
+
         return new Envelope(
-            subject: 'Asesor creado',
+            subject: $asunto,
         );
     }
 

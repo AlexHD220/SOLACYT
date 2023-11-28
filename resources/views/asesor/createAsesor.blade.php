@@ -29,13 +29,13 @@
         <input type="text" id="usuario" name="usuario" placeholder="Usuario" required value = "{{ old('usuario') }}"><br><br>--> <!--value = "{{old('name')}}"-->
 
         <label for="nombre"><b> Nombre: </b></label>
-        <input type="text" id = "nombre" name="nombre" placeholder="Nombre Completo" minlength="10" maxlength="50" required value = "{{ old('nombre') }}" autofocus><br><br>
+        <input type="text" id = "nombre" name="nombre" placeholder="Nombre Completo" minlength="10" maxlength="50" required value = "{{ old('nombre') }}" style="width: 300px;" autofocus><br><br>
 
         <label for = "correo"><b>Correo: </b></label>
-        <input type="email" name="correo" minlength="5" maxlength="50" required value = "{{ old('correo') }}"><br><br>
+        <input type="email" name="correo" minlength="5" maxlength="50" required value = "{{ old('correo') }}" style="width: 300px;"><br><br>
 
         <label for = "telefono"><b>Telefono: </b></label>
-        <input type="tel" name="telefono" maxlength="10" required value = "{{ old('telefono') }}"><br><br>
+        <input type="tel" name="telefono" placeholder="10 dígitos" maxlength="10" value = "{{ old('telefono') }}"> (opcional)<br><br>
 
         <!--<label for="escuela"><b> Escuela: </b></label>
         <input type="text" name="escuela" list="listaEscuelas" value = "{{ old('escuela') }}"><br><br>-->

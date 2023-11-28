@@ -19,7 +19,7 @@ class EquipoController extends Controller
     public function __construct()
     {
         //$this->middleware('can:only-user')->except('index', 'show');
-        $this->middleware('can:only-user');
+        $this->middleware('can:only-user')->except('show');
     }
 
     /**
@@ -101,10 +101,14 @@ class EquipoController extends Controller
      */
     public function show(Equipo $equipo)
     {
-        // Uso de gate
-        if (!Gate::allows('gate-equipo', $equipo)) {
-            return redirect('/equipo');
-        }
+
+        // Solo administradores
+        if (!Gate::allows('only-admin')) {
+            
+            if (!Gate::allows('gate-equipo', $equipo)) { // Uso de gate
+                return redirect('/asesor');
+            }
+        } 
         
         /*$asesor = Asesor::where('id',$equipo->asesor_id)->first(); //registro que solo pertenezcan al usuario logueado (1 solo arreglo)
 

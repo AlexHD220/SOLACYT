@@ -19,7 +19,7 @@ class ProyectoController extends Controller
     public function __construct()
     {
         //$this->middleware('can:only-user')->except('index', 'show');
-        $this->middleware('can:only-user');
+        $this->middleware('can:only-user')->except('show');
     }
 
 
@@ -111,10 +111,14 @@ class ProyectoController extends Controller
      */
     public function show(Proyecto $proyecto)
     {
-        // Uso de gate
-        if (!Gate::allows('gate-proyecto', $proyecto)) {
-            return redirect('/proyecto');
-        }
+
+        // Solo administradores
+        if (!Gate::allows('only-admin')) {
+            
+            if (!Gate::allows('gate-asesor', $proyecto)) { // Uso de gate
+                return redirect('/asesor');
+            }
+        }  
 
         /*$asesor = Asesor::where('id',$proyecto->asesor_id)->first(); //registro que solo pertenezcan al usuario logueado (1 solo arreglo)
 

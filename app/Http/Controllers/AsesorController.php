@@ -31,7 +31,7 @@ class AsesorController extends Controller
 
     public function __construct()
     {
-        $this->middleware('can:only-user');
+        $this->middleware('can:only-user')->except('show');
     }
 
     public function index()
@@ -146,10 +146,13 @@ class AsesorController extends Controller
     public function show(Asesor $asesor)
     {
 
-        // Uso de gate
-        if (!Gate::allows('gate-asesor', $asesor)) {
-            return redirect('/asesor');
-        }
+        // Solo administradores
+        if (!Gate::allows('only-admin')) {
+            
+            if (!Gate::allows('gate-asesor', $asesor)) { // Uso de gate
+                return redirect('/asesor');
+            }
+        }        
 
         return view('asesor/showAsesor',compact('asesor')); //asesor es el usuario actual a mostrar
     }

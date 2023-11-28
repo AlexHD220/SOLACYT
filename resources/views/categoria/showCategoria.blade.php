@@ -12,6 +12,12 @@
         <div style="text-align: justify;text-justify: distribute-all-lines;">
             <p style="margin-left: 100px; margin-right: 100px;">{{ $categoria -> descripcion}}</p>
         </div>
+
+        @can('only-admin')
+            <div style="margin-top: 30px;">
+                <a href="/categoria">Regresar</a> 
+            </div>
+        @endcan
     </div>
 
 </x-plantilla-body>

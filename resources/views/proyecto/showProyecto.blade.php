@@ -10,20 +10,26 @@
     <div class="d-flex justify-content-between" style="margin-bottom: 10px;">
         <h2 style="display: inline;"> {{ $proyecto -> nombre }}</h2>
         @auth <!--Cuando el usuario este logueado muestrame lo sigiente-->
-            <button class="btn btn-primary" onclick="window.location.href = '/participante/create';">Registrar nuevo participante</button>
+            @can('only-user')
+                <button class="btn btn-primary" onclick="window.location.href = '/participante/create';">Registrar nuevo participante</button>
+            @endcan
         @endauth
     </div>
 
     <div style="display: flex; ">
         <h4 style="margin-right: 15px;">Asesor:</h4>
-        <p style="font-size: 18px; margin-bottom: 15px;">{{ $proyecto -> asesor->nombre }}</p>
+        <a onmouseover="this.style.color='white'" onmouseout="this.style.color='#6c7293'" href="{{route('asesor.show', $proyecto->asesor)}}" style="text-decoration: none; color: inherit; display: inline-block;">
+            <p style="font-size: 18px; margin-bottom: 15px;">{{ $proyecto -> asesor->nombre }}</p>
+        </a>
     </div>
 
     <div style="display: flex;">
         <h4 style="margin-right: 15px;"> Competencia: </h4>
 
         @if($proyecto -> competencia)
-            <p style="font-size: 18px; margin-right: 8px;"> {{ $proyecto -> competencia -> identificador }} </p>
+            <a onmouseover="this.style.color='white'" onmouseout="this.style.color='#6c7293'" href="{{route('competencia.show', $proyecto -> competencia)}}" style="text-decoration: none; color: inherit;">
+                <p style="font-size: 18px; margin-right: 8px;"> {{ $proyecto -> competencia -> identificador }} </p>
+            </a>
             <p style="font-size: 18px; margin-bottom: 15px;"> ({{ date('d/m/Y', strtotime($proyecto -> competencia->fecha)) }}) </p>
         @else
             <p style="font-size: 18px; margin-right: 8px;"> Esta competencia fue temporalmente deshabilitada </p>
@@ -40,7 +46,9 @@
             <ul>
                 @foreach($proyecto->categorias as $categoria)
                     <li>
-                        {{ $categoria -> nombre }}
+                        <a onmouseover="this.style.color='white'" onmouseout="this.style.color='#6c7293'" href="{{route('categoria.show', $categoria)}}" style="text-decoration: none; color: inherit;">
+                            {{ $categoria -> nombre }}
+                        </a>
                     </li>
                 @endforeach
             </ul>
@@ -58,9 +66,11 @@
         </div>
     @endif
 
-    <div style="margin-top: 25px;">
-        <a href="/proyecto">Regresar</a> 
-    </div>
+    @can('only-user')
+        <div style="margin-top: 25px;">
+            <a href="/proyecto">Regresar</a> 
+        </div>
+    @endcan
 
 </x-plantilla-body>
 

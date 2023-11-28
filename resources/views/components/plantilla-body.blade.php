@@ -62,7 +62,7 @@
                                     <a href="/asesor" class="dropdown-item">Asesores</a>                        
                                     <a href="/equipo" class="dropdown-item">Equipos</a>
                                     <a href="/proyecto" class="dropdown-item">Proyectos</a>
-                                    <!--<a href="/participantes" class="dropdown-item">Participantes</a>-->
+                                    <a href="/participante" class="dropdown-item">Participantes</a>
                                     <!--<a href="/competencia" class="dropdown-item">Competencias</a>-->
                                 </div>
                             </div>

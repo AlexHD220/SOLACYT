@@ -4,15 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Models\Participante;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class ParticipanteController extends Controller
 {
+    public function __construct()
+    {
+        //$this->middleware('can:only-user')->except('index', 'show');
+        $this->middleware('can:only-user');
+        
+    }
+
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return view('participante/proxParticipante');
     }
 
     /**
@@ -20,7 +29,7 @@ class ParticipanteController extends Controller
      */
     public function create()
     {
-        //
+        return view('participante/proxParticipante');
     }
 
     /**
@@ -28,7 +37,7 @@ class ParticipanteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return redirect('/');
     }
 
     /**
@@ -36,7 +45,7 @@ class ParticipanteController extends Controller
      */
     public function show(Participante $participante)
     {
-        //
+        return redirect('/');
     }
 
     /**
@@ -44,7 +53,7 @@ class ParticipanteController extends Controller
      */
     public function edit(Participante $participante)
     {
-        //
+        return redirect('/');
     }
 
     /**
@@ -52,7 +61,7 @@ class ParticipanteController extends Controller
      */
     public function update(Request $request, Participante $participante)
     {
-        //
+        return redirect('/');
     }
 
     /**
@@ -60,6 +69,6 @@ class ParticipanteController extends Controller
      */
     public function destroy(Participante $participante)
     {
-        //
+        return redirect('/');
     }
 }
